@@ -66,6 +66,30 @@ Do not infer recovery overhead by comparing separate historical series.
 
 ## Durable recovery
 
+### Current research candidate: `lazy_keys`
+
+Claude proposed deferred field extraction for `table2`. Codex reproduced 800
+invalid-input differential cases on Linux plus 150 `payload_once` control cases;
+output checksums and exact error messages matched the original. A rejected rewrite
+was detected by the same harness. Qualification order remains planner-dependent;
+this is evidence for tested cases, not every possible execution plan.
+
+At 100,000 official rows, three balanced full-GUI rounds at `3c62b85` gave:
+
+| Variant | Median total | Median table2 insertion |
+|---|---:|---:|
+| Original, without recovery | 15.588 s | 6.741 s |
+| `payload_once`, with strengthened recovery | 15.567 s | 5.734 s |
+| `lazy_keys`, with strengthened recovery | 12.342 s | 3.423 s |
+
+`lazy_keys` reduced measured time locally by 20.82% versus the original and
+20.72% versus `payload_once`. Six-table equivalence passed every run. All runs
+are retained, including the first original total of 25.973 s. No significance or
+official score is established. The old `payload_once` gain was not reproduced
+in this three-way series. Default remains `payload_once`; opt in with
+`python launch.py --recipe-mode lazy_keys --recovery`.
+Reports: [`reports/research-lazy-100k/durable-gui/`](reports/research-lazy-100k/durable-gui/).
+
 <img src="docs/assets/recovery.gif" alt="Effects and receipt commit together; a retry with the same job UUID replays the stored result" width="100%">
 
 `--recovery` stores a durable receipt in the same transaction as the effects, in each database.
@@ -111,6 +135,9 @@ rules in [`docs/RULES.md`](docs/RULES.md); reuse in [`docs/REUSE.md`](docs/REUSE
   `reports/research-consistency*.json`); they are not independent replications.
 - An early-filter position rewrite was rejected for changing malformed-input errors.
   Negative results are preserved in `experiments/` and `reports/sparse-semantics.json`.
+- Source manifests compare stored `raw_hash` metadata, not a recalculated JSON
+  checksum. A clone-only race probe detected hash changes but accepted JSON edits
+  preserving stored hashes. Such mutated fixtures are excluded from benchmarks.
 
 ## License
 

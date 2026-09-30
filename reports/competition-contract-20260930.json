@@ -1,0 +1,16 @@
+{
+  "verified_at_madrid": "2026-09-30T15:02:29.359815+02:00",
+  "sources": [
+    "https://www.kaggle.com/competitions/python-database-performance-optimization/overview",
+    "https://www.kaggle.com/competitions/python-database-performance-optimization/rules"
+  ],
+  "deadline_madrid": "2026-10-12T04:59:00+02:00",
+  "deadline_utc": "2026-10-12T02:59:00Z",
+  "evidence": "Visible Overview submission notice and Close tooltip agree; Rules tab confirms prior rule acceptance. No acceptance/enrollment action performed.",
+  "rules_accepted": true,
+  "writeup_created": false,
+  "team_maximum": 5,
+  "final_submissions_per_team": 1,
+  "drafts_eligible": false,
+  "runtime_ai_services_required": false
+}

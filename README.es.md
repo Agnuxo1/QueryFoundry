@@ -118,3 +118,17 @@ son propuestas; registrar aceptación y recursos antes de ejecutar.
 Huella reforzada: benchmark GUI n3 a100k, original 15,875 s /candidato 15,094 s,
 reducción local 4,920% con rangos solapados. Código c0c7e27;
 reports/research-fingerprint-100k/durable-gui/. Sin significancia demostrada.
+
+## I-005: resultados GUI100k verificados
+
+Commit3c62b85, tres rondas rotatorias original/payload_once/lazy_keys.
+Medianas15,588055791 /15,56720543 /12,34199933s. Candidatos con recuperación
+reforzada; original sin recibos. Lazy reduce20,824% frente al original y20,718%
+frente a payload. Las seis tablas coinciden en las9ejecuciones. Todos los
+resultados conservados: primera original25,973s, dominada por table1, causa
+no establecida. Rangos original15,085–25,973, payload15,154–15,792, lazy12,142–12,422s.
+N3exploratorio; no significancia ni puntuación oficial. La pequeña mejora de
+payload de series anteriores no se reproduce aquí. Table2 mediana6,741/5,734/3,423s.
+Linux:800fuzz lazy con219errores y150payload con19errores, idénticos al original.
+El control sparse produce la discrepancia esperada. Defaultpayload conservado;
+lazyoptativo; falta concluir piloto1M con esta implementación.
