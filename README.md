@@ -50,6 +50,12 @@ recipes keep their original SQL. See [`dbperf/recipes.py`](dbperf/recipes.py).
 indicative, not established. Peak container working set ≈ 633–643 MiB. Peak temporary disk is **not
 yet measured**. Metric: `MEASURED PROCESSING TOTAL`. Reports: [`reports/`](reports).
 
+The subsequent **1,000,000-row capacity pilot** completed with equivalent six-table
+outputs: original155.491s, candidate145.662s (one pair, exploratory). Sampled working
+set1.863/1.926GiB under a2GiB limit. It measured the count-guard revision `bfb2b44`;
+later content-fingerprint changes require their own benchmark. See
+[`docs/RESEARCH-LOG.md`](docs/RESEARCH-LOG.md) and [`reports/scale-1000000/`](reports/scale-1000000/).
+
 ## Durable recovery
 
 <img src="docs/assets/recovery.gif" alt="Effects and receipt commit together; a retry with the same job UUID replays the stored result" width="100%">
@@ -90,10 +96,13 @@ rules in [`docs/RULES.md`](docs/RULES.md); reuse in [`docs/REUSE.md`](docs/REUSE
 
 - No official score, no accepted submission, and no demonstrated capacity at 300 million rows.
 - A pre-commit failure repeats the full expansion: there are no chunk checkpoints yet.
-- The receipt does not verify that the effects are still present (see the audit in
-  `coordinacion/entregas/T-001-claude.md`).
+- Research receipts now check counts and typed row-hash sums before replay; tested
+  deletions and same-count alterations are rejected. These are noncryptographic,
+  version/locale-bound checksums; legacy receipts need independent validation.
 - Concurrency, server restart and dump/restore checks are recent, single-lab results (see
   `reports/research-consistency*.json`); they are not independent replications.
+- An early-filter position rewrite was rejected for changing malformed-input errors.
+  Negative results are preserved in `experiments/` and `reports/sparse-semantics.json`.
 
 ## License
 

@@ -1,0 +1,146 @@
+{
+  "timestamp_utc": "2026-09-30T10:56:20.756168+00:00",
+  "scope": "SQL-only diagnostic; server Execution Time from EXPLAIN ANALYZE, no GUI score",
+  "server": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "methods": {
+    "count": {
+      "runs": [
+        {
+          "repeat": 0,
+          "table_seconds": {
+            "table3": 0.0006580000000000001,
+            "table4": 0.000504,
+            "table1": 0.024252,
+            "table5": 0.015894,
+            "table6": 0.018652000000000002,
+            "table2": 0.041894
+          },
+          "total_seconds": 0.101854
+        },
+        {
+          "repeat": 1,
+          "table_seconds": {
+            "table3": 6.3e-05,
+            "table4": 7.9e-05,
+            "table1": 0.008768000000000001,
+            "table5": 0.008818,
+            "table6": 0.008153,
+            "table2": 0.014874
+          },
+          "total_seconds": 0.040755
+        },
+        {
+          "repeat": 2,
+          "table_seconds": {
+            "table3": 5.1e-05,
+            "table4": 5.8e-05,
+            "table1": 0.008513,
+            "table5": 0.007940000000000001,
+            "table6": 0.007712,
+            "table2": 0.015224999999999999
+          },
+          "total_seconds": 0.039499
+        }
+      ],
+      "median_total_server_seconds": 0.040755
+    },
+    "record_hash_sums": {
+      "runs": [
+        {
+          "repeat": 0,
+          "table_seconds": {
+            "table3": 0.00029499999999999996,
+            "table4": 0.000212,
+            "table1": 0.048244,
+            "table5": 0.063418,
+            "table6": 0.051843,
+            "table2": 0.090227
+          },
+          "total_seconds": 0.254239
+        },
+        {
+          "repeat": 1,
+          "table_seconds": {
+            "table3": 0.000246,
+            "table4": 0.000214,
+            "table1": 0.047553,
+            "table5": 0.064019,
+            "table6": 0.051609999999999996,
+            "table2": 0.14564
+          },
+          "total_seconds": 0.309282
+        },
+        {
+          "repeat": 2,
+          "table_seconds": {
+            "table3": 0.000294,
+            "table4": 0.000211,
+            "table1": 0.059488,
+            "table5": 0.06702200000000001,
+            "table6": 0.05864,
+            "table2": 0.089624
+          },
+          "total_seconds": 0.275279
+        }
+      ],
+      "median_total_server_seconds": 0.275279
+    },
+    "sorted_json_md5": {
+      "runs": [
+        {
+          "repeat": 0,
+          "table_seconds": {
+            "table3": 0.000444,
+            "table4": 0.000497,
+            "table1": 0.9671029999999999,
+            "table5": 0.5299170000000001,
+            "table6": 0.428861,
+            "table2": 1.484406
+          },
+          "total_seconds": 3.411228
+        },
+        {
+          "repeat": 1,
+          "table_seconds": {
+            "table3": 0.000472,
+            "table4": 0.000518,
+            "table1": 0.9303440000000001,
+            "table5": 0.5375650000000001,
+            "table6": 0.429234,
+            "table2": 1.473175
+          },
+          "total_seconds": 3.371308
+        },
+        {
+          "repeat": 2,
+          "table_seconds": {
+            "table3": 0.000483,
+            "table4": 0.000583,
+            "table1": 0.928489,
+            "table5": 0.52376,
+            "table6": 0.42947,
+            "table2": 1.478473
+          },
+          "total_seconds": 3.361258
+        }
+      ],
+      "median_total_server_seconds": 3.371308
+    }
+  },
+  "same_count_mutation": {
+    "before": {
+      "rows": 64,
+      "h0": "23025124457746493838",
+      "h1": "-22864759574997731775"
+    },
+    "after": {
+      "rows": 64,
+      "h0": "37363819811831821118",
+      "h1": "-30198684545021306313"
+    },
+    "counts_equal": true,
+    "record_checksum_changed": true,
+    "original_destinations_untouched": true
+  },
+  "limitations": "Record hashes are noncryptographic and version/type dependent. Sorted MD5 is a diagnostic multiset checksum, not adversarial integrity proof. Neither is integrated into GUI recovery."
+}

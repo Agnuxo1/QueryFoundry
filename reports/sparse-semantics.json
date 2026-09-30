@@ -1,0 +1,102 @@
+{
+  "scope": "synthetic read-only CTEs over64 source rows; no official input mutation",
+  "cases": {
+    "official_sample": {
+      "original": {
+        "status": "ok",
+        "rows": 158,
+        "sha256_multiset": "a69867866215e942cbff26180b7fdf7f7766a9765ee96176251cdeadb1b48c07"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 158,
+        "sha256_multiset": "a69867866215e942cbff26180b7fdf7f7766a9765ee96176251cdeadb1b48c07"
+      },
+      "same": true
+    },
+    "blank_declaration_bad_weight": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "fb62a9805954cd8ec628456b5d49c88a4f1149d74a835ac1c7fbabf3486d7a42"
+      },
+      "same": false
+    },
+    "valid_declaration_bad_weight": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "same": true
+    },
+    "wrong_declaration_bad_weight": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "fb62a9805954cd8ec628456b5d49c88a4f1149d74a835ac1c7fbabf3486d7a42"
+      },
+      "same": false
+    },
+    "bad_declaration": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "same": true
+    },
+    "overflow_declaration": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22003"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22003"
+      },
+      "same": true
+    },
+    "invalid_type_bad_weight": {
+      "original": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "fb62a9805954cd8ec628456b5d49c88a4f1149d74a835ac1c7fbabf3486d7a42"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "fb62a9805954cd8ec628456b5d49c88a4f1149d74a835ac1c7fbabf3486d7a42"
+      },
+      "same": true
+    },
+    "negative_weight_bad_gap": {
+      "original": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "fb62a9805954cd8ec628456b5d49c88a4f1149d74a835ac1c7fbabf3486d7a42"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "fb62a9805954cd8ec628456b5d49c88a4f1149d74a835ac1c7fbabf3486d7a42"
+      },
+      "same": true
+    }
+  },
+  "passed": false
+}

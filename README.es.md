@@ -96,6 +96,17 @@ El repositorio local todavía no constituye una entrega aceptada.
 
 Apache-2.0. Origen y hashes en `docs/upstream-manifest.json` y NOTICE.
 
+## Investigación posterior
+
+Piloto1M: original155,491s/candidato145,662s, seis tablas equivalentes, una pareja
+exploratoria; memoria muestreada1,863/1,926GiB. Código medido bfb2b44, con guard de
+conteos. Una huella posterior añade comprobación de contenido en recuperación,
+vinculada a versión/locale y no criptográfica; requiere su propia medición.
+Concurrencia, reinicio, dump/restore completo y alteraciones de salida están
+probados en el laboratorio. Un prototipo de posiciones dispersas se descartó
+por aceptar pesos malformados que el original rechaza. Resultados y límites en
+[RESEARCH-LOG.md](docs/RESEARCH-LOG.md).
+
 ## Trabajo compartido con Claude y JEV
 
 [Tablón](coordinacion/TABLON.md), [agenda por horas](coordinacion/AGENDA.md),

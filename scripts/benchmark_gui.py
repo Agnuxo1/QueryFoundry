@@ -8,6 +8,7 @@ import argparse
 from datetime import datetime, timezone
 import json
 import os
+import re
 from pathlib import Path
 import statistics
 import subprocess
@@ -24,7 +25,7 @@ from filter.facet_service import FilterFacetService
 from services.postgres_service import PostgresAdminService
 from dbperf.service import QueryFoundryService
 from dbperf.durable_service import DurableQueryFoundryService
-from dbperf.recipes import destinations, ORDER
+from dbperf.recipes import destinations, ORDER, MODES
 from ui.dialogs import ExpansionTimingReportDialog
 from benchmark import canonical
 
@@ -33,6 +34,7 @@ PROJECT={'queryfoundry-database-1':'queryfoundry','queryfoundry-scale-database-1
 if PROJECT is None: raise RuntimeError('Unsupported laboratory container')
 REPORTS=ROOT/'reports'/os.environ.get('QF_REPORT_SUBDIR','')
 DURABLE=False
+CANDIDATE='payload_once'
 def docker(*args, **kw):
     return subprocess.run(['docker',*args],check=True,capture_output=True,**kw)
 
@@ -134,20 +136,23 @@ def run_once(mode,number):
         service.close()
         app.destroy()
 
+def rendered_total_seconds(text):
+    match=re.search(r'MEASURED PROCESSING TOTAL: (?:(\d+)m\s+)?([0-9.]+)\s*(us|ms|s)',text)
+    if not match: raise RuntimeError('Missing original rendered total')
+    return 60*int(match[1] or 0)+float(match[2])*{'us':.000001,'ms':.001,'s':1}[match[3]]
+
 def summarize(records,repeats):
     # Item seconds are the upstream report schema; re-read its rendered total as
     # an independent check against accidental summary/schema drift.
-    import re
     for record in records:
         total=sum(float(x.get('seconds') or 0) for x in record.get('items',[]) if x.get('include_in_total',True))
         rendered=ExpansionTimingReportDialog.build_report_text(record)
-        match=re.search(r'MEASURED PROCESSING TOTAL: ([0-9.]+) s',rendered)
-        if not match or abs(float(match[1])-total)>.0006:
+        if abs(rendered_total_seconds(rendered)-total)>.0006:
             raise RuntimeError('Report total and summary disagree')
         record['measured_processing_total_seconds']=total
-    medians={m:statistics.median(r['measured_processing_total_seconds'] for r in records if r['mode']==m) for m in ('baseline','payload_once')}
+    medians={m:statistics.median(r['measured_processing_total_seconds'] for r in records if r['mode']==m) for m in ('baseline',CANDIDATE)}
     summary={'timestamp_utc':datetime.now(timezone.utc).isoformat(),'source_rows':int(sql('SELECT count(*) FROM public.raw_data;')),
-        'repeats':repeats,'median_seconds':medians,'speedup':medians['baseline']/medians['payload_once'],
+        'repeats':repeats,'median_seconds':medians,'speedup':medians['baseline']/medians[CANDIDATE],
         'local_full_gui_path':True,'six_table_multiset_equivalence':True,'organizer_score':None,
         'container_memory_limit_bytes':2147483648,'container_cpu_limit':2,
         'sampled_peak_working_set_bytes':{m:max(r['sampled_peak_container_working_set_bytes'] or 0 for r in records if r['mode']==m) for m in medians},
@@ -161,14 +166,16 @@ def summarize(records,repeats):
     print(json.dumps(summary,indent=2))
 
 def main():
-    global REPORTS,DURABLE
+    global REPORTS,DURABLE,CANDIDATE
     parser=argparse.ArgumentParser(); parser.add_argument('--repeats',type=int,default=3)
     parser.add_argument('--summarize-existing',action='store_true')
     parser.add_argument('--durable',action='store_true')
-    parser.add_argument('--single-mode',choices=['baseline','payload_once'])
+    parser.add_argument('--single-mode',choices=MODES)
+    parser.add_argument('--candidate-mode',choices=[m for m in MODES if m!='baseline'],default='payload_once')
     parser.add_argument('--single-number',type=int,default=0)
     args=parser.parse_args()
     DURABLE=args.durable
+    CANDIDATE=args.candidate_mode
     if DURABLE: REPORTS=REPORTS/'durable-gui'
     REPORTS.mkdir(parents=True,exist_ok=True)
     if args.single_mode:
@@ -183,7 +190,7 @@ def main():
     records=[]
     reference_exists=sql("SELECT to_regclass('qf_reference.table1') IS NOT NULL;")=='t'
     for repeat in range(args.repeats):
-        modes=('baseline','payload_once') if repeat%2==0 else ('payload_once','baseline')
+        modes=('baseline',CANDIDATE) if repeat%2==0 else (CANDIDATE,'baseline')
         for mode in modes:
             # A fresh Tcl interpreter per run also models an ordinary GUI launch.
             command=[sys.executable,str(Path(__file__).resolve()),'--single-mode',mode,

@@ -36,8 +36,32 @@ Las series históricas n=3 son exploratorias, con rangos solapados. La serie
 durable compara original sin recibos con candidato con recibos. Los nuevos
 parches no heredan las cifras históricas. Diagnóstico adicional separado por etiqueta.
 
-Próximo experimento: un millón de filas del generador oficial en un volumen
-independiente, dos CPU, dos GiB, recorrido GUI completo original/candidato.
-Primera pareja como piloto de capacidad; n=1 no demuestra una ganancia estable.
-Registrar memoria, archivos temporales muestreados y temp_bytes escritos; no
-confundir tamaños muestreados con máximos garantizados ni bytes escritos con pico.
+Piloto completado: un millón de filas oficiales, volumen independiente, dos CPU
+y dos GiB, recorrido GUI completo original/candidato con guard de conteos.
+Original155,490661388s; candidato145,661872109s; seis tablas equivalentes y
+5.321.553 filas insertadas en cada ejecución. n=1 no demuestra ganancia estable.
+Código medido bfb2b44; reports/scale-1000000/. Generación138,755s.
+Memoria muestreada1,863/1,926GiB; archivos de trabajo temporales43,06/0MiB
+observados y74,69/0MiB escritos. Esto NO incluye todas las tablas SQL TEMP,
+WAL o intermediarios: el pico global de disco intermedio sigue desconocido.
+table2 domina70,281/58,390s; table1 ronda41s. Datos de ambos laboratorios preservados.
+
+## Experimento descartado: posiciones dispersas
+
+Un prototipo filtró posiciones no declaradas antes de extraer peso/tipo/gap.
+Preservó el ejemplo oficial, pero2 de8 casos sintéticos cambiaron error SQL por
+aceptación cuando el peso era malformado y la declaración vacía/incorrecta.
+REJECT antes de medir velocidad. Código sólo en experiments/rejected_sparse_positions.py;
+producción restaurada. Contraejemplos en reports/sparse-semantics.json.
+
+## Huellas de contenido: costes y gate
+
+Tres repeticiones SQL diagnósticas sobre las seis salidas100k: mediana0,040755s
+para conteos;0,275279s para dos sumas de hashes PostgreSQL tipados;3,371308s para
+MD5 de JSON ordenado. Una actualización en copia TEMP mantuvo64 filas pero cambió
+ambas huellas. No son métricas GUI ni prueba criptográfica/adversarial.
+La variante rápida se vincula a versión, encoding y locale; se prueba reinicio,
+restauración con OIDs nuevos, reintento concurrente y cambio de contenido con
+igual conteo antes de aceptar la extensión. La primera consulta de locale usó
+un parámetro no existente; rollback dejó cero efectos/recibos, y se corrigió
+consultando el catálogo pg_database. Los intentos fallidos permanecen guardados.

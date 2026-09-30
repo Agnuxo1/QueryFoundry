@@ -1,0 +1,7 @@
+{
+  "rows": 1000000,
+  "unchanged_official_generator": true,
+  "elapsed_wall_seconds": 138.7551201000024,
+  "container": "queryfoundry-scale-database-1",
+  "preserved_100k_volume": true
+}

@@ -134,6 +134,28 @@ def main():
             assert register(replay_restored)==versions[0]
             evidence['stages']['restored_identity_replay']={'same_job_and_six_versions':True,
                 'rows_unchanged':fingerprint('kaggle_challenge')==before}; save()
+            sql('ALTER TABLE public.table2 RENAME COLUMN integer_column_3 TO qf_probe_renamed;')
+            try:
+                try: expand(); schema_detected=False
+                except RuntimeError as exc: schema_detected='fingerprint' in str(exc)
+            finally:
+                sql('ALTER TABLE public.table2 RENAME COLUMN qf_probe_renamed TO integer_column_3;')
+            evidence['stages']['destination_schema_change']={'replay_detected_column_rename':schema_detected,
+                'original_data_untouched':True}; save()
+            assert schema_detected,'Replay falsely accepted changed output schema'
+            # Same row count with changed content must also refuse replay.
+            key=int(sql('SELECT min(id_column_1) FROM public.table2;'))
+            count_before=int(sql('SELECT count(*) FROM public.table2;'))
+            sql('UPDATE public.table2 SET integer_column_3=1 WHERE id_column_1='+str(key)+';')
+            try: expand(); content_detected=False
+            except RuntimeError as exc:
+                content_detected='fingerprint' in str(exc)
+            assert int(sql('SELECT count(*) FROM public.table2;'))==count_before
+            evidence['stages']['same_count_content_change']={'replay_detected_content_change':content_detected,
+                'row_count_unchanged':True,'original_data_untouched':True}; save()
+            assert content_detected,'Replay falsely accepted content alteration'
+            sql('UPDATE public.table2 SET integer_column_3=NULL WHERE id_column_1='+str(key)+';')
+            assert fingerprint('kaggle_challenge')==before
             # Research boundary: receipt replay after manual deletion of one output.
             count_before=int(sql('SELECT count(*) FROM public.table2;'))
             sql('DELETE FROM public.table2 WHERE ctid=(SELECT ctid FROM public.table2 LIMIT 1);')
