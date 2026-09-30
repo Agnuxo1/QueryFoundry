@@ -1,0 +1,6 @@
+customtkinter
+openpyxl
+pandas
+paramiko
+reportlab
+xlrd

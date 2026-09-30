@@ -1,0 +1,4 @@
+QueryFoundry — extensions and reproducible performance experiments, 2026.
+Includes byte-preserving source from igorsiecz/kaggle_postgre_challenge,
+commit 5dfde9d967425982229b92d6ffe98efcd74612e9, under Apache License 2.0.
+Original notices remain in app/. See docs/upstream-manifest.json.

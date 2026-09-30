@@ -1,0 +1,22 @@
+{
+  "timestamp_utc": "2026-09-30T07:33:40.547680+00:00",
+  "source_rows": 100000,
+  "repeats": 3,
+  "median_seconds": {
+    "baseline": 14.245125486000001,
+    "payload_once": 13.238978626
+  },
+  "speedup": 1.0759988280382924,
+  "local_full_gui_path": true,
+  "six_table_multiset_equivalence": true,
+  "organizer_score": null,
+  "container_memory_limit_bytes": 2147483648,
+  "container_cpu_limit": 2,
+  "sampled_peak_working_set_bytes": {
+    "baseline": 666505216,
+    "payload_once": 678293504
+  },
+  "peak_intermediate_disk_bytes": null,
+  "recovery_gui_integrated": false,
+  "submission_ready": false
+}

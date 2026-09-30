@@ -1,0 +1,342 @@
+EXPANSION PERFORMANCE REPORT
+================================================================================
+Started:       2026-09-30T09:55:16+02:00
+Completed:     2026-09-30T09:55:30+02:00
+Database:      kaggle_challenge
+Source:        public.raw_data
+Raw schemas:   group001
+Source rows:   100,000
+Inserted rows: 532,416
+
+MEASUREMENT MODEL
+- Local Python work: per-thread CPU time; blocking and SSH waits excluded.
+- Remote commands: clocked by the Linux server; SSH connection/return excluded.
+- Expansion SQL: clocked inside PostgreSQL with clock_timestamp().
+- Diagnostic envelope entries are shown but excluded from totals.
+
+ROWS BY DESTINATION
+- public.table3: 4
+- public.table4: 26
+- public.table1: 100,000
+- public.table5: 100,000
+- public.table6: 100,000
+- public.table2: 232,386
+
+1. PREPARATION
+--------------------------------------------------------------------------------
+ 1. Ensure control database metadata
+         44.716 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 2. Ensure control database metadata - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 3. Normalize, parse, and validate expansion recipes - local Python CPU
+         31.250 ms | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 4. Build protected transactional SQL batch - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+Stage subtotal: 75.966 ms
+
+2. PREFLIGHT VALIDATION
+--------------------------------------------------------------------------------
+ 1. Verify source table existence
+         34.721 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 2. Verify source table existence - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 3. Read and validate source column metadata
+         34.820 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 4. Read and validate source column metadata - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 5. Load Raw version references for the selected scope
+         40.905 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 6. Load Raw version references for the selected scope - server command 2
+         37.203 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 7. Load Raw version references for the selected scope - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 8. Validate SQL function safety
+         34.871 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 9. Validate SQL function safety - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+10. Ensure data-database metadata and row counters
+         47.551 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+11. Ensure data-database metadata and row counters - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+12. Verify destination public.table3
+         34.961 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+13. Verify destination public.table3 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+14. Read row counter for public.table3
+         40.131 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+15. Read row counter for public.table3 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+16. Validate managed dependencies for public.table3
+         35.815 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+17. Validate managed dependencies for public.table3 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+18. Verify destination public.table4
+         34.292 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+19. Verify destination public.table4 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+20. Read row counter for public.table4
+         34.816 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+21. Read row counter for public.table4 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+22. Validate managed dependencies for public.table4
+         36.481 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+23. Validate managed dependencies for public.table4 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+24. Verify destination public.table1
+         33.851 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+25. Verify destination public.table1 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+26. Read row counter for public.table1
+         40.232 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+27. Read row counter for public.table1 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+28. Validate managed dependencies for public.table1
+         40.661 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+29. Validate managed dependencies for public.table1 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+30. Verify destination public.table5
+         43.442 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+31. Verify destination public.table5 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+32. Read row counter for public.table5
+         44.730 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+33. Read row counter for public.table5 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+34. Validate managed dependencies for public.table5
+         39.389 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+35. Validate managed dependencies for public.table5 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+36. Verify destination public.table6
+         32.650 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+37. Verify destination public.table6 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+38. Read row counter for public.table6
+         33.923 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+39. Read row counter for public.table6 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+40. Validate managed dependencies for public.table6
+         36.126 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+41. Validate managed dependencies for public.table6 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+42. Verify destination public.table2
+         42.677 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+43. Verify destination public.table2 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+44. Read row counter for public.table2
+         31.924 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+45. Read row counter for public.table2 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+46. Validate managed dependencies for public.table2
+         36.155 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+47. Validate managed dependencies for public.table2 - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+Stage subtotal: 902.329 ms
+
+3. POSTGRESQL EXPANSION
+--------------------------------------------------------------------------------
+ 1. Expansion database batch envelope
+          11.485 s | remote_server_wall | diagnostic only; excluded from totals
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 2. Initialize database transaction
+            483 us | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 3. Acquire destination table locks
+            296 us | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 4. Scan source and build dependency manifest
+         34.610 ms | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 5. Insert into public.table3 (statement 1)
+        307.265 ms | postgresql_backend_wall | rows=4 | destination=public.table3
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 6. Insert into public.table4 (statement 1)
+        380.545 ms | postgresql_backend_wall | rows=26 | destination=public.table4
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 7. Insert into public.table1 (statement 1)
+           2.636 s | postgresql_backend_wall | rows=100,000 | destination=public.table1
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 8. Insert into public.table5 (statement 1)
+           1.134 s | postgresql_backend_wall | rows=100,000 | destination=public.table5
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 9. Insert into public.table6 (statement 1)
+           1.564 s | postgresql_backend_wall | rows=100,000 | destination=public.table6
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+10. Insert into public.table2 (statement 1)
+           5.364 s | postgresql_backend_wall | rows=232,386 | destination=public.table2
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+11. Commit expansion transaction
+          6.172 ms | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+12. Parse database manifest and timing telemetry - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+Stage subtotal: 11.428 s
+
+4. VERSION REGISTRATION
+--------------------------------------------------------------------------------
+ 1. Ensure control metadata for version registration
+         40.248 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 2. Ensure control metadata for version registration - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 3. Build atomic version registration SQL - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 4. Version database batch envelope
+         65.038 ms | remote_server_wall | diagnostic only; excluded from totals
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 5. Acquire version lock for table1
+            668 us | postgresql_backend_wall | destination=table1
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+ 6. Acquire version lock for table2
+            328 us | postgresql_backend_wall | destination=table2
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+ 7. Acquire version lock for table3
+            326 us | postgresql_backend_wall | destination=table3
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+ 8. Acquire version lock for table4
+            323 us | postgresql_backend_wall | destination=table4
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+ 9. Acquire version lock for table5
+            309 us | postgresql_backend_wall | destination=table5
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+10. Acquire version lock for table6
+            304 us | postgresql_backend_wall | destination=table6
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+11. Register version and dependency for public.table3
+          2.933 ms | postgresql_backend_wall | rows=1 | destination=public.table3
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+12. Register version and dependency for public.table4
+          1.156 ms | postgresql_backend_wall | rows=1 | destination=public.table4
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+13. Register version and dependency for public.table1
+          1.336 ms | postgresql_backend_wall | rows=1 | destination=public.table1
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+14. Register version and dependency for public.table5
+            980 us | postgresql_backend_wall | rows=1 | destination=public.table5
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+15. Register version and dependency for public.table6
+            937 us | postgresql_backend_wall | rows=1 | destination=public.table6
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+16. Register version and dependency for public.table2
+          1.373 ms | postgresql_backend_wall | rows=1 | destination=public.table2
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+17. Commit atomic version batch
+          4.021 ms | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+18. Parse version registration results and timing telemetry - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+Stage subtotal: 55.242 ms
+
+5. INTERFACE REFRESH
+--------------------------------------------------------------------------------
+ 1. Invalidate destination filter caches - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 2. Reload database table catalog
+         36.059 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 3. Reload database table catalog - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 4. Rebuild table navigation controls - local Python CPU
+         78.125 ms | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 5. Build completion summary - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+Stage subtotal: 114.184 ms
+
+RECOVERY
+--------------------------------------------------------------------------------
+ 1. Bind durable job to source versions, manifest and recipes
+         53.998 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 2. Bind durable job to source versions, manifest and recipes - server command 2
+         33.345 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 3. Bind durable job to source versions, manifest and recipes - server command 3
+         78.803 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 4. Bind durable job to source versions, manifest and recipes - server command 4
+         35.155 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 5. Bind durable job to source versions, manifest and recipes - server command 5
+         33.975 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 6. Bind durable job to source versions, manifest and recipes - local Python CPU
+         31.250 ms | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+ 7. Commit durable recovery receipt
+          3.582 ms | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.
+ 8. Check atomic version-finalization receipt
+         32.360 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+ 9. Check atomic version-finalization receipt - server command 2
+         32.913 ms | remote_server_wall
+    Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.
+10. Check atomic version-finalization receipt - local Python CPU
+              0 us | local_python_cpu
+    Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.
+11. Commit durable recovery receipt
+            657 us | postgresql_backend_wall
+    Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.
+Stage subtotal: 336.037 ms
+
+================================================================================
+MEASURED PROCESSING TOTAL: 12.911 s
+================================================================================

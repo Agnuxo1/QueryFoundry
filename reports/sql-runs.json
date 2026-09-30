@@ -1,0 +1,326 @@
+[
+  {
+    "mode": "baseline",
+    "sql_stage_seconds": 15.982558000000001,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.324755
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.336508
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.29754
+      },
+      {
+        "name": "public.table1",
+        "seconds": 3.695751
+      },
+      {
+        "name": "public.table5",
+        "seconds": 2.066269
+      },
+      {
+        "name": "public.table6",
+        "seconds": 2.062699
+      },
+      {
+        "name": "public.table2",
+        "seconds": 7.199036
+      }
+    ],
+    "repeat": 0,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "payload_once",
+    "sql_stage_seconds": 19.576231,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.079065
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.32469
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.297003
+      },
+      {
+        "name": "public.table1",
+        "seconds": 7.816026
+      },
+      {
+        "name": "public.table5",
+        "seconds": 1.931771
+      },
+      {
+        "name": "public.table6",
+        "seconds": 2.448475
+      },
+      {
+        "name": "public.table2",
+        "seconds": 6.679201
+      }
+    ],
+    "repeat": 0,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "fields_once",
+    "sql_stage_seconds": 16.832519,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.082345
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.484397
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.440686
+      },
+      {
+        "name": "public.table1",
+        "seconds": 3.776387
+      },
+      {
+        "name": "public.table5",
+        "seconds": 2.067845
+      },
+      {
+        "name": "public.table6",
+        "seconds": 2.090028
+      },
+      {
+        "name": "public.table2",
+        "seconds": 7.890831
+      }
+    ],
+    "repeat": 0,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "fields_once",
+    "sql_stage_seconds": 15.384107,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.137583
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.471405
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.439907
+      },
+      {
+        "name": "public.table1",
+        "seconds": 5.561648
+      },
+      {
+        "name": "public.table5",
+        "seconds": 1.675322
+      },
+      {
+        "name": "public.table6",
+        "seconds": 1.836868
+      },
+      {
+        "name": "public.table2",
+        "seconds": 5.261374
+      }
+    ],
+    "repeat": 1,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "payload_once",
+    "sql_stage_seconds": 13.121365,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.096064
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.346562
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.374101
+      },
+      {
+        "name": "public.table1",
+        "seconds": 3.446954
+      },
+      {
+        "name": "public.table5",
+        "seconds": 1.53988
+      },
+      {
+        "name": "public.table6",
+        "seconds": 2.037724
+      },
+      {
+        "name": "public.table2",
+        "seconds": 5.28008
+      }
+    ],
+    "repeat": 1,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "baseline",
+    "sql_stage_seconds": 15.752639,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.085605
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.353337
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.306968
+      },
+      {
+        "name": "public.table1",
+        "seconds": 3.713309
+      },
+      {
+        "name": "public.table5",
+        "seconds": 1.679686
+      },
+      {
+        "name": "public.table6",
+        "seconds": 3.20667
+      },
+      {
+        "name": "public.table2",
+        "seconds": 6.407064
+      }
+    ],
+    "repeat": 1,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "baseline",
+    "sql_stage_seconds": 15.726225,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.075032
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.360902
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.366401
+      },
+      {
+        "name": "public.table1",
+        "seconds": 5.610851
+      },
+      {
+        "name": "public.table5",
+        "seconds": 1.426294
+      },
+      {
+        "name": "public.table6",
+        "seconds": 1.951189
+      },
+      {
+        "name": "public.table2",
+        "seconds": 5.935556
+      }
+    ],
+    "repeat": 2,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "payload_once",
+    "sql_stage_seconds": 13.376190000000001,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.150582
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.324558
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.288261
+      },
+      {
+        "name": "public.table1",
+        "seconds": 3.728012
+      },
+      {
+        "name": "public.table5",
+        "seconds": 1.653951
+      },
+      {
+        "name": "public.table6",
+        "seconds": 2.072394
+      },
+      {
+        "name": "public.table2",
+        "seconds": 5.158432
+      }
+    ],
+    "repeat": 2,
+    "equivalent_multiset": true
+  },
+  {
+    "mode": "fields_once",
+    "sql_stage_seconds": 15.184657,
+    "stages": [
+      {
+        "name": "manifest",
+        "seconds": 0.157415
+      },
+      {
+        "name": "public.table3",
+        "seconds": 0.481789
+      },
+      {
+        "name": "public.table4",
+        "seconds": 0.439971
+      },
+      {
+        "name": "public.table1",
+        "seconds": 3.621988
+      },
+      {
+        "name": "public.table5",
+        "seconds": 2.86795
+      },
+      {
+        "name": "public.table6",
+        "seconds": 2.122204
+      },
+      {
+        "name": "public.table2",
+        "seconds": 5.49334
+      }
+    ],
+    "repeat": 2,
+    "equivalent_multiset": true
+  }
+]

@@ -1,0 +1,32 @@
+{
+  "timestamp_utc": "2026-09-30T07:06:00.818823+00:00",
+  "environment": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35228, 64-bit",
+  "benchmark_kind": "diagnostic_sql_only",
+  "official_parity": false,
+  "excludes": [
+    "GUI preparation",
+    "full preflight",
+    "managed row counters",
+    "version registration",
+    "dump handling",
+    "SSH path"
+  ],
+  "source_rows": 100000,
+  "generator_sha256": "6b807c8c3ec23c3c6555bed1342f81abe99bacf77a04ba7096dbaa1c66e33c6c",
+  "median_seconds": {
+    "baseline": 15.752639,
+    "payload_once": 13.376190000000001,
+    "fields_once": 15.384107
+  },
+  "speedup_vs_baseline": {
+    "baseline": 1.0,
+    "payload_once": 1.1776626229142977,
+    "fields_once": 1.0239553716052547
+  },
+  "precommit_rollback_verified": true,
+  "equivalence": "bidirectional EXCEPT ALL; surrogate keys resolved to source/dimension values",
+  "database_bytes": 437778099,
+  "peak_server_ram_bytes": null,
+  "peak_intermediate_bytes": null,
+  "eligible_submission": false
+}

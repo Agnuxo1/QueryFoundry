@@ -1,0 +1,8 @@
+.runtime/
+upstream/
+__pycache__/
+*.pyc
+.venv/
+.env
+.cognition/
+reports/*.log

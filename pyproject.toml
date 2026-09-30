@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "queryfoundry"
+version = "0.1.0"
+description = "Reproducible experiments for the Kaggle Python and PostgreSQL expansion challenge"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+dependencies = ["customtkinter", "openpyxl", "pandas", "paramiko", "reportlab", "xlrd"]
+
+[tool.setuptools.packages.find]
+include = ["dbperf*"]

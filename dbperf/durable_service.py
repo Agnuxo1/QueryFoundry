@@ -1,0 +1,167 @@
+"""Recover committed expansions and version finalization across lost SSH replies.
+
+Data effects and their receipt share a data-database transaction. The six
+version records and a second receipt share the control-database transaction.
+No cross-database atomicity is claimed: the durable data receipt lets a retry
+finish missing versions without rerunning the expansion.
+"""
+import hashlib
+import json
+import os
+import shlex
+import uuid
+from pathlib import Path
+
+from config import CONTROL_DB
+from utils import sql_literal
+from .service import QueryFoundryService
+from .receipts import INSTALL_SQL
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+
+class DurableQueryFoundryService(QueryFoundryService):
+    def _command(self,database,sql):
+        command=f'psql -h localhost -U {shlex.quote(self.sql_username)} -d {shlex.quote(database)} -X -qAt -v ON_ERROR_STOP=1 -f -'
+        return super().run_remote_command(command,stdin_text='SET client_min_messages=warning;\n'+sql)
+
+    def _read_receipt(self,database,job,signature):
+        output=self._command(database,"SELECT jsonb_build_object('signature',request_sha256,'payload',result)::text FROM qf_recovery.receipts WHERE job_id="+sql_literal(job)+'::uuid;')
+        if not output.strip(): return None
+        receipt=json.loads(output.splitlines()[-1])
+        if receipt['signature']!=signature:
+            raise RuntimeError('Recovery job ID was reused with different source, recipes or version metadata')
+        return receipt['payload']
+
+    def _guard(self,job):
+        return "SELECT pg_advisory_xact_lock(hashtextextended("+sql_literal(job)+",0));\nDO $qf_guard$ BEGIN IF EXISTS (SELECT 1 FROM qf_recovery.receipts WHERE job_id="+sql_literal(job)+"::uuid) THEN RAISE EXCEPTION 'QueryFoundry job already committed'; END IF; END $qf_guard$;\n"
+
+    def _journal(self,context,result_expression):
+        job=sql_literal(context['job']); signature=sql_literal(context['signature'])
+        return """INSERT INTO pg_temp.pgdm_expansion_timings VALUES
+            (8500, 'recovery', 'Commit durable recovery receipt',clock_timestamp(),NULL,NULL,NULL,NULL);
+            INSERT INTO qf_recovery.receipts(job_id,request_sha256,result)
+            VALUES ("""+job+'::uuid,'+signature+','+result_expression+""" );
+            UPDATE pg_temp.pgdm_expansion_timings SET finished_at=clock_timestamp()
+            WHERE sequence_number=8500;
+            """
+
+    def run_remote_command(self,command,**kwargs):
+        context=getattr(self,'_qf_context',None)
+        text=kwargs.get('stdin_text')
+        if context and text and 'pgdm_expansion_timings' in text:
+            if context['kind']=='data' and 'BEGIN ISOLATION LEVEL REPEATABLE READ;' in text:
+                manifest=context['manifest_query']
+                metadata=sql_literal(json.dumps(context['metadata'],sort_keys=True,ensure_ascii=False))+'::jsonb'
+                timings="""(SELECT COALESCE(jsonb_agg(jsonb_build_object(
+                    'stage',stage_key,'name',item_name,'seconds',EXTRACT(EPOCH FROM finished_at-started_at),
+                    'rows',rows_affected,'destination',destination_name) ORDER BY sequence_number), '[]'::jsonb)
+                    FROM pg_temp.pgdm_expansion_timings WHERE finished_at IS NOT NULL)"""
+                payload="jsonb_build_object('result',"+metadata+" || jsonb_build_object('dependency_manifest',("+manifest+")::jsonb),'timings',"+timings+")"
+                text=text.replace('BEGIN ISOLATION LEVEL REPEATABLE READ;','BEGIN ISOLATION LEVEL REPEATABLE READ;\n'+self._guard(context['job']),1)
+                # Verify the source footprint again in the expansion snapshot.
+                expected=sql_literal(json.dumps(context['source_footprint'],sort_keys=True))+'::jsonb'
+                footprint="jsonb_build_object('raw_hash_manifest',m->'raw_hash_manifest','source_columns',m->'source_columns','expected_row_count',m->'expected_row_count')"
+                check="\nDO $qf_source$ DECLARE m jsonb:= ("+manifest+")::jsonb; BEGIN IF "+footprint+' <> '+expected+" THEN RAISE EXCEPTION 'Source manifest changed before expansion'; END IF; END $qf_source$;\n"
+                boundary="clock_timestamp() WHERE sequence_number = 3;"
+                if text.count(boundary)!=1: raise RuntimeError('Unsupported upstream manifest boundary')
+                text=text.replace(boundary,boundary+check,1)
+                marker="INSERT INTO pg_temp.pgdm_expansion_timings VALUES (9000, 'execute'"
+                if text.count(marker)!=1: raise RuntimeError('Unsupported upstream commit boundary')
+                text=text.replace(marker,self._journal(context,payload)+marker,1)
+            elif context['kind']=='versions' and 'Commit atomic version batch' in text:
+                prefix="SELECT json_build_object(\n    'table_name'"
+                suffix=")::text\nFROM inserted_version;"
+                if text.count(prefix)!=6 or text.count(suffix)!=6:
+                    raise RuntimeError('Unsupported upstream version registration SQL')
+                text=text.replace(prefix,"INSERT INTO pg_temp.qf_registered_versions(result)\nSELECT json_build_object(\n    'table_name'")
+                text=text.replace(suffix,")::jsonb\nFROM inserted_version RETURNING result::text;")
+                text=text.replace('BEGIN;','CREATE TEMP TABLE qf_registered_versions(ordinal bigint GENERATED ALWAYS AS IDENTITY,result jsonb) ON COMMIT PRESERVE ROWS;\nBEGIN;\n'+self._guard(context['job']),1)
+                marker="INSERT INTO pg_temp.pgdm_expansion_timings VALUES (\n    9000,"
+                if text.count(marker)!=1: raise RuntimeError('Unsupported upstream version commit boundary')
+                payload="jsonb_build_object('versions',(SELECT jsonb_agg(result ORDER BY ordinal) FROM pg_temp.qf_registered_versions))"
+                text=text.replace(marker,self._journal(context,payload)+marker,1)
+            kwargs['stdin_text']=text
+        return super().run_remote_command(command,**kwargs)
+
+    def _recovered_result(self,payload,report,job,signature):
+        result=dict(payload['result'])
+        result.update(qf_job_id=job,qf_request_sha256=signature,timing_report=report)
+        for item in payload.get('timings',[]):
+            self._append_expansion_timing(report,item['stage'],item['name']+' (previous committed attempt)',
+                float(item.get('seconds') or 0),'previous_attempt_diagnostic',rows=item.get('rows'),
+                destination=item.get('destination'),include_in_total=False)
+        report['resumed_committed_job']=job
+        report['source_rows']=int(result['dependency_manifest'].get('expected_row_count') or 0)
+        report['recovery_metric_notice']='Previous attempt timings are diagnostic; this report counts current recovery work only.'
+        return result
+
+    def execute_cross_table_expansion(self,database_name,source_full_table_name,raw_schemas,destinations,
+        cancel_event=None,progress_callback=None,post_commit_callback=None,timing_report=None):
+        report=timing_report or self.create_cross_table_expansion_timing_report(database_name,source_full_table_name,raw_schemas,[d['table_name'] for d in destinations])
+        job=str(uuid.UUID(os.environ['QF_JOB_ID'])) if os.environ.get('QF_JOB_ID') else str(uuid.uuid4())
+        with self.expansion_timing_scope(report,'recovery','Bind durable job to source versions, manifest and recipes'):
+            prepared=self._prepare_cross_table_expansion(source_full_table_name,raw_schemas,destinations)
+            versions=self.get_raw_schema_version_references(database_name,source_full_table_name,prepared['raw_schemas'],cancel_event=cancel_event)
+            manifest=self._capture_expansion_source_manifest(database_name,prepared['source_schema_name'],prepared['source_table_name'],prepared['raw_schemas'],cancel_event=cancel_event)
+            footprint={k:manifest[k] for k in ('raw_hash_manifest','source_columns','expected_row_count')}
+            metadata={'source_database_name':database_name,'source_schema_name':prepared['source_schema_name'],
+                'source_table_name':prepared['source_table_name'],'raw_schemas':prepared['raw_schemas'],
+                'source_versions':versions,'destinations':prepared['destinations']}
+            signature=digest({'metadata':metadata,'source_footprint':footprint})
+            # Keep the identifier needed after a GUI/process restart, never credentials.
+            jobs=Path(__file__).resolve().parents[1]/'.runtime/jobs'
+            jobs.mkdir(parents=True,exist_ok=True)
+            record=jobs/(job+'.json')
+            if not record.exists():
+                temporary=jobs/(job+'.tmp')
+                temporary.write_text(json.dumps({'job_id':job,'request_sha256':signature,
+                    'database':database_name,'source':source_full_table_name,
+                    'raw_schemas':raw_schemas,'recipe_mode':os.environ.get('QF_RECIPE_MODE','baseline')},indent=2),encoding='utf-8')
+                os.replace(temporary,record)
+            self._command(database_name,INSTALL_SQL)
+            saved=self._read_receipt(database_name,job,signature)
+        if saved:
+            if post_commit_callback: post_commit_callback()
+            return self._recovered_result(saved,report,job,signature)
+        # Original preflight and DML guards still run on every new expansion.
+        query='SELECT json_build_object('+self._build_expansion_manifest_sql(prepared['source_schema_name'],prepared['source_table_name'],prepared['raw_schemas']).split('SELECT json_build_object(',1)[1]
+        query=query.strip().rstrip(';')
+        self._qf_context={'kind':'data','job':job,'signature':signature,'metadata':metadata,
+            'source_footprint':footprint,'manifest_query':query}
+        try:
+            try:
+                result=super().execute_cross_table_expansion(database_name,source_full_table_name,raw_schemas,destinations,
+                    cancel_event,progress_callback,post_commit_callback,report)
+            except Exception:
+                saved=self._read_receipt(database_name,job,signature)
+                if saved:
+                    if post_commit_callback: post_commit_callback()
+                    return self._recovered_result(saved,report,job,signature)
+                raise
+            result.update(qf_job_id=job,qf_request_sha256=signature)
+            return result
+        finally:
+            self._qf_context=None
+
+    def register_cross_table_expansion_versions(self,expansion_result,requested_by,workstation_name,
+        progress_callback=None,cancel_event=None,timing_report=None):
+        job=expansion_result.get('qf_job_id')
+        if not job:
+            return super().register_cross_table_expansion_versions(expansion_result,requested_by,workstation_name,progress_callback,cancel_event,timing_report)
+        report=timing_report or expansion_result.get('timing_report')
+        signature=digest({'data_request':expansion_result['qf_request_sha256'],'requested_by':requested_by,'workstation':workstation_name})
+        with self.expansion_timing_scope(report,'recovery','Check atomic version-finalization receipt'):
+            self._command(CONTROL_DB,INSTALL_SQL)
+            saved=self._read_receipt(CONTROL_DB,job,signature)
+        if saved: return saved['versions']
+        self._qf_context={'kind':'versions','job':job,'signature':signature}
+        try:
+            try:
+                return super().register_cross_table_expansion_versions(expansion_result,requested_by,workstation_name,progress_callback,cancel_event,report)
+            except Exception:
+                saved=self._read_receipt(CONTROL_DB,job,signature)
+                if saved: return saved['versions']
+                raise
+        finally:
+            self._qf_context=None

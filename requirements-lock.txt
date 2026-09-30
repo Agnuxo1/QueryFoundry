@@ -1,0 +1,22 @@
+# Verified Windows lab; CPython 3.13
+customtkinter==6.0.0
+darkdetect==0.8.0
+openpyxl==3.1.5
+et-xmlfile==2.0.0
+pandas==2.2.3
+numpy==2.2.6
+python-dateutil==2.9.0.post0
+pytz==2024.2
+tzdata==2024.2
+six==1.17.0
+paramiko==5.0.0
+bcrypt==5.0.0
+cryptography==46.0.6
+cffi==2.0.0
+pycparser==2.22
+invoke==3.0.3
+PyNaCl==1.6.2
+reportlab==4.2.5
+pillow==10.4.0
+charset-normalizer==3.5.1
+xlrd==2.0.2

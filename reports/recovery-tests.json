@@ -1,0 +1,10 @@
+{
+  "lost_reply_replay_exactly_once": true,
+  "changed_request_rejected": true,
+  "backend_termination_rolls_back_effect_and_receipt": true,
+  "retry_after_backend_death_succeeds": true,
+  "scope": "experimental receipt primitive only",
+  "gui_integration": false,
+  "cross_database_version_finalization": false,
+  "checkpoint_chunks": false
+}
