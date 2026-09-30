@@ -6,13 +6,16 @@ data and control-database receipts; this primitive alone is not a coordinator.
 import re
 import uuid
 
-INSTALL_SQL = '''CREATE SCHEMA IF NOT EXISTS qf_recovery;
+INSTALL_SQL = '''BEGIN;
+SELECT pg_advisory_xact_lock(hashtextextended('qf_recovery_install',0));
+CREATE SCHEMA IF NOT EXISTS qf_recovery;
 CREATE TABLE IF NOT EXISTS qf_recovery.receipts (
     job_id uuid PRIMARY KEY,
     request_sha256 text NOT NULL CHECK (length(request_sha256)=64),
     result jsonb NOT NULL,
     committed_at timestamptz NOT NULL DEFAULT clock_timestamp()
-);'''
+);
+COMMIT;'''
 
 def literal(text):
     return "'" + str(text).replace("'", "''") + "'"
