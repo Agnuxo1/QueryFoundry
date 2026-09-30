@@ -1,0 +1,106 @@
+{
+ "s01_same_uuid_race": {
+  "status": "PASS",
+  "clients": 4,
+  "clients_that_ran_dml": 1,
+  "seconds": 16.2
+ },
+ "s02_distinct_uuid_race": {
+  "status": "PASS",
+  "loser_error": "RuntimeError: psql:<stdin>:221: ERROR:  could not serialize access due to concurrent update\nCONTEXTO:  SQL statement \"UPDATE \"public\".\"pgdm_table_row_counts\"\n    SET row_count = row_count + pgdm_affec",
+  "seconds": 22.0
+ },
+ "s03_kill_backend_mid_expansion_then_retry": {
+  "status": "PASS",
+  "client_error": "RuntimeError: psql:<stdin>:416: FATAL:  terminating connection due to administrator command\nCONTEXTO:  SQL statement \"SELECT 1 FROM ONLY \"public\".\"table3\" x WHE",
+  "seconds": 19.3
+ },
+ "s00_fresh_install_race_four_clients_same_uuid": {
+  "status": "PASS",
+  "clients_failed_on_fresh_install": 1,
+  "sample_errors": [
+   "RuntimeError: psql:<stdin>:2: ERROR:  duplicate key value violates unique constraint \"pg_namespace_nspname_index\"\nDETALLE:  Key (nspname)=(qf_recovery) already "
+  ],
+  "seconds": 29.6
+ },
+ "s04a_server_crash_mid_expansion_then_retry": {
+  "status": "PASS",
+  "client_error": "RuntimeError: psql: error: fall\ufffd la conexi\ufffdn al servidor en \ufffd127.0.0.1\ufffd, puerto 55433: FATAL:  the database system is shutting down",
+  "seconds": 38.1
+ },
+ "s04b_server_crash_between_data_commit_and_versions": {
+  "status": "PASS",
+  "seconds": 30.5
+ },
+ "s05_lost_replies_data_and_versions": {
+  "status": "PASS",
+  "versions": [
+   "0001public.table1",
+   "0001public.table2",
+   "0001public.table3",
+   "0001public.table4",
+   "0001public.table5",
+   "0001public.table6"
+  ],
+  "seconds": 16.1
+ },
+ "s06_raw_version_changes_between_attempt_and_retry": {
+  "status": "PASS",
+  "retry_outcome_after_new_raw_version": "refused: Recovery job ID was reused with different source, recipes or version metadata",
+  "finalize_with_pre_restart_result_ok": true,
+  "seconds": 19.9
+ },
+ "s07a_full_dump_restore_same_names_then_resume": {
+  "status": "PASS",
+  "replayed_after_restore": true,
+  "seconds": 34.8
+ },
+ "s07b_restore_under_other_database_name": {
+  "status": "PASS",
+  "outcome_same_job_on_renamed_copy": "refused: Recovery job ID was reused with different source, recipes or version metadata",
+  "seconds": 20.2
+ },
+ "s07c_restore_without_receipts_schema": {
+  "status": "PASS",
+  "outcome": "refused: psql:<stdin>:289: ERROR:  duplicate key value violates unique constraint \"table4_pkey\"\nDETALLE:  Key (id_column_1)=(1) already exists.\nCONTEXTO:  SQL statement \"INSERT INTO public.table4 (\n    id_colu",
+  "counts_unchanged": true,
+  "seconds": 36.2
+ },
+ "s07d_control_restored_to_older_dump": {
+  "status": "PASS",
+  "versions": [
+   "table1:0001",
+   "table2:0001",
+   "table3:0001",
+   "table4:0001",
+   "table5:0001",
+   "table6:0001"
+  ],
+  "seconds": 17.9
+ },
+ "s08_destination_tampering_after_commit": {
+  "status": "PASS",
+  "same_count_content_change": "refused",
+  "legit_extra_row": "refused (versions stay pending)",
+  "after_revert_finalize": 6,
+  "seconds": 22.7
+ },
+ "s09_source_payload_changed_after_commit": {
+  "status": "PASS",
+  "outcome": "replayed (source payload edits after commit are not checked)",
+  "seconds": 18.7
+ },
+ "s10_second_job_after_wipe_versions_monotonic": {
+  "status": "PASS",
+  "second_job_version_codes": [
+   "0002"
+  ],
+  "seconds": 27.1
+ },
+ "s11_client_killed_mid_expansion": {
+  "status": "PASS",
+  "backend_left_after_3s": 0,
+  "locks_left": 0,
+  "seconds": 26.0
+ }
+}

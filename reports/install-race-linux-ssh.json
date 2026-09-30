@@ -1,0 +1,653 @@
+{
+  "timestamp_utc": "2026-09-30T18:55:01.293153+00:00",
+  "scope": "Linux PG installation only, Windows Paramiko SSH clients; no expansion or version-finalization coverage",
+  "postgresql_version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+  "base_git_commit": "d6eae5690800ca1731f1ec4ed0f61a54e3de81b2",
+  "source_files_modified_during_run": true,
+  "official_database_writes": false,
+  "clients_per_round": 6,
+  "rounds_per_variant": 10,
+  "variants": {
+    "legacy": {
+      "rounds": [
+        {
+          "round": 0,
+          "clients": [
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": false,
+              "catalog_conflict": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": false,
+              "catalog_conflict": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 3.794400200000382
+        },
+        {
+          "round": 1,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": true,
+              "catalog_conflict": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.7515992999979062
+        },
+        {
+          "round": 2,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": true,
+              "catalog_conflict": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.6329839999962132
+        },
+        {
+          "round": 3,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.7307400999998208
+        },
+        {
+          "round": 4,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.8160822999925585
+        },
+        {
+          "round": 5,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.8800300000002608
+        },
+        {
+          "round": 6,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.7355580000003101
+        },
+        {
+          "round": 7,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": false,
+              "catalog_conflict": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": true,
+              "catalog_conflict": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.464756600005785
+        },
+        {
+          "round": 8,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.6855711999960477
+        },
+        {
+          "round": 9,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": false,
+              "catalog_conflict": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": false,
+              "error_type": "RuntimeError",
+              "namespace_conflict": false,
+              "catalog_conflict": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.4701293999969494
+        }
+      ],
+      "failed_clients": 8
+    },
+    "transaction_locked": {
+      "rounds": [
+        {
+          "round": 0,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.2882312000001548
+        },
+        {
+          "round": 1,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.3087310999981128
+        },
+        {
+          "round": 2,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.333382900003926
+        },
+        {
+          "round": 3,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.2909377000032691
+        },
+        {
+          "round": 4,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.4249267999985022
+        },
+        {
+          "round": 5,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.4941545000037877
+        },
+        {
+          "round": 6,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.514903500006767
+        },
+        {
+          "round": 7,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.3615002000005916
+        },
+        {
+          "round": 8,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.2989944000000833
+        },
+        {
+          "round": 9,
+          "clients": [
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            },
+            {
+              "ok": true
+            }
+          ],
+          "state": {
+            "receipt_rows": 0,
+            "tables": 1,
+            "advisory_locks": 0
+          },
+          "retry_succeeded": true,
+          "seconds": 1.4558686999953352
+        }
+      ],
+      "failed_clients": 0
+    }
+  },
+  "passed": true,
+  "disposable_database_removed": true,
+  "tested_runtime_source_sha256": {
+    "dbperf/receipts.py": "f69fe57841a78e66b14ab86cbce6774de8ac48b39cc1cc142ea4c75132c72c73",
+    "dbperf/durable_service.py": "5181c1420f0879869fb3f6d3998bf041e19248ef03cd3aef7f3632851a2056aa"
+  },
+  "provenance_note": "Runtime hashes recorded after execution; runtime unchanged throughout. Probe script gained metadata fields after execution."
+}

@@ -43,6 +43,14 @@ class DurableQueryFoundryService(QueryFoundryService):
             raise RuntimeError('Recovery job ID was reused with different source, recipes or version metadata')
         return receipt['payload']
 
+    def _read_receipt_after_error(self,database,job,signature,original_error):
+        try:
+            return self._read_receipt(database,job,signature)
+        except Exception as recovery_error:
+            # A second failed connection must not replace the triggering failure.
+            # Keep the probe failure as an explicit cause for diagnosis.
+            raise original_error from recovery_error
+
     def _guard(self,job):
         return "SELECT pg_advisory_xact_lock(hashtextextended("+sql_literal(job)+",0));\nDO $qf_guard$ BEGIN IF EXISTS (SELECT 1 FROM qf_recovery.receipts WHERE job_id="+sql_literal(job)+"::uuid) THEN RAISE EXCEPTION 'QueryFoundry job already committed'; END IF; END $qf_guard$;\n"
 
@@ -178,8 +186,8 @@ class DurableQueryFoundryService(QueryFoundryService):
             try:
                 result=super().execute_cross_table_expansion(database_name,source_full_table_name,raw_schemas,destinations,
                     cancel_event,progress_callback,post_commit_callback,report)
-            except Exception:
-                saved=self._read_receipt(database_name,job,signature)
+            except Exception as original_error:
+                saved=self._read_receipt_after_error(database_name,job,signature,original_error)
                 if saved:
                     if post_commit_callback: post_commit_callback()
                     return self._recovered_result(saved,report,job,signature)
@@ -204,8 +212,8 @@ class DurableQueryFoundryService(QueryFoundryService):
         try:
             try:
                 return super().register_cross_table_expansion_versions(expansion_result,requested_by,workstation_name,progress_callback,cancel_event,report)
-            except Exception:
-                saved=self._read_receipt(CONTROL_DB,job,signature)
+            except Exception as original_error:
+                saved=self._read_receipt_after_error(CONTROL_DB,job,signature,original_error)
                 if saved: return saved['versions']
                 raise
         finally:
