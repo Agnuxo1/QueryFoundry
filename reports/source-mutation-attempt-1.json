@@ -1,0 +1,14 @@
+{
+  "timestamp_utc": "2026-09-30T12:52:45.250891+00:00",
+  "scope": "64-row clone-only functional probe; Windows SSH / Linux PostgreSQL",
+  "benchmark": false,
+  "source_commit": "abdb1285e1daa84d9b482d16325c18cbaa10cc60",
+  "clones": {
+    "kaggle_challenge": "qf_source_data_fad6e30489e8",
+    "postgres_data_manager": "qf_source_control_fad6e30489e8"
+  },
+  "cases": {},
+  "source_generator_modified": false,
+  "clones_removed": true,
+  "original_source_unchanged": true
+}

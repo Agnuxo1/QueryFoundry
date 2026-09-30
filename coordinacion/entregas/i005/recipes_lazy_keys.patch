@@ -1,0 +1,56 @@
+diff --git a/dbperf/recipes.py b/dbperf/recipes.py
+index 744c6d1..9e28ade 100644
+--- a/dbperf/recipes.py
++++ b/dbperf/recipes.py
+@@ -8,15 +8,50 @@ import re
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ ORDER = ('table3', 'table4', 'table1', 'table5', 'table6', 'table2')
+-MODES = ('baseline', 'payload_once', 'fields_once')
++MODES = ('baseline', 'payload_once', 'fields_once', 'lazy_keys')
+ EXTRACTION = re.compile(r"source_row\.raw\s*->\s*'values'\s*->>\s*'([a-z_]+[0-9]+)'")
+ ANCHOR = 'FROM {{source}} AS source_row'
+ 
++MARKER = 'AS position_data(position_number, declared_number_text, type_text, weight_text, gap_text)'
++EXTRACT_TEXT = re.compile(r"source_row\.raw\s*->\s*'values'\s*->>\s*'([a-z_]+[0-9]+)'")
++FIELDS = {'declared_number_text': 'declared_key', 'type_text': 'type_key',
++          'weight_text': 'weight_key', 'gap_text': 'gap_key'}
++
++def _lazy_keys(sql: str) -> str:
++    if sql.count(ANCHOR) != 1 or sql.count(MARKER) != 1:
++        raise ValueError('Unsupported position recipe structure')
++    m = re.search(r'CROSS JOIN LATERAL \(\s*VALUES\s*(.*?)\s*\) ' + re.escape(MARKER), sql, re.S)
++    if not m:
++        raise ValueError('Unsupported position matrix')
++    rows = re.findall(r'\((\d+)::smallint,\s*(.*?)\)(?=,\s*\(|\s*$)', m[1], re.S)
++    if [int(r[0]) for r in rows] != list(range(1, 15)):
++        raise ValueError('Unsupported position range')
++    tuples = []
++    for position, text in rows:
++        keys = EXTRACT_TEXT.findall(text)
++        n = int(position)
++        if keys != [f'integer_column_{n+1}', f'text_column_{n+3}', f'numeric_column_{2*n+1}', f'numeric_column_{2*n+2}']:
++            raise ValueError('Unsupported position keys')
++        tuples.append('(' + position + '::smallint, ' + ', '.join("'" + k + "'" for k in keys) + ')')
++    replacement = ("CROSS JOIN LATERAL (\n    VALUES\n        " + ',\n        '.join(tuples) +
++                   "\n) AS position_keys(position_number, declared_key, type_key, weight_key, gap_key)")
++    result = sql[:m.start()] + replacement + sql[m.end():]
++    for column, key in FIELDS.items():
++        result = result.replace('position_data.' + column, '(qf_payload.payload ->> position_keys.' + key + ')')
++    result = result.replace('position_data.position_number', 'position_keys.position_number')
++    if 'position_data' in result:
++        raise ValueError('Unexpected position_data reference')
++    payload = "\nCROSS JOIN LATERAL (\n    SELECT source_row.raw -> 'values' AS payload OFFSET 0\n) AS qf_payload"
++    return result.replace(ANCHOR, ANCHOR + payload)
++
+ def rewrite(sql: str, mode: str) -> str:
+     if mode not in MODES:
+         raise ValueError('Unknown experiment mode')
+     if mode == 'baseline':
+         return sql
++    if mode == 'lazy_keys':
++        # Position matrix recipe (table2): lazy key extraction. Other recipes: payload_once.
++        return _lazy_keys(sql) if MARKER in sql else rewrite(sql, 'payload_once')
+     fields = sorted(set(EXTRACTION.findall(sql)))
+     if not fields or sql.count(ANCHOR) != 1:
+         raise ValueError('Unsupported recipe structure; refusing rewrite')

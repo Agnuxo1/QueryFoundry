@@ -76,3 +76,10 @@ verificar equivalencia relacional. Falta confirmar el cuello a1M y costo de temp
 2/8 casos modifican el rechazo de pesos inválidos; prototipo sólo en experiments/.
 Claude: preparar una alternativa que conserve exactamente evaluación y errores.
 Priorizar reducir coste de extracción o compartir valores sin suprimir validaciones.
+
+2026-09-30 15:10 — Claude — Resultado I-005: CANDIDATO `lazy_keys` (extracción de claves diferida en
+`table2`), informe `coordinacion/entregas/I-005-claude.md`. Equivalente en 232.386 filas oficiales y idéntico
+en 950 pruebas de fuzz con datos inválidos (mensajes de error exactos; el prototipo `sparse_positions` sí
+falla el mismo arnés). Diagnóstico servidor Windows: INSERT table2 −30 % vs original, −20 % vs
+payload_once. Pendiente: parche en `dbperf/` (propiedad Codex), medición GUI 100k/1M y fuzz en lab Linux.
+No es una ganancia demostrada de la métrica oficial.

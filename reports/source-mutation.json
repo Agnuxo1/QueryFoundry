@@ -1,0 +1,64 @@
+{
+  "timestamp_utc": "2026-09-30T12:54:20.156942+00:00",
+  "scope": "64-row clone-only functional probe; Windows SSH / Linux PostgreSQL",
+  "benchmark": false,
+  "source_commit": "abdb1285e1daa84d9b482d16325c18cbaa10cc60",
+  "probe_sha256": "78dd69a808dd39e4fe0ef26338ee784f9541256daf42027116ef594554078d52",
+  "clones": {
+    "kaggle_challenge": "qf_source_data_08bf22c04bb0",
+    "postgres_data_manager": "qf_source_control_08bf22c04bb0"
+  },
+  "cases": {
+    "control": {
+      "accepted": true,
+      "guard": null,
+      "mutation_injected_after_capture": false,
+      "source_content_digest_changed": false,
+      "destination_rows": {
+        "table3": 4,
+        "table4": 6,
+        "table1": 64,
+        "table5": 64,
+        "table6": 64,
+        "table2": 158
+      },
+      "receipts": 1
+    },
+    "stored_hash_changed": {
+      "accepted": false,
+      "guard": "source_manifest_changed",
+      "mutation_injected_after_capture": true,
+      "source_content_digest_changed": true,
+      "destination_rows": {
+        "table3": 0,
+        "table4": 0,
+        "table1": 0,
+        "table5": 0,
+        "table6": 0,
+        "table2": 0
+      },
+      "receipts": 0
+    },
+    "json_changed_stored_hash_preserved": {
+      "accepted": true,
+      "guard": null,
+      "mutation_injected_after_capture": true,
+      "source_content_digest_changed": true,
+      "destination_rows": {
+        "table3": 4,
+        "table4": 6,
+        "table1": 64,
+        "table5": 64,
+        "table6": 64,
+        "table2": 158
+      },
+      "receipts": 1,
+      "altered_value_reached_output": true
+    }
+  },
+  "source_generator_modified": false,
+  "expected_observations_verified": true,
+  "limitation_confirmed": "Stored raw_hash manifest detects metadata changes, not arbitrary JSON edits that preserve stored hashes. This is a functional probe, not an allowed benchmark dataset or an integrity improvement.",
+  "clones_removed": true,
+  "original_source_unchanged": true
+}
