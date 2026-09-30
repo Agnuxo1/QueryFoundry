@@ -42,11 +42,13 @@ Lock acquisition/release and receipt persistence are timed in fresh GUI runs.
 Same-service retries with unchanged signatures reuse their pending UUID;
 after recreating the service/process use --resume-job explicitly.
 
-New receipts record actual counts for all six destinations at commit. Recovery
-verifies exact counts before reporting success, rejecting removed/appended rows
-or partial restores that change them. This does not detect equal-count content
-changes; complete dump/restore is required for full state consistency. Older
-receipts without counts are refused and require explicit independent validation.
+New experimental receipts record counts and two seeded sums of PostgreSQL typed
+row hashes for all six destinations at commit. Recovery compares these before
+reporting success, detecting tested deleted rows and same-count content changes.
+The checksum is noncryptographic and bound to PostgreSQL version, encoding and
+locale; it is not adversarial integrity proof or cross-version migration support.
+Complete dump/restore with fresh table OIDs is tested under the same server version.
+Older count-only receipts require explicit independent validation and are refused.
 Restoring a database must preserve its owner/permissions as well as table data.
 
 This release retains one data transaction and recovers after a lost

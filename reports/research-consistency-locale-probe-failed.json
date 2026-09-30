@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "2026-09-30T11:08:20.082717+00:00",
+  "job_id": "b144cb9b-ba19-4828-8371-e21851b5dba0",
+  "scope": "real Windows SSH services; Linux PG; isolated lab",
+  "stages": {
+    "concurrent_data": {
+      "successful_clients": 0,
+      "errors": [
+        {
+          "type": "RuntimeError",
+          "message": "psql:<stdin>:708: ERROR:  unrecognized configuration parameter \"lc_collate\""
+        },
+        {
+          "type": "RuntimeError",
+          "message": "psql:<stdin>:708: ERROR:  unrecognized configuration parameter \"lc_collate\""
+        }
+      ],
+      "seconds": 30.829747099996894,
+      "receipts": 0,
+      "rows": {
+        "table3": 0,
+        "table4": 0,
+        "table1": 0,
+        "table5": 0,
+        "table6": 0,
+        "table2": 0
+      }
+    }
+  },
+  "passed": false,
+  "failure_type": "AssertionError",
+  "failure": "Concurrent clients did not both recover successfully"
+}

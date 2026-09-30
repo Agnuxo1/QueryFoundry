@@ -1,12 +1,12 @@
 {
-  "timestamp_utc": "2026-09-30T10:19:52.070654+00:00",
-  "job_id": "831c24e0-2c73-460d-a018-bfae0a370616",
+  "timestamp_utc": "2026-09-30T11:20:41.933024+00:00",
+  "job_id": "5270ed4a-29b5-4dc8-9f09-95f6ed353370",
   "scope": "real Windows SSH services; Linux PG; isolated lab",
   "stages": {
     "concurrent_data": {
       "successful_clients": 2,
       "errors": [],
-      "seconds": 17.299969699997746,
+      "seconds": 16.388000000006286,
       "receipts": 1,
       "rows": {
         "table3": 4,
@@ -20,7 +20,7 @@
     },
     "restart_before_versions": {
       "data_fingerprint_unchanged": true,
-      "resumed_job": "831c24e0-2c73-460d-a018-bfae0a370616"
+      "resumed_job": "5270ed4a-29b5-4dc8-9f09-95f6ed353370"
     },
     "concurrent_versions": {
       "same_six_versions": true,
@@ -29,18 +29,18 @@
     "dump_restore": [
       {
         "database": "kaggle_challenge",
-        "restored_database": "qf_restore_data_831c24e02c",
-        "bytes": 18773405,
-        "sha256": "6cfbe7f59a927b422e67016f1c716b5e59805e128fcc970ef6e7ba6d930236be",
+        "restored_database": "qf_restore_data_5270ed4a29",
+        "bytes": 18776704,
+        "sha256": "4237b723abee51c7131f4bb59a41a711397467d1ec13fc99b801de1f1d24e2c1",
         "all_user_tables_counts_and_row_hashes_equal": true,
         "tables": 15,
         "database_owner": "challenge"
       },
       {
         "database": "postgres_data_manager",
-        "restored_database": "qf_restore_control_831c24e02c",
-        "bytes": 35751,
-        "sha256": "4a1fe746b0089562205ac1ee8ee740feb3bc8c549ebeb59b670aa3c0d9fd2a5a",
+        "restored_database": "qf_restore_control_5270ed4a29",
+        "bytes": 37643,
+        "sha256": "75ef25ccc69a421aa8895751993067cc5e02b8304d52aa23abb45add023827f3",
         "all_user_tables_counts_and_row_hashes_equal": true,
         "tables": 7,
         "database_owner": "challenge"
@@ -49,6 +49,15 @@
     "restored_identity_replay": {
       "same_job_and_six_versions": true,
       "rows_unchanged": true
+    },
+    "destination_schema_change": {
+      "replay_detected_column_rename": true,
+      "original_data_untouched": true
+    },
+    "same_count_content_change": {
+      "replay_detected_content_change": true,
+      "row_count_unchanged": true,
+      "original_data_untouched": true
     },
     "out_of_band_output_deletion": {
       "mutation": "delete one table2 row in restored clone",

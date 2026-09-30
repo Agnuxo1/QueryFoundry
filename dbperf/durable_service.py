@@ -51,8 +51,11 @@ class DurableQueryFoundryService(QueryFoundryService):
         pairs=[]
         for destination in destinations:
             relation=sql_ident(destination['schema_name'])+'.'+sql_ident(destination['pure_table_name'])
-            pairs.extend([sql_literal(destination['table_name']),'(SELECT count(*) FROM '+relation+')'])
-        return 'SELECT jsonb_build_object('+','.join(pairs)+')'
+            columns="(SELECT jsonb_agg(jsonb_build_object('name',attname,'type',format_type(atttypid,atttypmod),'not_null',attnotnull,'collation',attcollation::regcollation::text) ORDER BY attnum) FROM pg_attribute WHERE attrelid="+sql_literal(relation)+"::regclass AND attnum>0 AND NOT attisdropped)"
+            checksum="(SELECT jsonb_build_object('rows',count(*),'h0',COALESCE(sum(hash_record_extended(t,0)::numeric),0)::text,'h1',COALESCE(sum(hash_record_extended(t,1)::numeric),0)::text,'columns',"+columns+") FROM "+relation+' t)'
+            pairs.extend([sql_literal(destination['table_name']),checksum])
+        locale="(SELECT jsonb_build_object('collate',datcollate,'ctype',datctype,'provider',datlocprovider,'version',datcollversion) FROM pg_database WHERE datname=current_database())"
+        return "SELECT jsonb_build_object('algorithm','record_hash_sums_v1','server_version',current_setting('server_version_num'),'encoding',current_setting('server_encoding'),'locale',"+locale+",'destinations',jsonb_build_object("+','.join(pairs)+'))'
 
     def _journal(self,context,result_expression):
         job=sql_literal(context['job']); signature=sql_literal(context['signature'])
@@ -110,13 +113,15 @@ class DurableQueryFoundryService(QueryFoundryService):
 
     def _recovered_result(self,payload,report,job,signature):
         result=dict(payload['result'])
-        with self.expansion_timing_scope(report,'recovery','Verify committed destination row counts before replay'):
+        with self.expansion_timing_scope(report,'recovery','Verify committed destination counts and content fingerprints before replay'):
             expected=payload.get('destination_snapshot')
             if expected is None:
                 raise RuntimeError('Older recovery receipt lacks destination counts; explicit validation is required')
+            if expected.get('algorithm')!='record_hash_sums_v1':
+                raise RuntimeError('Older count-only receipt lacks content fingerprints; explicit validation is required')
             current=json.loads(self._command(result['source_database_name'],self._snapshot_query(result['destinations'])).splitlines()[-1])
             if current!=expected:
-                raise RuntimeError('Committed destination counts changed; recovery refused, investigate restore or external modifications')
+                raise RuntimeError('Committed destination fingerprint or PostgreSQL version changed; recovery refused, investigate restore or external modifications')
         result.update(qf_job_id=job,qf_request_sha256=signature,timing_report=report)
         for item in payload.get('timings',[]):
             self._append_expansion_timing(report,item['stage'],item['name']+' (previous committed attempt)',

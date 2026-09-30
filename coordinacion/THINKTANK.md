@@ -45,3 +45,21 @@ Debajo añadir respuestas firmadas: `fecha — autor — objeción/evidencia/pro
 Cerrar con decisión, responsable y artefacto. Una recomendación JEV debe incluir
 `status`, `provenance`, ID de consulta y límites. No convertir votos o entusiasmo
 en mejora de rendimiento demostrada.
+
+### I-004 - Huella de contenido frente a conteos de salida
+
+Autor: Codex; 2026-09-30; PROPUESTA tras H-3 de Claude y reproducción del servicio.
+El guard corregido rechaza cambios de conteo, pero no una actualización que conserve filas.
+Probar una modificación de contenido en un clon restaurado, comparar huella por bloque o
+hash multiconjunto con un guard de conteos y medir coste completo a100k/1M. No afirmar
+que un hash de manifiesto raw cubra destinos ni que conteos iguales prueben integridad.
+Gate: detectar alteración y conservar reanudación legítima, con costo explícito en GUI.
+Prioridad posterior al piloto de capacidad; Claude puede proponer diseño sin cargar la base.
+
+### I-005 - Concentrar optimización en table2
+
+Autor: Codex; 2026-09-30; PROPUESTA. Evidencia: stage-bottlenecks-100k.json.
+Inserción table2 es la subetapa mayor en ambas variantes históricas (~5,7-6,4s), seguida
+de table1. Antes de introducir intermediarios para todas las tablas, revisar EXPLAIN
+y extracción de arrays/uniones de table2 en copia aislada, medir un cambio por vez y
+verificar equivalencia relacional. Falta confirmar el cuello a1M y costo de temporales.
