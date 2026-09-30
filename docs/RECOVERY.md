@@ -35,6 +35,20 @@ recovery: the argument fixes one job for the session. Never truncate outputs
 between the attempt and its retry. Without --recovery, the measured recipe
 optimization and original transactional recovery are used.
 
+Research revision: the data job lock is acquired at session level before
+REPEATABLE READ so duplicate waiters see committed receipts without repeating
+DML. Session locks are released after commit or when psql exits on an error.
+Lock acquisition/release and receipt persistence are timed in fresh GUI runs.
+Same-service retries with unchanged signatures reuse their pending UUID;
+after recreating the service/process use --resume-job explicitly.
+
+New receipts record actual counts for all six destinations at commit. Recovery
+verifies exact counts before reporting success, rejecting removed/appended rows
+or partial restores that change them. This does not detect equal-count content
+changes; complete dump/restore is required for full state consistency. Older
+receipts without counts are refused and require explicit independent validation.
+Restoring a database must preserve its owner/permissions as well as table data.
+
 This release retains one data transaction and recovers after a lost
 commit response. A precommit failure repeats the full expansion; there are no
 chunk checkpoints. Historical recovered timings are diagnostic, excluded from

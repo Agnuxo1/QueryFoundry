@@ -1,0 +1,7 @@
+{
+  "experiment": "two concurrent registrations same UUID, both temporary writes complete before serialized atomic renames",
+  "before_fix": "FileNotFoundError on second shared temporary rename",
+  "fix": "unique temporary pathname per writer",
+  "after_fix": "regression test passes",
+  "database_access": false
+}

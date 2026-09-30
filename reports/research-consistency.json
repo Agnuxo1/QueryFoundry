@@ -1,0 +1,62 @@
+{
+  "timestamp_utc": "2026-09-30T10:19:52.070654+00:00",
+  "job_id": "831c24e0-2c73-460d-a018-bfae0a370616",
+  "scope": "real Windows SSH services; Linux PG; isolated lab",
+  "stages": {
+    "concurrent_data": {
+      "successful_clients": 2,
+      "errors": [],
+      "seconds": 17.299969699997746,
+      "receipts": 1,
+      "rows": {
+        "table3": 4,
+        "table4": 26,
+        "table1": 100000,
+        "table5": 100000,
+        "table6": 100000,
+        "table2": 232386
+      },
+      "guard_short_circuit_observed": true
+    },
+    "restart_before_versions": {
+      "data_fingerprint_unchanged": true,
+      "resumed_job": "831c24e0-2c73-460d-a018-bfae0a370616"
+    },
+    "concurrent_versions": {
+      "same_six_versions": true,
+      "receipts": 1
+    },
+    "dump_restore": [
+      {
+        "database": "kaggle_challenge",
+        "restored_database": "qf_restore_data_831c24e02c",
+        "bytes": 18773405,
+        "sha256": "6cfbe7f59a927b422e67016f1c716b5e59805e128fcc970ef6e7ba6d930236be",
+        "all_user_tables_counts_and_row_hashes_equal": true,
+        "tables": 15,
+        "database_owner": "challenge"
+      },
+      {
+        "database": "postgres_data_manager",
+        "restored_database": "qf_restore_control_831c24e02c",
+        "bytes": 35751,
+        "sha256": "4a1fe746b0089562205ac1ee8ee740feb3bc8c549ebeb59b670aa3c0d9fd2a5a",
+        "all_user_tables_counts_and_row_hashes_equal": true,
+        "tables": 7,
+        "database_owner": "challenge"
+      }
+    ],
+    "restored_identity_replay": {
+      "same_job_and_six_versions": true,
+      "rows_unchanged": true
+    },
+    "out_of_band_output_deletion": {
+      "mutation": "delete one table2 row in restored clone",
+      "replay_detected_mutation": true,
+      "rows_before": 232386,
+      "rows_after": 232385,
+      "original_data_untouched": true
+    }
+  },
+  "passed": true
+}

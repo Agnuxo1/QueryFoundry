@@ -37,7 +37,7 @@ def counts():
 def main():
     reset_destinations()
     os.environ['QF_RECIPE_MODE']='payload_once'
-    job=str(uuid.uuid4()); os.environ['QF_JOB_ID']=job
+    os.environ.pop('QF_JOB_ID',None)
     service=FaultService(); connect(service)
     evidence={}
     try:
@@ -46,6 +46,7 @@ def main():
         try: expand(service)
         except Exception: pass
         else: raise AssertionError('Precommit fault was not raised')
+        job=service._qf_pending_job['job']
         assert not any(counts().values())
         assert sql("SELECT count(*) FROM qf_recovery.receipts WHERE job_id='"+job+"'")=='0'
         evidence['precommit_failure_rolls_back_rows_and_receipt']=True
@@ -54,9 +55,14 @@ def main():
         committed=counts(); assert committed['table1']==100000
         assert sql("SELECT count(*) FROM qf_recovery.receipts WHERE job_id='"+job+"'")=='1'
         evidence['lost_data_reply_recovers_committed_result']=True
+        retry=expand(service)
+        assert retry['qf_job_id']==job and counts()==committed
+        assert retry['timing_report']['total_rows_inserted']==sum(committed.values())
+        evidence['same_service_retry_reuses_job_without_env_override']=True
     finally: service.close()
     # A new SSH connection represents restart in the gap before version commit.
     service=FaultService(); connect(service)
+    os.environ['QF_JOB_ID']=job
     try:
         result=expand(service)
         assert counts()==committed

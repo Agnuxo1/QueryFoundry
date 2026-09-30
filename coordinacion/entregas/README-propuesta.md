@@ -1,0 +1,101 @@
+<div align="center">
+
+<img src="docs/assets/header.gif" alt="QueryFoundry: fast, verifiable, recoverable database expansion" width="100%">
+
+**Verifiable performance and durable recovery for the Kaggle *Python Database Performance Optimization* challenge.**
+
+[![License](https://img.shields.io/badge/license-Apache--2.0-38bdf8)](LICENSE)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-34d399)](docs/RULES.md)
+[![Status](https://img.shields.io/badge/status-local%20evidence%20only-fbbf24)](docs/STATUS.md)
+[![Official files](https://img.shields.io/badge/organizer%20files-32%2F32%20verified-a78bfa)](scripts/verify_upstream.py)
+
+[Results](#results) · [How it works](#how-it-works) · [Recovery](#durable-recovery) · [Integrity](#integrity-guardrails) · [Reproduce](#reproduce) · [Limits](#honest-limits)
+
+</div>
+
+---
+
+QueryFoundry is an **independent extension** of the organizer's Windows application. The official
+GUI, generator and fixed seed live byte-for-byte in `app/`; everything we add lives in `dbperf/`.
+Nothing here claims an official score or a 300-million-row capacity: every number below is a local,
+reproducible measurement with its scope stated.
+
+## How it works
+
+<img src="docs/assets/pipeline.gif" alt="One expansion writes six destination tables in one transaction, then registers six versions" width="100%">
+
+The unchanged GUI worker validates the source, expands `raw_data` into the six destinations
+(`table3, table4, table1, table5, table6, table2`) inside **one** `REPEATABLE READ` transaction and
+registers six versions in the control database.
+
+### `payload_once`: parse the JSON once per row
+
+<img src="docs/assets/payload-once.gif" alt="The original recipe re-reads the JSON for every field; payload_once reads it once" width="100%">
+
+Only JSON extraction is rewritten (`LATERAL` with an `OFFSET 0` barrier). Casts, filters, joins,
+ordering and outputs are unchanged, and only the six known organizer recipes are touched; custom
+recipes keep their original SQL. See [`dbperf/recipes.py`](dbperf/recipes.py).
+
+## Results
+
+<img src="docs/assets/benchmark.gif" alt="Measured medians for the original and payload_once variants, with individual runs" width="100%">
+
+| Series (100,000 official rows, 3 alternating repeats, full Windows GUI path) | Original | `payload_once` | Change |
+|---|---:|---:|---:|
+| Without receipts | 14.245 s | 13.239 s | −7.1 % |
+| Durable series¹ | 13.868 s | 12.911 s | −6.9 % |
+
+¹ In the durable series only the candidate runs with receipts; the original does not
+(`scripts/benchmark_gui.py`). The ranges of the three runs overlap, so treat the gain as
+indicative, not established. Peak container working set ≈ 633–643 MiB. Peak temporary disk is **not
+yet measured**. Metric: `MEASURED PROCESSING TOTAL`. Reports: [`reports/`](reports).
+
+## Durable recovery
+
+<img src="docs/assets/recovery.gif" alt="Effects and receipt commit together; a retry with the same job UUID replays the stored result" width="100%">
+
+`--recovery` stores a durable receipt in the same transaction as the effects, in each database.
+A retry with the same job UUID returns the stored result instead of repeating work; a changed
+request under the same UUID is rejected. There is no distributed transaction: a restart between the
+two commits resumes version registration from the data receipt. Details and verified failpoints:
+[`docs/RECOVERY.md`](docs/RECOVERY.md), [`reports/durable-recovery.json`](reports/durable-recovery.json).
+
+## Integrity guardrails
+
+<img src="docs/assets/integrity.gif" alt="32 organizer files verified by SHA-256 and six-table equivalence checked with EXCEPT ALL" width="100%">
+
+```bash
+python scripts/verify_upstream.py   # 32 organizer files unchanged (SHA-256)
+```
+
+Outputs are compared with a bidirectional `EXCEPT ALL` against a reference, normalising surrogate
+identities and preserving relations. Source/destination guards, row counters, manifests and version
+records are preserved.
+
+## Reproduce
+
+```bash
+pip install -r requirements-lock.txt
+python scripts/verify_upstream.py
+python launch.py                 # measured recipes
+python launch.py --recovery      # + durable receipts
+python launch.py --baseline      # original recipes
+python scripts/build_assets.py   # regenerate the animations in docs/assets
+```
+
+Lab setup (Docker, WSL, SSH) is described in [`docs/DOCKER-REPAIR.md`](docs/DOCKER-REPAIR.md);
+rules in [`docs/RULES.md`](docs/RULES.md); reuse in [`docs/REUSE.md`](docs/REUSE.md).
+
+## Honest limits
+
+- No official score, no accepted submission, and no demonstrated capacity at 300 million rows.
+- A pre-commit failure repeats the full expansion: there are no chunk checkpoints yet.
+- The receipt does not verify that the effects are still present (see the audit in
+  `coordinacion/entregas/T-001-claude.md`).
+- Dump/restore, server restart and concurrent duplicate requests are not yet verified.
+
+## License
+
+Apache-2.0. Includes byte-preserving organizer sources from
+`igorsiecz/kaggle_postgre_challenge` (commit `5dfde9d`); original notices are kept in `app/` and
+[`NOTICE`](NOTICE).

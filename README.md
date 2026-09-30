@@ -1,102 +1,102 @@
-# QueryFoundry
+<div align="center">
 
-Proyecto dedicado a [Python Database Performance Optimization](https://www.kaggle.com/competitions/python-database-performance-optimization).
-Cliente Windows, PostgreSQL Linux y SSH. Generador y aplicación oficial
-conservados byte a byte en `app/`; extensiones en `dbperf/`.
+<img src="docs/assets/header.gif" alt="QueryFoundry: fast, verifiable, recoverable database expansion" width="100%">
 
-## Evidencia inicial
+**Verifiable performance and durable recovery for the Kaggle *Python Database Performance Optimization* challenge.**
 
-100.000 filas del generador oficial, PostgreSQL 17 Linux, dos CPU y límite de
-2 GiB. Tres repeticiones alternadas del recorrido completo de la GUI Windows,
-incluyendo validación, versiones y actualización de interfaz:
+[![License](https://img.shields.io/badge/license-Apache--2.0-38bdf8)](LICENSE)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-34d399)](docs/RULES.md)
+[![Status](https://img.shields.io/badge/status-local%20evidence%20only-fbbf24)](docs/STATUS.md)
+[![Official files](https://img.shields.io/badge/organizer%20files-32%2F32%20verified-a78bfa)](scripts/verify_upstream.py)
 
-| Variante | Mediana MEASURED PROCESSING TOTAL |
-|---|---:|
-| Original | 14,245 s |
-| JSON reutilizado por fila | 13,239 s |
+[Español](README.es.md) · [Results](#results) · [How it works](#how-it-works) · [Recovery](#durable-recovery) · [Integrity](#integrity-guardrails) · [Reproduce](#reproduce) · [Limits](#honest-limits)
 
-Reducción local del 7,1%. Las seis tablas son equivalentes con `EXCEPT ALL`
-bidireccional, normalizando identidades sustitutas y conservando relaciones.
-Estos números corresponden a la optimización sin recibos adicionales. Informes
-en `reports/gui-benchmark.json`; recuperación en `reports/durable-gui/`.
-No hay puntuación oficial ni capacidad demostrada a 300 millones de filas.
+</div>
 
-Con recuperación activada, la comparación independiente de tres repeticiones
-dio 13,868 s para el original y 12,911 s para QueryFoundry: 6,9% menos tiempo.
-Pico de working set observado: 633 MiB frente a 643 MiB. Son mediciones locales
-de series distintas; no permiten atribuir una diferencia entre ambas series al
-coste de recuperación. El pico de disco temporal todavía no está medido.
+---
 
-## Implementación
+QueryFoundry is an **independent extension** of the organizer's Windows application. The official
+GUI, generator and fixed seed live byte-for-byte in `app/`; everything we add lives in `dbperf/`.
+Nothing here claims an official score or a 300-million-row capacity: every number below is a local,
+reproducible measurement with its scope stated.
 
-`payload_once` extrae `raw->'values'` una vez por fila mediante `LATERAL` con
-barrera `OFFSET 0`. Mantiene casts, filtros, orden, validaciones y transacciones;
-no materializa toda la entrada. Sólo transforma las seis recetas oficiales
-conocidas. Las recetas personalizadas conservan su SQL original.
+## How it works
 
-`--recovery` añade recibos durables en las bases de trabajo y control. Recupera
-commits confirmados y completa versiones pendientes sin duplicar filas.
-No tiene checkpoints por bloques. Véase [RECOVERY.md](docs/RECOVERY.md).
+<img src="docs/assets/pipeline.gif" alt="One expansion writes six destination tables in one transaction, then registers six versions" width="100%">
 
-## Instalación y GUI
+The unchanged GUI worker validates the source, expands `raw_data` into the six destinations
+(`table3, table4, table1, table5, table6, table2`) inside **one** `REPEATABLE READ` transaction and
+registers six versions in the control database.
 
-Python 3.13 fue la versión usada en Windows. Desde esta carpeta:
+### `payload_once`: parse the JSON once per row
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
-.\.venv\Scripts\python.exe scripts/verify_upstream.py
-.\.venv\Scripts\python.exe launch.py
+<img src="docs/assets/payload-once.gif" alt="The original recipe re-reads the JSON for every field; payload_once reads it once" width="100%">
+
+Only JSON extraction is rewritten (`LATERAL` with an `OFFSET 0` barrier). Casts, filters, joins,
+ordering and outputs are unchanged, and only the six known organizer recipes are touched; custom
+recipes keep their original SQL. See [`dbperf/recipes.py`](dbperf/recipes.py).
+
+## Results
+
+<img src="docs/assets/benchmark.gif" alt="Measured medians for the original and payload_once variants, with individual runs" width="100%">
+
+| Series (100,000 official rows, 3 alternating repeats, full Windows GUI path) | Original | `payload_once` | Change |
+|---|---:|---:|---:|
+| Without receipts | 14.245 s | 13.239 s | −7.1 % |
+| Durable series¹ | 13.868 s | 12.911 s | −6.9 % |
+
+¹ In the durable series only the candidate runs with receipts; the original does not
+(`scripts/benchmark_gui.py`). The ranges of the three runs overlap, so treat the gain as
+indicative, not established. Peak container working set ≈ 633–643 MiB. Peak temporary disk is **not
+yet measured**. Metric: `MEASURED PROCESSING TOTAL`. Reports: [`reports/`](reports).
+
+## Durable recovery
+
+<img src="docs/assets/recovery.gif" alt="Effects and receipt commit together; a retry with the same job UUID replays the stored result" width="100%">
+
+`--recovery` stores a durable receipt in the same transaction as the effects, in each database.
+A retry with the same job UUID returns the stored result instead of repeating work; a changed
+request under the same UUID is rejected. There is no distributed transaction: a restart between the
+two commits resumes version registration from the data receipt. Details and verified failpoints:
+[`docs/RECOVERY.md`](docs/RECOVERY.md), [`reports/durable-recovery.json`](reports/durable-recovery.json).
+
+## Integrity guardrails
+
+<img src="docs/assets/integrity.gif" alt="32 organizer files verified by SHA-256 and six-table equivalence checked with EXCEPT ALL" width="100%">
+
+```bash
+python scripts/verify_upstream.py   # 32 organizer files unchanged (SHA-256)
 ```
 
-`--baseline` usa recetas originales; `--recovery` activa recibos.
-Configurar conexiones en la GUI original. No guardar contraseñas en Git.
-`--resume-job UUID` recupera una operación según RECOVERY.md.
+Outputs are compared with a bidirectional `EXCEPT ALL` against a reference, normalising surrogate
+identities and preserving relations. Source/destination guards, row counters, manifests and version
+records are preserved.
 
-## Laboratorio
+## Reproduce
 
-Docker Desktop debe usar contenedores Linux. En este equipo su disco está en E:;
-proyecto, entornos y descargas están en D:. Sólo publica SSH en
-`127.0.0.1:55222`, con volumen propio y comprobación estricta de host.
-
-```powershell
-.\.venv\Scripts\python.exe scripts/download_postgres.py
-.\.venv\Scripts\python.exe scripts/docker_lab.py prepare
-.\.venv\Scripts\python.exe scripts/docker_lab.py build
-.\.venv\Scripts\python.exe scripts/docker_lab.py start
-.\.venv\Scripts\python.exe scripts/docker_lab.py generate --rows 100000
-.\.venv\Scripts\python.exe scripts/benchmark_gui.py --repeats 3
-.\.venv\Scripts\python.exe scripts/test_durable_pipeline.py
-.\.venv\Scripts\python.exe scripts/benchmark_gui.py --durable --repeats 3
-.\.venv\Scripts\python.exe scripts/docker_lab.py stop
+```bash
+pip install -r requirements-lock.txt
+python scripts/verify_upstream.py
+python launch.py                 # measured recipes
+python launch.py --recovery      # + durable receipts
+python launch.py --baseline      # original recipes
+python scripts/build_assets.py   # regenerate the animations in docs/assets
 ```
 
-El generador crea la base de pruebas; usarlo sólo en el laboratorio. Los
-benchmarks vacían las seis salidas únicamente del contenedor etiquetado
-`queryfoundry`. Claves y contraseñas se generan en `.runtime/`, ignorado por Git.
-La descarga de herramientas cliente registra origen y SHA-256.
+Lab setup (Docker, WSL, SSH) is described in [`docs/DOCKER-REPAIR.md`](docs/DOCKER-REPAIR.md);
+rules in [`docs/RULES.md`](docs/RULES.md); reuse in [`docs/REUSE.md`](docs/REUSE.md).
 
-## Verificación y entrega
+## Honest limits
 
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-cd app
-..\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
+- No official score, no accepted submission, and no demonstrated capacity at 300 million rows.
+- A pre-commit failure repeats the full expansion: there are no chunk checkpoints yet.
+- The receipt does not verify that the effects are still present (see the audit in
+  `coordinacion/entregas/T-001-claude.md`).
+- Concurrency, server restart and dump/restore checks are recent, single-lab results (see
+  `reports/research-consistency*.json`); they are not independent replications.
 
-[RULES.md](docs/RULES.md): contrato verificado.
-[REUSE.md](docs/REUSE.md): métodos de proyectos locales y GitHub.
-[WRITEUP.md](docs/WRITEUP.md): borrador de entrega.
-Antes de enviar: verificar fecha exacta y elegibilidad, ampliar escala y recursos,
-probar dumps y fallos restantes, publicar repositorio y fijar commit en Kaggle.
-El repositorio local todavía no constituye una entrega aceptada.
+## License
 
-Apache-2.0. Origen y hashes en `docs/upstream-manifest.json` y NOTICE.
-
-## Trabajo compartido con Claude y JEV
-
-[Tablón](coordinacion/TABLON.md), [agenda por horas](coordinacion/AGENDA.md),
-[tareas](coordinacion/TAREAS.md), [cola de investigación](coordinacion/COLA-DE-INVESTIGACION.md)
-y [ThinkTank](coordinacion/THINKTANK.md). Incorporar a Claude con
-[PROMPT_CLAUDE.md](coordinacion/PROMPT_CLAUDE.md). Las asignaciones iniciales
-son propuestas; registrar aceptación y recursos antes de ejecutar.
+Apache-2.0. Includes byte-preserving organizer sources from
+`igorsiecz/kaggle_postgre_challenge` (commit `5dfde9d`); original notices are kept in `app/` and
+[`NOTICE`](NOTICE).

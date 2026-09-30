@@ -1,0 +1,13 @@
+User authorized Codex to consult Claude and JEV and autonomously research QueryFoundry.
+You are Claude, an independent read-only reviewer. Inspect only this repository's
+dbperf/durable_service.py, dbperf/receipts.py, dbperf/service.py,
+scripts/test_durable_pipeline.py, app/services/postgres_service.py (targeted relevant excerpts),
+docs/RECOVERY.md, reports/durable-recovery.json and reports/durable-gui/gui-benchmark.json.
+Do not read .runtime, credentials, unrelated projects or user directories. No shell/edit/MCP tools.
+Return a concise Spanish technical audit (max 1200 words), with file lines,
+confirmed issues separated from hypotheses and test gaps. Focus on concurrent
+same/different UUID requests, crash/restart between two database commits, dump/restore,
+idempotence, timing correctness and out-of-band changes to output tables.
+Propose 3 smallest executable experiments and one optimization tied to a measured
+bottleneck. Do not promise ranking. Do not claim tests were executed. Codex will
+save your response under coordinacion/entregas/T-001-claude.md and verify findings.

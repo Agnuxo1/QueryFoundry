@@ -9,8 +9,10 @@ generador oficial 100.000 filas; tres repeticiones GUI/SSH/Linux por variante;
 equivalencia de seis tablas; recuperación de expansión y finalización mediante
 recibos transaccionales; fallo precommit, respuestas perdidas y reintentos.
 
-Baseline/candidato sin recibos: 14,245/13,239 s. Con recuperación:
-13,868/12,911 s. Métrica MEASURED PROCESSING TOTAL local; puntuación oficial nula.
+Baseline/candidato sin recibos: 14,245/13,239 s. Segunda serie: original sin
+recibos 13,868 s frente a candidato con recibos 12,911 s. n=3, exploratorio,
+rangos solapados. Los cambios posteriores deben medirse de nuevo.
+Métrica MEASURED PROCESSING TOTAL local; puntuación oficial nula.
 Memoria de contenedor aproximadamente 633–647 MiB. Pico de disco temporal desconocido.
 
 Antes de entregar:

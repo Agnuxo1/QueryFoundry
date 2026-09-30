@@ -28,8 +28,10 @@ from dbperf.recipes import destinations, ORDER
 from ui.dialogs import ExpansionTimingReportDialog
 from benchmark import canonical
 
-CONTAINER='queryfoundry-database-1'
-REPORTS=ROOT/'reports'
+CONTAINER=os.environ.get('QF_LAB_CONTAINER','queryfoundry-database-1')
+PROJECT={'queryfoundry-database-1':'queryfoundry','queryfoundry-scale-database-1':'queryfoundry-scale'}.get(CONTAINER)
+if PROJECT is None: raise RuntimeError('Unsupported laboratory container')
+REPORTS=ROOT/'reports'/os.environ.get('QF_REPORT_SUBDIR','')
 DURABLE=False
 def docker(*args, **kw):
     return subprocess.run(['docker',*args],check=True,capture_output=True,**kw)
@@ -40,15 +42,16 @@ def sql(statement,database='kaggle_challenge'):
 
 def connect(service):
     values=dict(line.split('=',1) for line in (ROOT/'.runtime/docker.env').read_text().splitlines() if '=' in line)
-    client=paramiko.SSHClient(); client.load_host_keys(str(ROOT/'.runtime/known_hosts'))
+    client=paramiko.SSHClient(); client.load_host_keys(str(ROOT/'.runtime'/os.environ.get('QF_KNOWN_HOSTS','known_hosts')))
     client.set_missing_host_key_policy(paramiko.RejectPolicy())
-    client.connect('127.0.0.1',port=55222,username='qf',key_filename=str(ROOT/'.runtime/ssh-key'),look_for_keys=False,allow_agent=False)
-    service.ssh_client=client; service.ssh_host='127.0.0.1'; service.ssh_port=55222; service.ssh_username='qf'
+    port=int(os.environ.get('QF_SSH_PORT','55222'))
+    client.connect('127.0.0.1',port=port,username='qf',key_filename=str(ROOT/'.runtime/ssh-key'),look_for_keys=False,allow_agent=False)
+    service.ssh_client=client; service.ssh_host='127.0.0.1'; service.ssh_port=port; service.ssh_username='qf'
     service.postgres_port=5432; service.sql_username='challenge'; service.sql_password=values['QF_PG_PASSWORD']
 
 def reset_destinations():
     label=docker('inspect','--format','{{index .Config.Labels "com.docker.compose.project"}}',CONTAINER,text=True).stdout.strip()
-    if label!='queryfoundry': raise RuntimeError('Refusing to reset a non-laboratory container')
+    if label!=PROJECT: raise RuntimeError('Refusing to reset a non-laboratory container')
     names=','.join("'"+t+"'" for t in ORDER)
     sql('BEGIN; TRUNCATE '+','.join('public.'+t for t in ORDER)+' RESTART IDENTITY; '
         'UPDATE public.pgdm_table_row_counts SET row_count=0,updated_at=clock_timestamp() '
@@ -72,12 +75,16 @@ def run_once(mode,number):
     errors=[]
     stop=threading.Event()
     samples=[]
+    temporary_samples=[]
+    temp_before=int(sql("SELECT temp_bytes FROM pg_stat_database WHERE datname='kaggle_challenge';"))
     def monitor():
         while not stop.is_set():
             try:
-                raw=docker('exec',CONTAINER,'cat','/sys/fs/cgroup/memory.current','/sys/fs/cgroup/memory.stat',text=True).stdout.splitlines()
-                stats=dict(line.split() for line in raw[1:])
+                raw=docker('exec',CONTAINER,'sh','-c',"cat /sys/fs/cgroup/memory.current /sys/fs/cgroup/memory.stat; echo QF_TEMP; find /var/lib/postgresql/data/base -path '*/pgsql_tmp/*' -type f -printf '%s\\n'",text=True).stdout.splitlines()
+                boundary=raw.index('QF_TEMP')
+                stats=dict(line.split() for line in raw[1:boundary])
                 samples.append(max(0,int(raw[0])-int(stats.get('inactive_file',0))))
+                temporary_samples.append(sum(int(size) for size in raw[boundary+1:]))
             except (subprocess.SubprocessError,ValueError,KeyError): pass
             stop.wait(.5)
     watcher=threading.Thread(target=monitor,daemon=True)
@@ -108,6 +115,10 @@ def run_once(mode,number):
         result['resource_sample_count']=len(samples)
         result['resource_method']='cgroup memory.current minus inactive_file; 0.5s requested interval; container includes PostgreSQL and SSH'
         result['temporary_disk_peak_bytes']=None
+        result['sampled_peak_postgresql_temporary_files_bytes']=max(temporary_samples) if temporary_samples else None
+        result['postgresql_temporary_bytes_written']=max(0,int(sql("SELECT temp_bytes FROM pg_stat_database WHERE datname='kaggle_challenge';"))-temp_before)
+        result['lab_container']=CONTAINER
+        result['git_commit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
         result['mode']=mode; result['repeat']=number
         total=sum(float(x.get('seconds') or 0) for x in result.get('items',[]) if x.get('include_in_total',True))
         result['measured_processing_total_seconds']=total
@@ -139,6 +150,8 @@ def summarize(records,repeats):
         'container_memory_limit_bytes':2147483648,'container_cpu_limit':2,
         'sampled_peak_working_set_bytes':{m:max(r['sampled_peak_container_working_set_bytes'] or 0 for r in records if r['mode']==m) for m in medians},
         'peak_intermediate_disk_bytes':None,'recovery_gui_integrated':DURABLE,'submission_ready':False}
+    summary['baseline_recovery_enabled']=False
+    summary['candidate_recovery_enabled']=DURABLE
     for record in records:
         (REPORTS/f"gui-{record['mode']}-{record['repeat']}.json").write_text(json.dumps(record,indent=2),encoding='utf-8')
     (REPORTS/'gui-runs.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
@@ -154,7 +167,7 @@ def main():
     parser.add_argument('--single-number',type=int,default=0)
     args=parser.parse_args()
     DURABLE=args.durable
-    if DURABLE: REPORTS=ROOT/'reports/durable-gui'
+    if DURABLE: REPORTS=REPORTS/'durable-gui'
     REPORTS.mkdir(parents=True,exist_ok=True)
     if args.single_mode:
         run_once(args.single_mode,args.single_number)
@@ -185,6 +198,7 @@ def main():
                 if sql('SELECT count(*) FROM (('+query+' EXCEPT ALL SELECT value FROM qf_reference.'+table+') UNION ALL (SELECT value FROM qf_reference.'+table+' EXCEPT ALL '+query+')) differences;')!='0':
                     raise RuntimeError('Relational mismatch: '+table)
             record['six_table_multiset_equivalence']=True
+            record['benchmark_role']='comparison'
             records.append(record)
             (REPORTS/'gui-runs.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
     summarize(records,args.repeats)

@@ -13,7 +13,7 @@ import uuid
 from pathlib import Path
 
 from config import CONTROL_DB
-from utils import sql_literal
+from utils import sql_literal, sql_ident
 from .service import QueryFoundryService
 from .receipts import INSTALL_SQL
 
@@ -21,6 +21,16 @@ def digest(value):
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
 
 class DurableQueryFoundryService(QueryFoundryService):
+    @staticmethod
+    def persist_job_record(jobs,job,metadata):
+        jobs.mkdir(parents=True,exist_ok=True)
+        record=jobs/(job+'.json')
+        if not record.exists():
+            # Two clients may register the same UUID before either rename.
+            temporary=jobs/(job+'.'+uuid.uuid4().hex+'.tmp')
+            temporary.write_text(json.dumps(metadata,indent=2),encoding='utf-8')
+            os.replace(temporary,record)
+
     def _command(self,database,sql):
         command=f'psql -h localhost -U {shlex.quote(self.sql_username)} -d {shlex.quote(database)} -X -qAt -v ON_ERROR_STOP=1 -f -'
         return super().run_remote_command(command,stdin_text='SET client_min_messages=warning;\n'+sql)
@@ -35,6 +45,14 @@ class DurableQueryFoundryService(QueryFoundryService):
 
     def _guard(self,job):
         return "SELECT pg_advisory_xact_lock(hashtextextended("+sql_literal(job)+",0));\nDO $qf_guard$ BEGIN IF EXISTS (SELECT 1 FROM qf_recovery.receipts WHERE job_id="+sql_literal(job)+"::uuid) THEN RAISE EXCEPTION 'QueryFoundry job already committed'; END IF; END $qf_guard$;\n"
+
+    @staticmethod
+    def _snapshot_query(destinations):
+        pairs=[]
+        for destination in destinations:
+            relation=sql_ident(destination['schema_name'])+'.'+sql_ident(destination['pure_table_name'])
+            pairs.extend([sql_literal(destination['table_name']),'(SELECT count(*) FROM '+relation+')'])
+        return 'SELECT jsonb_build_object('+','.join(pairs)+')'
 
     def _journal(self,context,result_expression):
         job=sql_literal(context['job']); signature=sql_literal(context['signature'])
@@ -57,8 +75,14 @@ class DurableQueryFoundryService(QueryFoundryService):
                     'stage',stage_key,'name',item_name,'seconds',EXTRACT(EPOCH FROM finished_at-started_at),
                     'rows',rows_affected,'destination',destination_name) ORDER BY sequence_number), '[]'::jsonb)
                     FROM pg_temp.pgdm_expansion_timings WHERE finished_at IS NOT NULL)"""
-                payload="jsonb_build_object('result',"+metadata+" || jsonb_build_object('dependency_manifest',("+manifest+")::jsonb),'timings',"+timings+")"
-                text=text.replace('BEGIN ISOLATION LEVEL REPEATABLE READ;','BEGIN ISOLATION LEVEL REPEATABLE READ;\n'+self._guard(context['job']),1)
+                snapshot=self._snapshot_query(context['metadata']['destinations'])
+                payload="jsonb_build_object('result',"+metadata+" || jsonb_build_object('dependency_manifest',("+manifest+")::jsonb),'timings',"+timings+",'destination_snapshot',("+snapshot+"))"
+                lock_key='hashtextextended('+sql_literal(context['job'])+',0)'
+                # Acquire outside REPEATABLE READ so a waiter takes a fresh snapshot.
+                session_lock="INSERT INTO pg_temp.pgdm_expansion_timings VALUES (0,'recovery','Acquire job session lock before snapshot',clock_timestamp(),NULL,NULL,NULL,NULL);\n"+'DO $qf_lock$ BEGIN PERFORM pg_advisory_lock('+lock_key+'); END $qf_lock$;\n'+"UPDATE pg_temp.pgdm_expansion_timings SET finished_at=clock_timestamp() WHERE sequence_number=0;\n"
+                text=text.replace('BEGIN ISOLATION LEVEL REPEATABLE READ;',session_lock+'BEGIN ISOLATION LEVEL REPEATABLE READ;\n'+self._guard(context['job']),1)
+                unlock="\nINSERT INTO pg_temp.pgdm_expansion_timings VALUES (9100,'recovery','Release job session lock',clock_timestamp(),NULL,NULL,NULL,NULL);\nDO $qf_unlock$ BEGIN PERFORM pg_advisory_unlock("+lock_key+"); END $qf_unlock$;\nUPDATE pg_temp.pgdm_expansion_timings SET finished_at=clock_timestamp() WHERE sequence_number=9100;"
+                text=text.replace('COMMIT;','COMMIT;'+unlock,1)
                 # Verify the source footprint again in the expansion snapshot.
                 expected=sql_literal(json.dumps(context['source_footprint'],sort_keys=True))+'::jsonb'
                 footprint="jsonb_build_object('raw_hash_manifest',m->'raw_hash_manifest','source_columns',m->'source_columns','expected_row_count',m->'expected_row_count')"
@@ -86,11 +110,26 @@ class DurableQueryFoundryService(QueryFoundryService):
 
     def _recovered_result(self,payload,report,job,signature):
         result=dict(payload['result'])
+        with self.expansion_timing_scope(report,'recovery','Verify committed destination row counts before replay'):
+            expected=payload.get('destination_snapshot')
+            if expected is None:
+                raise RuntimeError('Older recovery receipt lacks destination counts; explicit validation is required')
+            current=json.loads(self._command(result['source_database_name'],self._snapshot_query(result['destinations'])).splitlines()[-1])
+            if current!=expected:
+                raise RuntimeError('Committed destination counts changed; recovery refused, investigate restore or external modifications')
         result.update(qf_job_id=job,qf_request_sha256=signature,timing_report=report)
         for item in payload.get('timings',[]):
             self._append_expansion_timing(report,item['stage'],item['name']+' (previous committed attempt)',
                 float(item.get('seconds') or 0),'previous_attempt_diagnostic',rows=item.get('rows'),
                 destination=item.get('destination'),include_in_total=False)
+        inserted={}
+        for item in payload.get('timings',[]):
+            if item['stage']=='execute' and item['name'].startswith('Insert into ') and item.get('destination'):
+                inserted[item['destination']]=inserted.get(item['destination'],0)+int(item.get('rows') or 0)
+        report['destination_rows']=[{'table_name':name,'rows':rows} for name,rows in inserted.items()]
+        report['total_rows_inserted']=sum(inserted.values())
+        self._append_expansion_timing(report,'recovery','Reused rows from previous commit; no new inserts this attempt',
+            0,'diagnostic',rows=report['total_rows_inserted'],include_in_total=False)
         report['resumed_committed_job']=job
         report['source_rows']=int(result['dependency_manifest'].get('expected_row_count') or 0)
         report['recovery_metric_notice']='Previous attempt timings are diagnostic; this report counts current recovery work only.'
@@ -109,16 +148,17 @@ class DurableQueryFoundryService(QueryFoundryService):
                 'source_table_name':prepared['source_table_name'],'raw_schemas':prepared['raw_schemas'],
                 'source_versions':versions,'destinations':prepared['destinations']}
             signature=digest({'metadata':metadata,'source_footprint':footprint})
+            if not os.environ.get('QF_JOB_ID'):
+                pending=getattr(self,'_qf_pending_job',None)
+                if pending and pending['signature']==signature:
+                    job=pending['job']
+                else:
+                    self._qf_pending_job={'signature':signature,'job':job}
             # Keep the identifier needed after a GUI/process restart, never credentials.
             jobs=Path(__file__).resolve().parents[1]/'.runtime/jobs'
-            jobs.mkdir(parents=True,exist_ok=True)
-            record=jobs/(job+'.json')
-            if not record.exists():
-                temporary=jobs/(job+'.tmp')
-                temporary.write_text(json.dumps({'job_id':job,'request_sha256':signature,
+            self.persist_job_record(jobs,job,{'job_id':job,'request_sha256':signature,
                     'database':database_name,'source':source_full_table_name,
-                    'raw_schemas':raw_schemas,'recipe_mode':os.environ.get('QF_RECIPE_MODE','baseline')},indent=2),encoding='utf-8')
-                os.replace(temporary,record)
+                    'raw_schemas':raw_schemas,'recipe_mode':os.environ.get('QF_RECIPE_MODE','baseline')})
             self._command(database_name,INSTALL_SQL)
             saved=self._read_receipt(database_name,job,signature)
         if saved:

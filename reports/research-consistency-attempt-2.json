@@ -1,0 +1,56 @@
+{
+  "timestamp_utc": "2026-09-30T10:02:59.552122+00:00",
+  "job_id": "a404d1c7-471a-4306-a7c8-69099b0b5569",
+  "scope": "real Windows SSH services; Linux PG; isolated lab",
+  "stages": {
+    "concurrent_data": {
+      "successful_clients": 2,
+      "errors": [],
+      "seconds": 15.191067500003555,
+      "receipts": 1,
+      "rows": {
+        "table3": 4,
+        "table4": 26,
+        "table1": 100000,
+        "table5": 100000,
+        "table6": 100000,
+        "table2": 232386
+      }
+    },
+    "restart_before_versions": {
+      "data_fingerprint_unchanged": true,
+      "resumed_job": "a404d1c7-471a-4306-a7c8-69099b0b5569"
+    },
+    "concurrent_versions": {
+      "same_six_versions": true,
+      "receipts": 1
+    },
+    "dump_restore": [
+      {
+        "database": "kaggle_challenge",
+        "restored_database": "qf_restore_data_a404d1c747",
+        "bytes": 18770794,
+        "sha256": "381dfca3b9198cceb985cc37bdcca8eaedc039962f872326c63993b820cacc86",
+        "all_user_tables_counts_and_row_hashes_equal": true,
+        "tables": 15,
+        "database_owner": "challenge"
+      },
+      {
+        "database": "postgres_data_manager",
+        "restored_database": "qf_restore_control_a404d1c747",
+        "bytes": 33848,
+        "sha256": "dc2b2a9dd6160d9220566da2c04b245098d23815b238f0e09935afb2fdce3a5d",
+        "all_user_tables_counts_and_row_hashes_equal": true,
+        "tables": 7,
+        "database_owner": "challenge"
+      }
+    ],
+    "restored_identity_replay": {
+      "same_job_and_six_versions": true,
+      "rows_unchanged": true
+    }
+  },
+  "passed": false,
+  "failure_type": "CalledProcessError",
+  "failure": "Command '['docker', 'exec', '-i', '-u', 'postgres', 'queryfoundry-database-1', 'psql', '-X', '-qAt', '-v', 'ON_ERROR_STOP=1', '-d', 'kaggle_challenge', '-f', '-']' returned non-zero exit status 3."
+}

@@ -1,7 +1,7 @@
 """Durable transaction receipts for trusted server-side jobs.
 
-Experimental primitive, not enabled in the GUI: registering control-database
-versions still needs its own atomic idempotency receipt before release.
+The GUI extension in durable_service.py uses this schema for separate atomic
+data and control-database receipts; this primitive alone is not a coordinator.
 """
 import re
 import uuid

@@ -6,7 +6,7 @@ alternativas BLOQUEADA y DESCARTADA. Una tarea activa tiene un único propietari
 
 | ID | Prioridad | Responsable propuesto | Tarea | Archivos/alcance | Aceptación | Estado |
 |---|---|---|---|---|---|---|
-| T-001 | P0 | Claude | Auditoría independiente de recuperación y versiones | Lectura dbperf/, app/ y reports/; escribir coordinacion/entregas/T-001-claude.md | Hallazgos con líneas, escenario, impacto y reproducción; separar fallos de hipótesis | PROPUESTA |
+| T-001 | P0 | Claude | Auditoría independiente de recuperación y versiones | Lectura dbperf/, app/ y reports/; escribir coordinacion/entregas/T-001-claude.md | Hallazgos con líneas, escenario, impacto y reproducción; separar fallos de hipótesis | EN_REVISION — Claude, entrega `entregas/T-001-claude.md` 2026-09-30 11:55; pendiente de revisión de Codex |
 | T-002 | P0 | Codex | Verificar reglas, fecha exacta y acceso a entrega | docs/RULES.md y STATUS.md | Fuentes oficiales fechadas; distinguir acceso, participación y envío | PROPUESTA |
 | T-003 | P0 | Claude | Diseñar pruebas de concurrencia, reinicio y dumps | coordinacion/entregas/T-003-plan.md; tests nuevos acordados | Fallos reales definidos, efectos/versiones esperados, limpieza limitada al lab | PROPUESTA |
 | T-004 | P0 | Codex | Ejecutar y verificar T-003; integrar correcciones revisadas | scripts/ y reports/; dbperf/ sólo tras acuerdo | Sin duplicados; seis tablas y versiones consistentes; dump restaurable; coste contabilizado | PROPUESTA |
