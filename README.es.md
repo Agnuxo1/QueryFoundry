@@ -114,3 +114,7 @@ por aceptar pesos malformados que el original rechaza. Resultados y límites en
 y [ThinkTank](coordinacion/THINKTANK.md). Incorporar a Claude con
 [PROMPT_CLAUDE.md](coordinacion/PROMPT_CLAUDE.md). Las asignaciones iniciales
 son propuestas; registrar aceptación y recursos antes de ejecutar.
+
+Huella reforzada: benchmark GUI n3 a100k, original 15,875 s /candidato 15,094 s,
+reducción local 4,920% con rangos solapados. Código c0c7e27;
+reports/research-fingerprint-100k/durable-gui/. Sin significancia demostrada.

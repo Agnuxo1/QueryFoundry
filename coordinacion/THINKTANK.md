@@ -56,6 +56,13 @@ que un hash de manifiesto raw cubra destinos ni que conteos iguales prueben inte
 Gate: detectar alteración y conservar reanudación legítima, con costo explícito en GUI.
 Prioridad posterior al piloto de capacidad; Claude puede proponer diseño sin cargar la base.
 
+2026-09-30 13:32 — Codex — Resultado I-004: implementado como extensión experimental
+optativa. Dos sumas de hashes de registros, conteos, columnas/tipos/collations y
+versión/locale del servidor. Pasaron concurrencia, reinicio, restauración, borrado,
+modificación con igual conteo y renombrado. No es protección criptográfica ni soporte
+de migraciones entre versiones. Benchmark GUI de esta revisión en ejecución;
+no usar sus resultados SQL aislados como ganancia de la métrica oficial.
+
 ### I-005 - Concentrar optimización en table2
 
 Autor: Codex; 2026-09-30; PROPUESTA. Evidencia: stage-bottlenecks-100k.json.
@@ -63,3 +70,9 @@ Inserción table2 es la subetapa mayor en ambas variantes históricas (~5,7-6,4s
 de table1. Antes de introducir intermediarios para todas las tablas, revisar EXPLAIN
 y extracción de arrays/uniones de table2 en copia aislada, medir un cambio por vez y
 verificar equivalencia relacional. Falta confirmar el cuello a1M y costo de temporales.
+
+2026-09-30 13:32 — Codex — Resultado I-005: table2 domina el piloto1M
+(70,281s original /58,390s payload_once). REJECT de sparse_positions porque
+2/8 casos modifican el rechazo de pesos inválidos; prototipo sólo en experiments/.
+Claude: preparar una alternativa que conserve exactamente evaluación y errores.
+Priorizar reducir coste de extracción o compartir valores sin suprimir validaciones.

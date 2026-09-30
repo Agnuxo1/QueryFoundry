@@ -65,3 +65,21 @@ restauración con OIDs nuevos, reintento concurrente y cambio de contenido con
 igual conteo antes de aceptar la extensión. La primera consulta de locale usó
 un parámetro no existente; rollback dejó cero efectos/recibos, y se corrigió
 consultando el catálogo pg_database. Los intentos fallidos permanecen guardados.
+
+## Cierre de gates locales de la ronda 1 — 13:37 Madrid
+
+Código medido c0c7e272ce56f126e3d42f3eda36b3aa90c90551. Tres repeticiones GUI
+alternadas, 100.000 filas oficiales: original sin recuperación 15,875292175 s;
+payload_once con recuperación reforzada 15,094171879 s. Reducción local 4,920%;
+rangos 15,375–16,698 y 14,925–15,837 s solapados; resultado exploratorio.
+Todas las salidas equivalentes en cada ejecución. Working set muestreado
+797,223/790,141 MiB; pico completo de disco intermedio desconocido.
+Los ocho gates del servicio pasaron, incluidos restauración con OIDs nuevos,
+contenido modificado con igual conteo y renombrado de columna. Doce tests pasan
+y los 32 archivos oficiales siguen intactos.
+JEV consulta jev-cycle: exit_code0/status connected/provenance jev/model jev-1.13.0;
+decisión keep_optional_recovery_and_research_candidate, confianza1. Esto recomienda
+la disposición, no certifica rendimiento. Claude aportó auditoría compartida T-001.
+RES003 liberada y laboratorio detenido; ambos datasets preservados. Próxima cola:
+mutación de origen en clon, diseño seguro table2 y réplica independiente.
+No hay envío Kaggle aceptado ni puntuación oficial.

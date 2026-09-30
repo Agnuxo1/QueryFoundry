@@ -1,6 +1,6 @@
 # QueryFoundry — borrador de entrega
 
-Estado: resultados locales reproducibles; pendiente de publicación y envío.
+Estado: repositorio público; resultados locales reproducibles; sin envío Kaggle aceptado.
 El commit exacto se obtiene con `git rev-parse HEAD` cuando se cierre la entrega.
 
 ## Problema y solución
@@ -61,7 +61,40 @@ digest, versiones Python registradas, origen oficial fijado y clientes con
 registro de descarga y hash. El laboratorio tiene claves propias y puertos
 loopback; no se incluyen credenciales en la entrega.
 
-Falta ampliar escala, medir disco temporal y verificar restauración de dumps,
-reinicio del servidor y concurrencia. La transacción única puede requerir
+Falta ampliar escala y medir el pico completo de disco intermedio. La transacción única puede requerir
 repetir mucho trabajo si falla antes del commit. Las mejoras pequeñas requieren
 más repeticiones y hardware independiente para confirmar estabilidad.
+
+## Investigación posterior — 2026-09-30
+
+La auditoría independiente de Claude detectó una instantánea obsoleta al esperar
+un lock dentro de REPEATABLE READ, reintentos con UUID distinto y recuperación
+que no detectaba alteración de destinos. Codex reprodujo los escenarios y
+corrigió la adquisición de lock antes de la instantánea, conservación de UUID
+y verificación de destinos. Concurrencia de dos clientes, reinicio real,
+dump/restore de ambas bases y reanudación en clones pasaron; también se rechazaron
+borrado, actualización con igual conteo y renombrado de columna.
+
+El recibo opcional guarda conteos, dos sumas de hashes de registros, descripción
+de columnas y metadatos de versión, codificación y locale. Estas huellas no son
+criptográficas ni permiten migración automática entre versiones PostgreSQL.
+Los recibos antiguos requieren validación independiente.
+
+En revisión c0c7e272ce56f126e3d42f3eda36b3aa90c90551, tres repeticiones alternadas
+de la GUI completa a100k dieron mediana15,875292175s para original SIN recuperación
+y15,094171879s para payload_once CON recuperación reforzada. Reducción local4,920%,
+rangos15,375–16,698s y14,925–15,837s: solapados, n3, exploratorio. No se aísla el
+coste de recuperación comparando con series históricas. Las seis tablas son
+equivalentes en cada ejecución. Working set máximo muestreado797,223/790,141MiB.
+Evidencia completa: reports/research-fingerprint-100k/durable-gui/.
+
+Piloto1M con generador oficial y revisión anterior bfb2b44: original155,490661388s,
+candidato145,661872109s; n1, seis tablas equivalentes, guard anterior de conteos.
+Working set1,863/1,926GiB bajo límite2GiB. No extrapolar este piloto a la nueva
+huella ni a300M. Temporales PostgreSQL observados43,056MiB original/0 candidato,
+escrituras74,687MiB/0; no incluye todos los intermedios, WAL ni tablas TEMP.
+
+Se rechazó sparse_positions antes de medir velocidad:2/8 casos sintéticos
+alteraban errores de cast del original. Se conserva sólo como experimento negativo.
+JEV, status connected/provenance jev, recomendó conservar el candidato de
+investigación y recuperación opcional, sin declarar significancia o victoria.

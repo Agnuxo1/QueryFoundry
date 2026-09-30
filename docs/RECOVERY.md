@@ -45,6 +45,8 @@ after recreating the service/process use --resume-job explicitly.
 New experimental receipts record counts and two seeded sums of PostgreSQL typed
 row hashes for all six destinations at commit. Recovery compares these before
 reporting success, detecting tested deleted rows and same-count content changes.
+Column names, types, nullability and collations are also bound; a renamed column
+is rejected even if the row-hash sums remain unchanged.
 The checksum is noncryptographic and bound to PostgreSQL version, encoding and
 locale; it is not adversarial integrity proof or cross-version migration support.
 Complete dump/restore with fresh table OIDs is tested under the same server version.
@@ -61,5 +63,9 @@ outputs, and limit intermediates to one bounded chunk. No unlogged table may
 serve as the sole durable checkpoint. Every added lock, receipt, validation,
 commit and finalization cost must be counted in the report.
 
-Remaining failpoints: concurrent duplicate request, source mutation, server
-restart, process termination of the full GUI, dump restoration and replay.
+Verified research failpoints: concurrent duplicate request, server restart,
+dump restoration and replay, deletion, same-count content change and schema rename.
+Remaining: source mutation, full GUI process termination, independent replication
+and larger-scale validation of the strengthened fingerprints. The new100k benchmark
+is in reports/research-fingerprint-100k/durable-gui/; older pilot numbers do not
+measure this implementation.
