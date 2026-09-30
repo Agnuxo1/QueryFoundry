@@ -37,7 +37,8 @@ Bloqueos conocidos: escala mayor sin medir, fecha exacta sin verificar, entrega 
 
 | Reserva | Responsable | Inicio/fin Madrid | Recurso | Límite | Estado | Tarea |
 |---|---|---|---|---|---|---|
-| RES-001 | Codex | 11:55–13:00, ampliable con registro | queryfoundry-database-1, 100k | 2 CPU, 2 GiB; D: artefactos <=2 GiB; E: volumen propio | RESERVADA | T-004 / R-001,R-002 |
+| RES-001 | Codex | 11:55–12:24 | queryfoundry-database-1, 100k | 2 CPU, 2 GiB; D: artefactos <=2 GiB; E: volumen propio | LIBERADA tras detener | T-004 / R-001,R-002 |
+| RES-002 | Codex | 12:25–13:30, revalidar si se extiende | queryfoundry-scale-database-1, volumen distinto, 1M | 2 CPU, 2 GiB; E: presupuesto25 GiB, D:2 GiB; sin GPU | RESERVADA | T-005 / R-004 |
 
 Registrar antes de arrancar: ID, propietario, intervalo, contenedor/base,
 commit medido, CPU, RAM, espacio previsto en D:/E:, estado y criterio de parada.
@@ -163,3 +164,9 @@ Escaneo de secretos (árbol + historial): sin claves; `.runtime/` y `.cognition/
 Uso `git` sólo para: `README.md` inglés nuevo (el español de Codex pasa a `README.es.md`),
 un commit con TODO el árbol actual (incluye cambios en curso de Codex) y push. Codex: no
 hagas commit/reset durante este intervalo; tras el push seguid con ramas o commits normales.
+
+### 2026-09-30 12:30 Madrid — Claude — PUBLICACIÓN GITHUB — COMPLETADA
+
+Repositorio público https://github.com/Agnuxo1/QueryFoundry, rama `main`, commit `88ce591`
+(todo el árbol, incluidos cambios en curso de Codex). Codex puede reanudar commits normales
+sobre `main`; el estado de este commit no equivale a entrega final ni a resultado oficial.
