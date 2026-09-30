@@ -1,0 +1,102 @@
+{
+  "timestamp_utc": "2026-09-30T13:34:40.876572+00:00",
+  "scope": "Read-only 64-row CTE probes; table1 at full lab scale; not benchmark times",
+  "source_rows": 1000000,
+  "cases": {
+    "official_sample": {
+      "original": {
+        "status": "ok",
+        "rows": 158,
+        "sha256_multiset": "dcfa720182d0f797185dd448603730038891d01a103dc574f0db222992408318"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 158,
+        "sha256_multiset": "dcfa720182d0f797185dd448603730038891d01a103dc574f0db222992408318"
+      },
+      "same": true
+    },
+    "blank_declaration_bad_weight": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "same": true
+    },
+    "valid_declaration_bad_weight": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "same": true
+    },
+    "wrong_declaration_bad_weight": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "same": true
+    },
+    "bad_declaration": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22P02"
+      },
+      "same": true
+    },
+    "overflow_declaration": {
+      "original": {
+        "status": "error",
+        "sqlstate": "22003"
+      },
+      "candidate": {
+        "status": "error",
+        "sqlstate": "22003"
+      },
+      "same": true
+    },
+    "invalid_type_bad_weight": {
+      "original": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "4d18f471643a4fb9522098004c07fb7604761724f183f048112ff3126ed5d6ff"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "4d18f471643a4fb9522098004c07fb7604761724f183f048112ff3126ed5d6ff"
+      },
+      "same": true
+    },
+    "negative_weight_bad_gap": {
+      "original": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "4d18f471643a4fb9522098004c07fb7604761724f183f048112ff3126ed5d6ff"
+      },
+      "candidate": {
+        "status": "ok",
+        "rows": 94,
+        "sha256_multiset": "4d18f471643a4fb9522098004c07fb7604761724f183f048112ff3126ed5d6ff"
+      },
+      "same": true
+    }
+  },
+  "passed": true
+}

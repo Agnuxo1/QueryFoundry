@@ -1,0 +1,33 @@
+{
+  "scope": "one full GUI run per variant at1M; exploratory, all six outputs equivalent",
+  "git_commit": "9e83eb5a15e9ddfede4bcd30b9ffef8479dd5210",
+  "runtime_equivalent_to": "3c62b8527b70e4c0e931734a8385eb2ce9d28465",
+  "time_reduction_percent": {
+    "payload_once": 7.118042686717551,
+    "lazy_keys": 22.75122932107102
+  },
+  "versus_payload_time_reduction_percent": 16.831241595850678,
+  "resources": {
+    "baseline": {
+      "sampled_working_set_gib": 1.7789268493652344,
+      "sampled_pg_temp_mib": 57.27534484863281,
+      "pg_temp_written_mib": 136.51829147338867,
+      "table2_insert_seconds": 73.05229
+    },
+    "payload_once": {
+      "sampled_working_set_gib": 1.7629737854003906,
+      "sampled_pg_temp_mib": 0.0,
+      "pg_temp_written_mib": 0.0,
+      "table2_insert_seconds": 60.071345
+    },
+    "lazy_keys": {
+      "sampled_working_set_gib": 1.8264579772949219,
+      "sampled_pg_temp_mib": 0.0,
+      "pg_temp_written_mib": 0.0,
+      "table2_insert_seconds": 35.405278
+    }
+  },
+  "global_intermediate_disk_peak_known": false,
+  "host_available_ram_sample_min_gib": 1.04,
+  "host_memory_sampling_exhaustive": false
+}

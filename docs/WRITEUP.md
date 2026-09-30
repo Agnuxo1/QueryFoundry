@@ -112,3 +112,22 @@ payload de series anteriores no se reproduce aquí. Table2 mediana6,741/5,734/3,
 Linux:800fuzz lazy con219errores y150payload con19errores, idénticos al original.
 El control sparse produce la discrepancia esperada. Defaultpayload conservado;
 lazyoptativo; falta concluir piloto1M con esta implementación.
+
+## I-005: piloto1M aceptado y decisión
+
+Datos oficiales preservados, runtime3c62b85 equivalente a9e83eb5 (diferencia sólo
+documentación/informes en los paths medidos); los tres registros usan9e83eb5.
+Una ejecución por variante: original164,108612678 /payload152,427291575 /
+lazy126,771885872s. Seis tablas equivalentes;5.321.553filas insertadas por variante.
+Reducción lazy22,751% original y16,831% payload. Table2:73,052 /60,071 /35,405s.
+Working set muestreado1,779 /1,763 /1,826GiB bajo límite2GiB. Archivos de trabajo
+PostgreSQL observados57,275MiB original y0 candidatos; escritos136,518MiB /0 /0.
+No incluye tablasTEMP, WAL y todos los intermediarios; pico global desconocido.
+RAM libre del host cayó transitoriamente a1,04GiB; no es medición exhaustiva.
+A esta escala se repitieron los8contraejemplos conocidos: salidas/SQLSTATE
+coincidentes. N1exploratorio, sin significancia ni puntuación oficial.
+JEV connected/provenancejev/modeljev-1.13.0 recomienda lazy optativo (confianza1),
+réplica independiente de recuperación como prioridad siguiente (confianza0,31).
+Decisión: KEEP como candidato de investigación optativo; defaultpayload conservado.
+No afirmamos equivalencia de errores en todos los planes/versiones.
+RES006liberada; ambos laboratorios detenidos y datasets preservados.

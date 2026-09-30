@@ -28,7 +28,7 @@ The unchanged GUI worker validates the source, expands `raw_data` into the six d
 (`table3, table4, table1, table5, table6, table2`) inside **one** `REPEATABLE READ` transaction and
 registers six versions in the control database.
 
-### `payload_once`: parse the JSON once per row
+### `payload_once`: reuse the values object per row
 
 <img src="docs/assets/payload-once.gif" alt="The original recipe re-reads the JSON for every field; payload_once reads it once" width="100%">
 
@@ -64,8 +64,6 @@ All six outputs match in every run. Sampled working set: 797.223/790.141 MiB.
 Reports: [`reports/research-fingerprint-100k/durable-gui/`](reports/research-fingerprint-100k/durable-gui/).
 Do not infer recovery overhead by comparing separate historical series.
 
-## Durable recovery
-
 ### Current research candidate: `lazy_keys`
 
 Claude proposed deferred field extraction for `table2`. Codex reproduced 800
@@ -89,6 +87,17 @@ official score is established. The old `payload_once` gain was not reproduced
 in this three-way series. Default remains `payload_once`; opt in with
 `python launch.py --recipe-mode lazy_keys --recovery`.
 Reports: [`reports/research-lazy-100k/durable-gui/`](reports/research-lazy-100k/durable-gui/).
+
+The subsequent 1,000,000-row pilot of the same runtime completed one run per
+variant: original 164.109 s / payload 152.427 s / lazy 126.772 s, all six outputs equivalent.
+Lazy reduced time locally by 22.75% versus original and 16.83% versus payload.
+Sampled working set 1.779/1.763/1.826 GiB respectively, under 2 GiB; n=1 is exploratory.
+Eight known malformed-input counterexamples also matched at this table scale.
+Reports: [`reports/research-lazy-1m/`](reports/research-lazy-1m/).
+JEV recommends retaining lazy as an opt-in research candidate pending independent
+recovery/planner replication. It is not an official score or 300M capacity claim.
+
+## Durable recovery
 
 <img src="docs/assets/recovery.gif" alt="Effects and receipt commit together; a retry with the same job UUID replays the stored result" width="100%">
 

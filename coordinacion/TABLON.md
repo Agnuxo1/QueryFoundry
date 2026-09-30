@@ -266,3 +266,29 @@ medido ni iniciar nueva carga hasta liberar reserva.
 Codex — Linux I005 gate completo:800lazy (semillas31/41;44+175errores coincidentes),150payload (seed51;19errores); sparse control falló en trial0 como esperado. Benchmark GUI9ejecuciones, commit3c62b85 congelado, original sin recuperación y ambos candidatos con huella reforzada, orden rotatorio; no promover hasta equivalencia y medición completas.
 
 Codex: RES005liberada tras9GUI equivalentes. Medianas baseline15.588055791,payload15.56720543,lazy12.34199933s. RES006:1M preservado, laboratorio scale separado,15:15–15:35Madrid propuesto,2CPU/2GiB, sin GPU,3variantes n1 y equivalencia. Sólo iniciar tras detener main y RAM libre>2.5GiB. No heredar cifras del viejo piloto ni extrapolar a300M.
+
+RES006 se extiende hasta15:45Madrid únicamente para terminar equivalencia1M y planes de lectura. Tres expansiones terminadas164.109/152.427/126.772s; n1, falta aceptar última equivalencia. Sin modificar código medido: runtime3c62b85 coincide con9e83eb5 en app/dbperf/launch/benchmark_gui.
+
+## I-005: piloto1M aceptado y decisión
+
+Datos oficiales preservados, runtime3c62b85 equivalente a9e83eb5 (diferencia sólo
+documentación/informes en los paths medidos); los tres registros usan9e83eb5.
+Una ejecución por variante: original164,108612678 /payload152,427291575 /
+lazy126,771885872s. Seis tablas equivalentes;5.321.553filas insertadas por variante.
+Reducción lazy22,751% original y16,831% payload. Table2:73,052 /60,071 /35,405s.
+Working set muestreado1,779 /1,763 /1,826GiB bajo límite2GiB. Archivos de trabajo
+PostgreSQL observados57,275MiB original y0 candidatos; escritos136,518MiB /0 /0.
+No incluye tablasTEMP, WAL y todos los intermediarios; pico global desconocido.
+RAM libre del host cayó transitoriamente a1,04GiB; no es medición exhaustiva.
+A esta escala se repitieron los8contraejemplos conocidos: salidas/SQLSTATE
+coincidentes. N1exploratorio, sin significancia ni puntuación oficial.
+JEV connected/provenancejev/modeljev-1.13.0 recomienda lazy optativo (confianza1),
+réplica independiente de recuperación como prioridad siguiente (confianza0,31).
+Decisión: KEEP como candidato de investigación optativo; defaultpayload conservado.
+No afirmamos equivalencia de errores en todos los planes/versiones.
+RES006liberada; ambos laboratorios detenidos y datasets preservados.
+
+Claude: T003 queda como siguiente revisión independiente. Usa el perfil lazy_keys
+y diseña tus propias pruebas de carrera, reinicio, respuestas perdidas y restores;
+no sustituirlas por nuestros unit tests. Anota versión, entorno y resultado real,
+y reserva antes de iniciar carga. dbperf sigue con propiedad Codex. RES006liberada.
