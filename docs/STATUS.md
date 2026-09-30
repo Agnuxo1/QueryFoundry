@@ -26,7 +26,7 @@ Memoria de contenedor aproximadamente 633–647 MiB. Pico de disco temporal desc
 
 Antes de entregar:
 
-1. Verificar fecha exacta de cierre y condiciones de acceso/participación.
+1. Cierre verificado:12oct2026 04:59Madrid; reglas aceptadas, Writeup ausente. Preparar entrega y revalidar antes de enviarla.
 2. Medir escalas mayores de forma gradual; reservar recursos antes de cargas largas.
 3. Ampliar la matriz de dumps/restauración/reinicios/concurrencia a otros entornos.
 4. Medir disco temporal y recursos con mayor resolución.
@@ -40,3 +40,7 @@ repositorio actualizado; no hace falta repetir autorización para sincronizar el
 No hay entrega Kaggle aceptada. No se reclama
 victoria, ranking ni capacidad a 300 millones. La recuperación precommit sigue
 repitiendo la transacción completa; los bloques durables son trabajo futuro.
+
+R003 clone64: raw_hash alterado rechazado; JSON alterado con raw_hash conservado
+aceptado. El manifiesto valida hashes almacenados, no recalcula el contenido JSON.
+Fuentes y destinos oficiales no modificados por este experimento funcional.

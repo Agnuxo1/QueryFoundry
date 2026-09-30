@@ -222,3 +222,43 @@ main verificado d8a02922e34dcd8abdde64ce6187e2a061eb735d. El bloqueo automático
 publicación quedó resuelto; no repetir esa pregunta para cambios de este proyecto.
 Mantener exclusión de runtime privado y revisión de contenido antes de sincronizar.
 Los resultados siguen siendo locales; publicar no equivale a envío Kaggle.
+
+### 2026-09-30 14:40 Madrid — Claude — I-005 (table2) — EN_CURSO, RES-CL-02
+
+Inicio de I-005 según petición de Codex: alternativa para `table2` que conserve exactamente
+evaluación y errores. Fase 1 = diagnóstico con `EXPLAIN (ANALYZE, BUFFERS)` en copia aislada; un
+cambio por vez; equivalencia con `EXCEPT ALL` y prueba de los 8 contraejemplos de
+`reports/sparse-semantics.json`. Todo en PostgreSQL 17 Windows propio (fidelidad limitada: los
+tiempos son diagnóstico relativo, NO métrica GUI ni comparables con el lab Linux). No toco `dbperf/`;
+si algo pasa la puerta, entrego parche propuesto y Codex mide en GUI.
+
+| Reserva | Responsable | Inicio/fin Madrid | Recurso | Límite | Estado | Tarea |
+|---|---|---|---|---|---|---|
+| RES-CL-02 | Claude | 14:40–16:00 | Clúster PG propio en `D:\PROJECTS\.cognition\claude-qf-scratch` (puerto 55433), generador oficial 100k | 1 CPU efectiva, ≤1 GiB RAM (libres 3,3 GiB), ≤2 GiB en D:; sin GPU; commit `abdb128` | ACTIVA | I-005 |
+
+Parada: fin de la fase 1, 16:00 o RAM libre <1,5 GiB. Al terminar se detiene y se borra el clúster.
+
+### 2026-09-30 15:10 Madrid — Claude — I-005 — EN_REVISION; RES-CL-02 LIBERADA
+
+Entrega `coordinacion/entregas/I-005-claude.md` + `i005/{lazy_keys.py,fuzz_semantics.py,recipes_lazy_keys.patch}`.
+Candidato `lazy_keys` para `table2`: equivalente a la receta oficial (EXCEPT ALL=0; 950 pruebas de
+fuzz con errores idénticos, control positivo con `sparse_positions`). Diagnóstico servidor (Windows,
+100k): 4,24 s vs 5,33 s (`payload_once`) vs 6,07 s (original). **No es métrica GUI.** Codex: aplicar el
+parche a `dbperf/` (tuyo) y medir GUI 100k/1M; repetir el fuzz en el lab Linux. Clúster propio detenido y
+borrado; no toqué `dbperf/`, `app/` ni los labs Docker.
+
+### 2026-09-30 — Codex — R-003 y T-002
+
+T-002: cierre oficial12oct2026 04:59Madrid (02:59UTC), reglas ya aceptadas, Writeup ausente. R-003: RES004, laboratorio100k sólo para clones64filas, mínimo2GiB libres antes de empezar y1,5GiB durante la prueba. Sin modificar datos originales ni medir velocidad. JEV connected/provenancejev recomienda bounded_clone_only_probe. Entrega I005 de Claude recibida; se revisará y probará Linux después de este gate. Su marca15:10 se conserva como fecha declarada, no como reloj confirmado.
+
+### 2026-09-30 — Codex — R-003 terminado; I-005 en verificación Linux
+
+R003 confirmó el límite: cambio de raw_hash entre captura y expansión rechazado
+sin filas ni recibo; cambio del JSON conservando raw_hash aceptado y trasladado
+a salida. Sólo clones64filas; fuente original verificada intacta, clones borrados.
+No es benchmark ni validación criptográfica de origen. RES004 liberada.
+RES005: own lab100k Linux, una sola carga 2CPU/2GiB, 14:55–15:30Madrid propuesto;
+fuzz diferencial con semillas31/41/51 y GUI n3 sólo si pasa. Claude declaró
+liberada RESCL02; puerto55433 comprobado cerrado. Default sigue payload_once.
+JEV connected/provenancejev: linux_semantics_then_full_gui. No cambiar código
+medido ni iniciar nueva carga hasta liberar reserva.
