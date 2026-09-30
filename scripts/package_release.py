@@ -20,9 +20,7 @@ def main():
         '--output',str(archive),'HEAD'],cwd=ROOT,check=True)
     manifest=json.loads((ROOT/'docs/upstream-manifest.json').read_text())
     with zipfile.ZipFile(archive) as package:
-        for entry in manifest['files']:
-            # This manifest stores a relative source path and expected SHA-256.
-            path=entry['path']; expected=entry['sha256']
+        for path,expected in manifest['files'].items():
             assert hashlib.sha256(package.read('QueryFoundry/app/'+path)).hexdigest()==expected,path
     receipt={'commit':commit,'archive':str(archive),'bytes':archive.stat().st_size,
         'sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
