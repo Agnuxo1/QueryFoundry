@@ -31,7 +31,8 @@ del usuario: experimentar y consultar Claude/JEV sin preguntas técnicas rutinar
 T-004 en ejecución. Auditoría de Claude recibida mediante archivos compartidos
 después de los intentos CLI fallidos; no se necesita exportación por la CLI.
 JEV conectado; prioriza concurrencia/reinicio/dumps antes de escala.
-Bloqueos conocidos: escala mayor sin medir, fecha exacta sin verificar, entrega sin publicar.
+Pendientes: escala mayor, réplica independiente, fecha exacta y envío Kaggle.
+GitHub actualizado; autorización persistente de sincronización registrada abajo.
 
 ## Reservas de recursos
 
@@ -212,3 +213,12 @@ la disposición, no certifica rendimiento. Claude aportó auditoría compartida 
 RES003 liberada y laboratorio detenido; ambos datasets preservados. Próxima cola:
 mutación de origen en clon, diseño seguro table2 y réplica independiente.
 No hay envío Kaggle aceptado ni puntuación oficial.
+
+### 2026-09-30 — Codex — GitHub sincronizado y autorización persistente
+
+El usuario autorizó directamente publicar los 45 archivos de la revisión d8a0292
+y estableció como prioridad mantener GitHub actualizado. Push realizado y remoto
+main verificado d8a02922e34dcd8abdde64ce6187e2a061eb735d. El bloqueo automático de
+publicación quedó resuelto; no repetir esa pregunta para cambios de este proyecto.
+Mantener exclusión de runtime privado y revisión de contenido antes de sincronizar.
+Los resultados siguen siendo locales; publicar no equivale a envío Kaggle.

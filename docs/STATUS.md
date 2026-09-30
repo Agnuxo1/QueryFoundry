@@ -30,10 +30,13 @@ Antes de entregar:
 2. Medir escalas mayores de forma gradual; reservar recursos antes de cargas largas.
 3. Ampliar la matriz de dumps/restauración/reinicios/concurrencia a otros entornos.
 4. Medir disco temporal y recursos con mayor resolución.
-5. Sincronizar revisión verificada en el repositorio público y enviar el Writeup en Kaggle.
+5. Mantener GitHub actualizado y preparar el envío del Writeup en Kaggle.
 
 Repositorio público verificado: https://github.com/Agnuxo1/QueryFoundry;
-remote main observado88ce591, con revisiones posteriores locales por sincronizar.
+revisión técnica y resultados publicados d8a02922e34dcd8abdde64ce6187e2a061eb735d,
+confirmados con git ls-remote tras aprobación directa del usuario. Las revisiones
+documentales posteriores se consultan en HEAD. El usuario prioriza mantener este
+repositorio actualizado; no hace falta repetir autorización para sincronizar el proyecto.
 No hay entrega Kaggle aceptada. No se reclama
 victoria, ranking ni capacidad a 300 millones. La recuperación precommit sigue
 repitiendo la transacción completa; los bloques durables son trabajo futuro.
