@@ -2,6 +2,9 @@
 
 Work directly; no subagents unless the user explicitly requests them.
 Read docs/STATUS.md and .cognition/checkpoint.md if it exists when resuming.
+For team work, read coordinacion/TABLON.md, AGENDA.md and TAREAS.md first.
+Claim task ownership and reserve shared database compute before execution.
+Record ideas and evidence in coordinacion/THINKTANK.md and the research queue.
 Do not modify app/generate_database.py, its fixed seed, or official benchmark input.
 Verify app/ with scripts/verify_upstream.py. Extend behavior under dbperf/.
 Consult JEV for substantial decisions using D:/PROJECTS/.cognition/jev-workflow.md.

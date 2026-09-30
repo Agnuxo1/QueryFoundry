@@ -92,3 +92,11 @@ probar dumps y fallos restantes, publicar repositorio y fijar commit en Kaggle.
 El repositorio local todavía no constituye una entrega aceptada.
 
 Apache-2.0. Origen y hashes en `docs/upstream-manifest.json` y NOTICE.
+
+## Trabajo compartido con Claude y JEV
+
+[Tablón](coordinacion/TABLON.md), [agenda por horas](coordinacion/AGENDA.md),
+[tareas](coordinacion/TAREAS.md), [cola de investigación](coordinacion/COLA-DE-INVESTIGACION.md)
+y [ThinkTank](coordinacion/THINKTANK.md). Incorporar a Claude con
+[PROMPT_CLAUDE.md](coordinacion/PROMPT_CLAUDE.md). Las asignaciones iniciales
+son propuestas; registrar aceptación y recursos antes de ejecutar.
