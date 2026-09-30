@@ -1,0 +1,70 @@
+{
+  "baseline": [
+    {
+      "name": "Insert into public.table2 (statement 1)",
+      "median_seconds": 6.437715
+    },
+    {
+      "name": "Insert into public.table1 (statement 1)",
+      "median_seconds": 3.19792
+    },
+    {
+      "name": "Insert into public.table6 (statement 1)",
+      "median_seconds": 1.517256
+    },
+    {
+      "name": "Insert into public.table5 (statement 1)",
+      "median_seconds": 1.215582
+    },
+    {
+      "name": "Insert into public.table3 (statement 1)",
+      "median_seconds": 0.276897
+    },
+    {
+      "name": "Insert into public.table4 (statement 1)",
+      "median_seconds": 0.253138
+    },
+    {
+      "name": "Rebuild table navigation controls - local Python CPU",
+      "median_seconds": 0.0625
+    },
+    {
+      "name": "Ensure control metadata for version registration",
+      "median_seconds": 0.045941257
+    }
+  ],
+  "payload_once": [
+    {
+      "name": "Insert into public.table2 (statement 1)",
+      "median_seconds": 5.66499
+    },
+    {
+      "name": "Insert into public.table1 (statement 1)",
+      "median_seconds": 2.636002
+    },
+    {
+      "name": "Insert into public.table6 (statement 1)",
+      "median_seconds": 1.532926
+    },
+    {
+      "name": "Insert into public.table5 (statement 1)",
+      "median_seconds": 1.133674
+    },
+    {
+      "name": "Insert into public.table4 (statement 1)",
+      "median_seconds": 0.318975
+    },
+    {
+      "name": "Insert into public.table3 (statement 1)",
+      "median_seconds": 0.307265
+    },
+    {
+      "name": "Bind durable job to source versions, manifest and recipes - server command 3",
+      "median_seconds": 0.078632773
+    },
+    {
+      "name": "Rebuild table navigation controls - local Python CPU",
+      "median_seconds": 0.078125
+    }
+  ]
+}
