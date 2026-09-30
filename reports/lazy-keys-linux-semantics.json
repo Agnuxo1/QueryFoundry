@@ -1,0 +1,51 @@
+{
+  "timestamp_utc": "2026-09-30T12:58:24.759579+00:00",
+  "scope": "Linux PG17 differential SELECT fuzz; session TEMP mutations only; not GUI timings",
+  "git_commit": "b4510b08524673c6c96017e73553d6cfd6a14fec",
+  "suite": [
+    {
+      "mode": "sparse_control",
+      "trials": 1,
+      "seed": 11,
+      "heavy": false,
+      "return_code": 1,
+      "expected_return_code": 1,
+      "summary": "MISMATCH trial 0 seed 11 [(29, 'numeric_column_3', '0'), (37, 'integer_column_14', '32768'), (32, 'numeric_column_5', '99999999999')] \n  baseline: error: integer out of range \n   sparse_control: error: value \"32768\" is out of range for type smallint",
+      "gate_passed": true
+    },
+    {
+      "mode": "lazy_keys",
+      "trials": 400,
+      "seed": 31,
+      "heavy": false,
+      "return_code": 0,
+      "expected_return_code": 0,
+      "summary": "lazy_keys trials 400 seed 31 outcomes {'ok': 356, 'error': 44} ALL IDENTICAL",
+      "gate_passed": true
+    },
+    {
+      "mode": "lazy_keys",
+      "trials": 400,
+      "seed": 41,
+      "heavy": true,
+      "return_code": 0,
+      "expected_return_code": 0,
+      "summary": "lazy_keys trials 400 seed 41 outcomes {'ok': 225, 'error': 175} ALL IDENTICAL",
+      "gate_passed": true
+    },
+    {
+      "mode": "payload_once",
+      "trials": 150,
+      "seed": 51,
+      "heavy": false,
+      "return_code": 0,
+      "expected_return_code": 0,
+      "summary": "payload_once trials 150 seed 51 outcomes {'ok': 131, 'error': 19} ALL IDENTICAL",
+      "gate_passed": true
+    }
+  ],
+  "seeds_independent_from_claude_windows_run": true,
+  "passed": true,
+  "completed": true,
+  "matching_trials": 950
+}

@@ -83,3 +83,40 @@ la disposición, no certifica rendimiento. Claude aportó auditoría compartida 
 RES003 liberada y laboratorio detenido; ambos datasets preservados. Próxima cola:
 mutación de origen en clon, diseño seguro table2 y réplica independiente.
 No hay envío Kaggle aceptado ni puntuación oficial.
+
+## R-003: límites del manifiesto de origen
+
+Prueba funcional con64filas oficiales copiadas a clones aislados y conexión SSH
+real. Cambiar raw_hash después de la captura y antes de BEGIN fue rechazado
+sin filas ni recibo. Cambiar numeric_column_1 del JSON manteniendo raw_hash
+fue aceptado; el valor alterado llegó a table1. El manifiesto vincula hashes
+almacenados, conteos y columnas, pero no recalcula el contenido JSON. No reclamar
+integridad frente a escritura externa arbitraria. Estos datos mutados no son
+benchmark. Origen original intacto; clones eliminados. Intento inicial falló
+al restaurar public sobre el esquema vacío existente; se conserva el informe
+y la corrección sólo elimina public del clon antes de restaurar. Evidencia:
+reports/source-mutation.json; script reproduce con UUID de clon único.
+
+## I-005: entrega Claude y verificación Linux
+
+Claude entregó lazy_keys para table2: matriz de nombres de campo, extracción
+de valores en los mismos filtros/casts y salida. Las otras cinco recetas
+usarán payload_once. Default sin cambios; opción --recipe-mode lazy_keys.
+Su tiempo Windows es diagnóstico. JEV recomienda Linux semántica antes de GUI.
+Fuzz usa semillas nuevas31/41/51 y el prototipo rechazado como control positivo;
+comparación GUI equilibrada incluye original y ambos candidatos con sus costes.
+Resultados pendientes hasta completar cada gate.
+
+## I-005: resultados GUI100k verificados
+
+Commit3c62b85, tres rondas rotatorias original/payload_once/lazy_keys.
+Medianas15,588055791 /15,56720543 /12,34199933s. Candidatos con recuperación
+reforzada; original sin recibos. Lazy reduce20,824% frente al original y20,718%
+frente a payload. Las seis tablas coinciden en las9ejecuciones. Todos los
+resultados conservados: primera original25,973s, dominada por table1, causa
+no establecida. Rangos original15,085–25,973, payload15,154–15,792, lazy12,142–12,422s.
+N3exploratorio; no significancia ni puntuación oficial. La pequeña mejora de
+payload de series anteriores no se reproduce aquí. Table2 mediana6,741/5,734/3,423s.
+Linux:800fuzz lazy con219errores y150payload con19errores, idénticos al original.
+El control sparse produce la discrepancia esperada. Defaultpayload conservado;
+lazyoptativo; falta concluir piloto1M con esta implementación.

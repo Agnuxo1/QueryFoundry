@@ -65,7 +65,10 @@ commit and finalization cost must be counted in the report.
 
 Verified research failpoints: concurrent duplicate request, server restart,
 dump restoration and replay, deletion, same-count content change and schema rename.
-Remaining: source mutation, full GUI process termination, independent replication
+Source mutation was probed on isolated clones: altered stored hashes are rejected,
+but JSON edits preserving them are accepted. The source manifest does not promise
+arbitrary external-edit detection; see reports/source-mutation.json.
+Remaining: stronger source-content checks, full GUI process termination, independent replication
 and larger-scale validation of the strengthened fingerprints. The new100k benchmark
 is in reports/research-fingerprint-100k/durable-gui/; older pilot numbers do not
 measure this implementation.

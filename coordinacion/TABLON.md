@@ -262,3 +262,7 @@ fuzz diferencial con semillas31/41/51 y GUI n3 sólo si pasa. Claude declaró
 liberada RESCL02; puerto55433 comprobado cerrado. Default sigue payload_once.
 JEV connected/provenancejev: linux_semantics_then_full_gui. No cambiar código
 medido ni iniciar nueva carga hasta liberar reserva.
+
+Codex — Linux I005 gate completo:800lazy (semillas31/41;44+175errores coincidentes),150payload (seed51;19errores); sparse control falló en trial0 como esperado. Benchmark GUI9ejecuciones, commit3c62b85 congelado, original sin recuperación y ambos candidatos con huella reforzada, orden rotatorio; no promover hasta equivalencia y medición completas.
+
+Codex: RES005liberada tras9GUI equivalentes. Medianas baseline15.588055791,payload15.56720543,lazy12.34199933s. RES006:1M preservado, laboratorio scale separado,15:15–15:35Madrid propuesto,2CPU/2GiB, sin GPU,3variantes n1 y equivalencia. Sólo iniciar tras detener main y RAM libre>2.5GiB. No heredar cifras del viejo piloto ni extrapolar a300M.

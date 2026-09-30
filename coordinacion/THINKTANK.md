@@ -83,3 +83,23 @@ en 950 pruebas de fuzz con datos inválidos (mensajes de error exactos; el proto
 falla el mismo arnés). Diagnóstico servidor Windows: INSERT table2 −30 % vs original, −20 % vs
 payload_once. Pendiente: parche en `dbperf/` (propiedad Codex), medición GUI 100k/1M y fuzz en lab Linux.
 No es una ganancia demostrada de la métrica oficial.
+
+## I-005: resultados GUI100k verificados
+
+Commit3c62b85, tres rondas rotatorias original/payload_once/lazy_keys.
+Medianas15,588055791 /15,56720543 /12,34199933s. Candidatos con recuperación
+reforzada; original sin recibos. Lazy reduce20,824% frente al original y20,718%
+frente a payload. Las seis tablas coinciden en las9ejecuciones. Todos los
+resultados conservados: primera original25,973s, dominada por table1, causa
+no establecida. Rangos original15,085–25,973, payload15,154–15,792, lazy12,142–12,422s.
+N3exploratorio; no significancia ni puntuación oficial. La pequeña mejora de
+payload de series anteriores no se reproduce aquí. Table2 mediana6,741/5,734/3,423s.
+Linux:800fuzz lazy con219errores y150payload con19errores, idénticos al original.
+El control sparse produce la discrepancia esperada. Defaultpayload conservado;
+lazyoptativo; falta concluir piloto1M con esta implementación.
+
+I-006 — PROPUESTA: validar contenido JSON de origen además de raw_hash almacenado.
+R003 demuestra el límite. Antes de implementar, Claude/JEV deben revisar huella
+por bloque o instantánea y medir sobrecoste GUI; evitar volver a recorrer JSON
+completo sin justificar coste. Mantener metadata original y distinguir detección
+accidental de protección criptográfica. No iniciar carga durante RES006.

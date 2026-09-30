@@ -1,0 +1,33 @@
+{
+  "scope": "post-analysis of all9fullGUI runs, no discarded measurements",
+  "source_commit": "3c62b8527b70e4c0e931734a8385eb2ce9d28465",
+  "time_reduction_percent": {
+    "payload_once": 0.13375857309952943,
+    "lazy_keys": 20.823998223525475
+  },
+  "versus_payload_time_reduction_percent": 20.717951686977898,
+  "range_seconds": {
+    "baseline": [
+      15.084744373,
+      25.973437022
+    ],
+    "payload_once": [
+      15.153817255,
+      15.792255956
+    ],
+    "lazy_keys": [
+      12.142104948,
+      12.4223426
+    ]
+  },
+  "median_table2_insert_seconds": {
+    "baseline": 6.740643,
+    "payload_once": 5.734109,
+    "lazy_keys": 3.423238
+  },
+  "notes": [
+    "First baseline25.973s retained; table1 dominates its extra time. Cause not established.",
+    "Payload_once medians almost equal baseline in this series; old4.92percent difference is not independently reproduced.",
+    "Lazy_keys gain locally observed; n3 does not establish significance or official score."
+  ]
+}
