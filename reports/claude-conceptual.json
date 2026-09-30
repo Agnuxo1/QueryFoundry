@@ -1,0 +1,7 @@
+{
+  "accepted": false,
+  "exit_code": 1,
+  "scope": "generic conceptual input; bare mode; no file tools",
+  "result": "Not logged in \u00b7 Please run /login",
+  "duration_ms": 53
+}

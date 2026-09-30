@@ -26,4 +26,5 @@ y siguiente paso. En trabajo sostenido, checkpoint factual al menos cada
 
 | Bloque | Inicio real | Fin real | Resultado/ruta | Estado |
 |---|---|---|---|---|
-| Incorporación | — | — | — | PENDIENTE |
+| Incorporación | 11:40 | 11:49 | TABLON.md, TAREAS.md T-001 EN_CURSO; JEV provenance=jev | HECHO (Claude) |
+| T-001 auditoría | 11:49 | 11:55 | coordinacion/entregas/T-001-claude.md (5 hallazgos, 1 reproducido) | EN_REVISION (Claude entrega; Codex revisa) |

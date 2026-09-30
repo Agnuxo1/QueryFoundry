@@ -47,8 +47,9 @@ tras ambos commits, nueva conexión entre commits y rechazo de UUID reutilizado.
 Véanse reports/durable-recovery.json, docs/RECOVERY.md y el benchmark separado
 reports/durable-gui/. Todos sus costes se incluyen en ejecuciones nuevas.
 
-La comparación GUI independiente con recuperación, tres repeticiones por
-variante, produjo medianas de 13,868 s original y 12,911 s candidato (6,9% menos).
+La comparación GUI independiente, tres repeticiones por variante, produjo
+medianas de 13,868 s original SIN recibos y 12,911 s candidato CON recibos
+(diferencia local del 6,9%; rangos solapados, sin prueba de significancia).
 Picos de working set: 633 y 643 MiB respectivamente. No interpretar la diferencia
 entre esta serie y la anterior como coste negativo de recuperación: existe
 variación de tiempos y ambas tienen sus propios baselines.

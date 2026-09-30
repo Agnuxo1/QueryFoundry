@@ -18,5 +18,8 @@
   },
   "peak_intermediate_disk_bytes": null,
   "recovery_gui_integrated": true,
-  "submission_ready": false
+  "submission_ready": false,
+  "baseline_recovery_enabled": false,
+  "candidate_recovery_enabled": true,
+  "interpretation": "exploratory n=3, overlapping ranges, not a significance claim"
 }

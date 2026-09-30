@@ -1,0 +1,50 @@
+{
+  "timestamp_utc": "2026-09-30T09:59:34.542662+00:00",
+  "job_id": "075ef879-1aad-43fc-938d-01689a2d721d",
+  "scope": "real Windows SSH services; Linux PG; isolated lab",
+  "stages": {
+    "concurrent_data": {
+      "successful_clients": 2,
+      "errors": [],
+      "seconds": 16.972174599999562,
+      "receipts": 1,
+      "rows": {
+        "table3": 4,
+        "table4": 26,
+        "table1": 100000,
+        "table5": 100000,
+        "table6": 100000,
+        "table2": 232386
+      }
+    },
+    "restart_before_versions": {
+      "data_fingerprint_unchanged": true,
+      "resumed_job": "075ef879-1aad-43fc-938d-01689a2d721d"
+    },
+    "concurrent_versions": {
+      "same_six_versions": true,
+      "receipts": 1
+    },
+    "dump_restore": [
+      {
+        "database": "kaggle_challenge",
+        "restored_database": "qf_restore_data_075ef8791a",
+        "bytes": 18770764,
+        "sha256": "b90816eed04307737ba3f680c8cebe71cb2c5db13d935bc19811405034fa3341",
+        "all_user_tables_counts_and_row_hashes_equal": true,
+        "tables": 15
+      },
+      {
+        "database": "postgres_data_manager",
+        "restored_database": "qf_restore_control_075ef8791a",
+        "bytes": 33346,
+        "sha256": "b67739ff5fcda4e9ed768d1395fd325247ad125b2a1ba228b989627c06e6d657",
+        "all_user_tables_counts_and_row_hashes_equal": true,
+        "tables": 7
+      }
+    ]
+  },
+  "passed": false,
+  "failure_type": "RuntimeError",
+  "failure": "ERROR:  permission denied for database postgres_data_manager"
+}

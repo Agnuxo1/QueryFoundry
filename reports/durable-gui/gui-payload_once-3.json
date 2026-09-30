@@ -1024,5 +1024,8 @@
   "temporary_disk_peak_bytes": null,
   "mode": "payload_once",
   "repeat": 3,
-  "measured_processing_total_seconds": 15.309365829999999
+  "measured_processing_total_seconds": 15.309365829999999,
+  "benchmark_role": "diagnostic_only",
+  "include_in_comparison": false,
+  "six_table_multiset_equivalence": true
 }

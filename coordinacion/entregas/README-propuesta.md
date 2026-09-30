@@ -9,7 +9,7 @@
 [![Status](https://img.shields.io/badge/status-local%20evidence%20only-fbbf24)](docs/STATUS.md)
 [![Official files](https://img.shields.io/badge/organizer%20files-32%2F32%20verified-a78bfa)](scripts/verify_upstream.py)
 
-[Español](README.es.md) · [Results](#results) · [How it works](#how-it-works) · [Recovery](#durable-recovery) · [Integrity](#integrity-guardrails) · [Reproduce](#reproduce) · [Limits](#honest-limits)
+[Results](#results) · [How it works](#how-it-works) · [Recovery](#durable-recovery) · [Integrity](#integrity-guardrails) · [Reproduce](#reproduce) · [Limits](#honest-limits)
 
 </div>
 
@@ -92,8 +92,7 @@ rules in [`docs/RULES.md`](docs/RULES.md); reuse in [`docs/REUSE.md`](docs/REUSE
 - A pre-commit failure repeats the full expansion: there are no chunk checkpoints yet.
 - The receipt does not verify that the effects are still present (see the audit in
   `coordinacion/entregas/T-001-claude.md`).
-- Concurrency, server restart and dump/restore checks are recent, single-lab results (see
-  `reports/research-consistency*.json`); they are not independent replications.
+- Dump/restore, server restart and concurrent duplicate requests are not yet verified.
 
 ## License
 
