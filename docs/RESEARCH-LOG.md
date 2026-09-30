@@ -139,3 +139,13 @@ réplica independiente de recuperación como prioridad siguiente (confianza0,31)
 Decisión: KEEP como candidato de investigación optativo; defaultpayload conservado.
 No afirmamos equivalencia de errores en todos los planes/versiones.
 RES006liberada; ambos laboratorios detenidos y datasets preservados.
+
+## 2026-09-30T19:45:44.189794+02:00: cobertura del monitor de disco
+
+Se prepara un muestreo de archivos SQL TEMP además de pgsql_tmp; incluye
+tablespaces, bloques asignados y evidencia de fallos/intervalos. Validación
+offline: 3 pruebas específicas, 9 raíz y 6 app aprobadas; 32 archivos originales
+intactos. No se ejecuta carga durante RES-CL-03 de Claude. La calibración Linux
+y el coste de instrumentación quedan pendientes. El pico global sigue sin
+medirse y las cifras históricas no se modifican. Método y exclusiones en
+DISK-MEASUREMENT.md; evidencia en reports/disk-sampler-offline-validation.json.

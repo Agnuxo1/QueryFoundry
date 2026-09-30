@@ -28,6 +28,7 @@ from dbperf.durable_service import DurableQueryFoundryService
 from dbperf.recipes import destinations, ORDER, MODES
 from ui.dialogs import ExpansionTimingReportDialog
 from benchmark import canonical
+from resource_sampling import RESOURCE_COMMAND, parse_sample, summarize_samples
 
 CONTAINER=os.environ.get('QF_LAB_CONTAINER','queryfoundry-database-1')
 PROJECT={'queryfoundry-database-1':'queryfoundry','queryfoundry-scale-database-1':'queryfoundry-scale'}.get(CONTAINER)
@@ -80,17 +81,18 @@ def run_once(mode,number):
     errors=[]
     stop=threading.Event()
     samples=[]
-    temporary_samples=[]
+    resource_samples=[]
+    sample_errors=[]
     temp_before=int(sql("SELECT temp_bytes FROM pg_stat_database WHERE datname='kaggle_challenge';"))
     def monitor():
         while not stop.is_set():
             try:
-                raw=docker('exec',CONTAINER,'sh','-c',"cat /sys/fs/cgroup/memory.current /sys/fs/cgroup/memory.stat; echo QF_TEMP; find /var/lib/postgresql/data/base -path '*/pgsql_tmp/*' -type f -printf '%s\\n'",text=True).stdout.splitlines()
-                boundary=raw.index('QF_TEMP')
-                stats=dict(line.split() for line in raw[1:boundary])
-                samples.append(max(0,int(raw[0])-int(stats.get('inactive_file',0))))
-                temporary_samples.append(sum(int(size) for size in raw[boundary+1:]))
-            except (subprocess.SubprocessError,ValueError,KeyError): pass
+                started=time.monotonic()
+                raw=docker('exec',CONTAINER,'sh','-c',RESOURCE_COMMAND,text=True,timeout=10).stdout
+                sample=parse_sample(raw,started,time.monotonic())
+                resource_samples.append(sample)
+                samples.append(sample['working_set_bytes'])
+            except (subprocess.SubprocessError,ValueError,KeyError): sample_errors.append(time.monotonic())
             stop.wait(.5)
     watcher=threading.Thread(target=monitor,daemon=True)
     watcher.start()
@@ -113,6 +115,8 @@ def run_once(mode,number):
         app.mainloop()
         worker.join(timeout=10)
         if errors or not result or worker.is_alive(): raise RuntimeError('GUI pipeline failed; no result accepted')
+        stop.set(); watcher.join(timeout=12)
+        if watcher.is_alive(): raise RuntimeError('Resource sampler did not stop')
         result['benchmark_scope']='unchanged Windows GUI worker with Linux PostgreSQL over SSH'
         result['local_environment_parity']=True
         result['organizer_score']=None
@@ -120,7 +124,9 @@ def run_once(mode,number):
         result['resource_sample_count']=len(samples)
         result['resource_method']='cgroup memory.current minus inactive_file; 0.5s requested interval; container includes PostgreSQL and SSH'
         result['temporary_disk_peak_bytes']=None
-        result['sampled_peak_postgresql_temporary_files_bytes']=max(temporary_samples) if temporary_samples else None
+        result['disk_sampling']=summarize_samples(resource_samples,len(sample_errors))
+        result['resource_samples']=resource_samples
+        result['sampled_peak_postgresql_temporary_files_bytes']=result['disk_sampling']['sampled_peak_executor_work_files_apparent_bytes']
         result['postgresql_temporary_bytes_written']=max(0,int(sql("SELECT temp_bytes FROM pg_stat_database WHERE datname='kaggle_challenge';"))-temp_before)
         result['lab_container']=CONTAINER
         result['git_commit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()

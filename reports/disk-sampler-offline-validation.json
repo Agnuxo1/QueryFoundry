@@ -1,0 +1,17 @@
+{
+  "timestamp_madrid": "2026-09-30T19:45:44.189794+02:00",
+  "scope": "offline fixtures only; no PostgreSQL or Docker started",
+  "tests_run": 9,
+  "failures": 0,
+  "errors": 0,
+  "passed": true,
+  "new_sampler_tests": 3,
+  "real_linux_calibration": "pending exclusive resource reservation",
+  "global_intermediate_disk_peak_bytes": null,
+  "historical_reports_modified": false,
+  "jev": {
+    "status": "connected",
+    "provenance": "jev",
+    "recommendation": "implement_sampler_then_calibrate"
+  }
+}
