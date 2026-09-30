@@ -35,6 +35,7 @@ if PROJECT is None: raise RuntimeError('Unsupported laboratory container')
 REPORTS=ROOT/'reports'/os.environ.get('QF_REPORT_SUBDIR','')
 DURABLE=False
 CANDIDATE='payload_once'
+COMPARISON_MODES=('baseline','payload_once')
 def docker(*args, **kw):
     return subprocess.run(['docker',*args],check=True,capture_output=True,**kw)
 
@@ -150,7 +151,7 @@ def summarize(records,repeats):
         if abs(rendered_total_seconds(rendered)-total)>.0006:
             raise RuntimeError('Report total and summary disagree')
         record['measured_processing_total_seconds']=total
-    medians={m:statistics.median(r['measured_processing_total_seconds'] for r in records if r['mode']==m) for m in ('baseline',CANDIDATE)}
+    medians={m:statistics.median(r['measured_processing_total_seconds'] for r in records if r['mode']==m) for m in COMPARISON_MODES}
     summary={'timestamp_utc':datetime.now(timezone.utc).isoformat(),'source_rows':int(sql('SELECT count(*) FROM public.raw_data;')),
         'repeats':repeats,'median_seconds':medians,'speedup':medians['baseline']/medians[CANDIDATE],
         'local_full_gui_path':True,'six_table_multiset_equivalence':True,'organizer_score':None,
@@ -159,6 +160,8 @@ def summarize(records,repeats):
         'peak_intermediate_disk_bytes':None,'recovery_gui_integrated':DURABLE,'submission_ready':False}
     summary['baseline_recovery_enabled']=False
     summary['candidate_recovery_enabled']=DURABLE
+    summary['speedup_by_mode']={m:medians['baseline']/medians[m] for m in medians if m!='baseline'}
+    summary['comparison_modes']=list(COMPARISON_MODES)
     for record in records:
         (REPORTS/f"gui-{record['mode']}-{record['repeat']}.json").write_text(json.dumps(record,indent=2),encoding='utf-8')
     (REPORTS/'gui-runs.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
@@ -166,16 +169,19 @@ def summarize(records,repeats):
     print(json.dumps(summary,indent=2))
 
 def main():
-    global REPORTS,DURABLE,CANDIDATE
+    global REPORTS,DURABLE,CANDIDATE,COMPARISON_MODES
     parser=argparse.ArgumentParser(); parser.add_argument('--repeats',type=int,default=3)
     parser.add_argument('--summarize-existing',action='store_true')
     parser.add_argument('--durable',action='store_true')
     parser.add_argument('--single-mode',choices=MODES)
     parser.add_argument('--candidate-mode',choices=[m for m in MODES if m!='baseline'],default='payload_once')
+    parser.add_argument('--compare-mode',action='append',choices=[m for m in MODES if m!='baseline'],help='Compare multiple candidates in balanced rotating order')
     parser.add_argument('--single-number',type=int,default=0)
     args=parser.parse_args()
     DURABLE=args.durable
     CANDIDATE=args.candidate_mode
+    COMPARISON_MODES=tuple(['baseline']+list(dict.fromkeys(args.compare_mode or [CANDIDATE])))
+    if CANDIDATE not in COMPARISON_MODES: CANDIDATE=COMPARISON_MODES[-1]
     if DURABLE: REPORTS=REPORTS/'durable-gui'
     REPORTS.mkdir(parents=True,exist_ok=True)
     if args.single_mode:
@@ -184,13 +190,14 @@ def main():
     if not 1<=args.repeats<=5: parser.error('repeats must be 1..5')
     if args.summarize_existing:
         records=json.loads((REPORTS/'gui-runs.json').read_text())
-        if len(records)!=2*args.repeats: raise RuntimeError('Incomplete existing runs')
+        if len(records)!=len(COMPARISON_MODES)*args.repeats: raise RuntimeError('Incomplete existing runs')
         summarize(records,args.repeats)
         return
     records=[]
     reference_exists=sql("SELECT to_regclass('qf_reference.table1') IS NOT NULL;")=='t'
     for repeat in range(args.repeats):
-        modes=('baseline',CANDIDATE) if repeat%2==0 else (CANDIDATE,'baseline')
+        offset=repeat%len(COMPARISON_MODES)
+        modes=COMPARISON_MODES[offset:]+COMPARISON_MODES[:offset]
         for mode in modes:
             # A fresh Tcl interpreter per run also models an ordinary GUI launch.
             command=[sys.executable,str(Path(__file__).resolve()),'--single-mode',mode,
