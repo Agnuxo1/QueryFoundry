@@ -37,6 +37,7 @@ REPORTS=ROOT/'reports'/os.environ.get('QF_REPORT_SUBDIR','')
 DURABLE=False
 CANDIDATE='payload_once'
 COMPARISON_MODES=('baseline','payload_once')
+RESOURCE_MONITOR=True
 def docker(*args, **kw):
     return subprocess.run(['docker',*args],check=True,capture_output=True,**kw)
 
@@ -95,7 +96,7 @@ def run_once(mode,number):
             except (subprocess.SubprocessError,ValueError,KeyError): sample_errors.append(time.monotonic())
             stop.wait(.5)
     watcher=threading.Thread(target=monitor,daemon=True)
-    watcher.start()
+    if RESOURCE_MONITOR: watcher.start()
     def complete(message,report=None):
         result.update(report or {})
         original_complete(message,report)
@@ -115,14 +116,16 @@ def run_once(mode,number):
         app.mainloop()
         worker.join(timeout=10)
         if errors or not result or worker.is_alive(): raise RuntimeError('GUI pipeline failed; no result accepted')
-        stop.set(); watcher.join(timeout=12)
-        if watcher.is_alive(): raise RuntimeError('Resource sampler did not stop')
+        stop.set()
+        if RESOURCE_MONITOR: watcher.join(timeout=12)
+        if RESOURCE_MONITOR and watcher.is_alive(): raise RuntimeError('Resource sampler did not stop')
         result['benchmark_scope']='unchanged Windows GUI worker with Linux PostgreSQL over SSH'
         result['local_environment_parity']=True
         result['organizer_score']=None
         result['sampled_peak_container_working_set_bytes']=max(samples) if samples else None
         result['resource_sample_count']=len(samples)
-        result['resource_method']='cgroup memory.current minus inactive_file; 0.5s requested interval; container includes PostgreSQL and SSH'
+        result['resource_monitor_enabled']=RESOURCE_MONITOR
+        result['resource_method']='cgroup memory.current minus inactive_file; 0.5s wait between calls; container includes PostgreSQL and SSH' if RESOURCE_MONITOR else 'disabled for instrumentation control'
         result['temporary_disk_peak_bytes']=None
         result['disk_sampling']=summarize_samples(resource_samples,len(sample_errors))
         result['resource_samples']=resource_samples
@@ -139,7 +142,8 @@ def run_once(mode,number):
         print(mode,number,round(total,4),'s full GUI metric',flush=True)
         return result
     finally:
-        stop.set(); watcher.join(timeout=5)
+        stop.set()
+        if RESOURCE_MONITOR: watcher.join(timeout=12)
         service.close()
         app.destroy()
 
@@ -175,16 +179,18 @@ def summarize(records,repeats):
     print(json.dumps(summary,indent=2))
 
 def main():
-    global REPORTS,DURABLE,CANDIDATE,COMPARISON_MODES
+    global REPORTS,DURABLE,CANDIDATE,COMPARISON_MODES,RESOURCE_MONITOR
     parser=argparse.ArgumentParser(); parser.add_argument('--repeats',type=int,default=3)
     parser.add_argument('--summarize-existing',action='store_true')
     parser.add_argument('--durable',action='store_true')
+    parser.add_argument('--no-resource-monitor',action='store_true',help='Disable sampling for instrumentation overhead controls')
     parser.add_argument('--single-mode',choices=MODES)
     parser.add_argument('--candidate-mode',choices=[m for m in MODES if m!='baseline'],default='payload_once')
     parser.add_argument('--compare-mode',action='append',choices=[m for m in MODES if m!='baseline'],help='Compare multiple candidates in balanced rotating order')
     parser.add_argument('--single-number',type=int,default=0)
     args=parser.parse_args()
     DURABLE=args.durable
+    RESOURCE_MONITOR=not args.no_resource_monitor
     CANDIDATE=args.candidate_mode
     COMPARISON_MODES=tuple(['baseline']+list(dict.fromkeys(args.compare_mode or [CANDIDATE])))
     if CANDIDATE not in COMPARISON_MODES: CANDIDATE=COMPARISON_MODES[-1]
@@ -209,6 +215,7 @@ def main():
             command=[sys.executable,str(Path(__file__).resolve()),'--single-mode',mode,
                 '--single-number',str(repeat)]
             if DURABLE: command.append('--durable')
+            if not RESOURCE_MONITOR: command.append('--no-resource-monitor')
             subprocess.run(command,check=True)
             record=json.loads((REPORTS/f'gui-{mode}-{repeat}.json').read_text())
             if not reference_exists:
