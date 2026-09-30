@@ -12,7 +12,11 @@ Investigación: concurrencia, reinicio y dump/restore de ambas bases con reanuda
 rechazo tras borrado y modificación de contenido con igual conteo. Huellas tipadas
 no criptográficas vinculadas a versión/locale; no soporte de migración automática.
 Piloto1M GUI/SSH:155,491/145,662s, una pareja exploratoria, seis tablas equivalentes,
-revisionbfb2b44 con guard de conteos; memoria1,863/1,926GiB. Huella posterior por medir.
+revisionbfb2b44 con guard de conteos; memoria1,863/1,926GiB.
+Huella reforzada medida a100k en c0c7e27: original15,875s /candidato15,094s,
+tres repeticiones alternadas, reducción local4,920%, rangos solapados.
+Original sin recuperación /candidato con recuperación; seis tablas equivalentes
+en cada ejecución. Working set muestreado797,223/790,141MiB. No significancia demostrada.
 
 Baseline/candidato sin recibos: 14,245/13,239 s. Segunda serie: original sin
 recibos 13,868 s frente a candidato con recibos 12,911 s. n=3, exploratorio,

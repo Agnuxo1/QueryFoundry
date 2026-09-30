@@ -53,8 +53,16 @@ yet measured**. Metric: `MEASURED PROCESSING TOTAL`. Reports: [`reports/`](repor
 The subsequent **1,000,000-row capacity pilot** completed with equivalent six-table
 outputs: original155.491s, candidate145.662s (one pair, exploratory). Sampled working
 set1.863/1.926GiB under a2GiB limit. It measured the count-guard revision `bfb2b44`;
-later content-fingerprint changes require their own benchmark. See
+this pilot predates content-fingerprint changes. See
 [`docs/RESEARCH-LOG.md`](docs/RESEARCH-LOG.md) and [`reports/scale-1000000/`](reports/scale-1000000/).
+
+The strengthened recovery revision `c0c7e27` has a separate **100,000-row** full-GUI
+benchmark: original **15.875 s** without recovery, candidate **15.094 s** with
+content/schema checks and receipts, three alternating repeats (**−4.92%** locally).
+Ranges overlap (15.375–16.698 s versus 14.925–15.837 s); this is exploratory.
+All six outputs match in every run. Sampled working set: 797.223/790.141 MiB.
+Reports: [`reports/research-fingerprint-100k/durable-gui/`](reports/research-fingerprint-100k/durable-gui/).
+Do not infer recovery overhead by comparing separate historical series.
 
 ## Durable recovery
 

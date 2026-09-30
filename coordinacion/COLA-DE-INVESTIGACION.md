@@ -22,3 +22,24 @@ pronto cuando falle consistencia, coste o evidencia. No iniciar todas las filas.
 Variar un factor por comparación y usar repeticiones alternadas cuando corresponda.
 La métrica válida incluye validación, versiones y GUI. SQL aislado es diagnóstico.
 No reutilizar un nombre de informe para ocultar una ejecución peor.
+
+## Resultados del ciclo 2026-09-30
+
+- R-001: gate local superado. Dos clientes con el mismo UUID producen una expansión
+  y seis versiones; el segundo se detiene antes de repetir DML. La espera del lock
+  ocurre antes de adquirir la instantánea. Evidencia: `reports/research-consistency.json`.
+- R-002: gate local superado. Reinicio real y dumps de ambas bases restaurados en
+  clones; reanudación sin duplicados. Detectados borrado, cambio de contenido con
+  igual conteo y renombrado de columna. Pendiente réplica en otro entorno.
+- R-004: piloto completado con 1M de filas oficiales, seis tablas equivalentes;
+  memoria observada cerca de 2GiB. Tiempo n1 exploratorio con revisión bfb2b44,
+  anterior a las huellas de contenido. No aumentar escala sin revisar capacidad.
+- R-005: table2 domina también a1M. REJECT del filtrado anticipado de posiciones:
+  2/8 casos sintéticos alteran errores del original. No se midió velocidad.
+- R-003, R-006 y R-007 siguen pendientes. Un manifiesto de hashes almacenados no
+  demuestra por sí solo integridad del JSON frente a modificaciones externas.
+
+Siguiente experimento acotado: R-003 en un clon, con mutación del manifiesto entre
+captura y expansión; distinguirlo de modificar JSON manteniendo raw_hash. Después,
+diseño Claude para table2 que preserve errores de cast, y revisión JEV antes de
+implementar. Reservar una sola carga y exigir equivalencia antes de medir velocidad.

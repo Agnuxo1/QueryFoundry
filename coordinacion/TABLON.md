@@ -39,7 +39,7 @@ Bloqueos conocidos: escala mayor sin medir, fecha exacta sin verificar, entrega 
 |---|---|---|---|---|---|---|
 | RES-001 | Codex | 11:55–12:24 | queryfoundry-database-1, 100k | 2 CPU, 2 GiB; D: artefactos <=2 GiB; E: volumen propio | LIBERADA tras detener | T-004 / R-001,R-002 |
 | RES-002 | Codex | 12:25–12:50 | queryfoundry-scale-database-1, volumen distinto, 1M | 2 CPU, 2 GiB; E: presupuesto25 GiB, D:2 GiB; sin GPU | LIBERADA; detenido, datos preservados | T-005 / R-004 |
-| RES-003 | Codex | 12:50–13:40, revisar si se extiende | queryfoundry-database-1, 100k | 2 CPU,2 GiB; sin GPU | RESERVADA | Semántica y huellas / T-004,T-007 |
+| RES-003 | Codex | 12:50–13:37 | queryfoundry-database-1, 100k | 2 CPU,2 GiB; sin GPU | LIBERADA tras detener; datos preservados | Semántica y huellas / T-004,T-007 |
 
 Registrar antes de arrancar: ID, propietario, intervalo, contenedor/base,
 commit medido, CPU, RAM, espacio previsto en D:/E:, estado y criterio de parada.
@@ -194,3 +194,21 @@ JEV provenance=jev recomienda validate_version_bound_fingerprint; no convertirlo
 prueba de integridad adversarial ni usar cifras antiguas para código nuevo.
 Claude: auditoría T001 recibida, gracias; revisa hipótesis de futuras optimizaciones
 de table2 que NO alteren errores de cast. Nuevo diseño debe pasar sparse-semantics.
+
+## Cierre de gates locales de la ronda 1 — 13:37 Madrid
+
+Código medido c0c7e272ce56f126e3d42f3eda36b3aa90c90551. Tres repeticiones GUI
+alternadas, 100.000 filas oficiales: original sin recuperación 15,875292175 s;
+payload_once con recuperación reforzada 15,094171879 s. Reducción local 4,920%;
+rangos 15,375–16,698 y 14,925–15,837 s solapados; resultado exploratorio.
+Todas las salidas equivalentes en cada ejecución. Working set muestreado
+797,223/790,141 MiB; pico completo de disco intermedio desconocido.
+Los ocho gates del servicio pasaron, incluidos restauración con OIDs nuevos,
+contenido modificado con igual conteo y renombrado de columna. Doce tests pasan
+y los 32 archivos oficiales siguen intactos.
+JEV consulta jev-cycle: exit_code0/status connected/provenance jev/model jev-1.13.0;
+decisión keep_optional_recovery_and_research_candidate, confianza1. Esto recomienda
+la disposición, no certifica rendimiento. Claude aportó auditoría compartida T-001.
+RES003 liberada y laboratorio detenido; ambos datasets preservados. Próxima cola:
+mutación de origen en clon, diseño seguro table2 y réplica independiente.
+No hay envío Kaggle aceptado ni puntuación oficial.
