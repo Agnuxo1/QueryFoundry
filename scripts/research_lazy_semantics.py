@@ -58,7 +58,9 @@ def main():
                 'return_code':result,'expected_return_code':expected,
                 'summary':capture.getvalue().strip(),'gate_passed':result==expected}
             evidence['suite'].append(record)
-            evidence['passed']=all(x['gate_passed'] for x in evidence['suite'])
+            evidence['completed']=len(evidence['suite'])==4
+            evidence['passed']=evidence['completed'] and all(x['gate_passed'] for x in evidence['suite'])
+            evidence['matching_trials']=sum(x['trials'] for x in evidence['suite'] if x['expected_return_code']==0)
             output.write_text(json.dumps(evidence,indent=2),encoding='utf8')
             print('Finished',mode,'seed',seed,'gate',record['gate_passed'],flush=True)
             if result!=expected: raise RuntimeError('Differential semantics gate failed; do not benchmark or promote')

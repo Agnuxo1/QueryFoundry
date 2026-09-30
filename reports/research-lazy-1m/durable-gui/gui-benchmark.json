@@ -1,0 +1,35 @@
+{
+  "timestamp_utc": "2026-09-30T13:31:26.520239+00:00",
+  "source_rows": 1000000,
+  "repeats": 1,
+  "median_seconds": {
+    "baseline": 164.10861267800001,
+    "payload_once": 152.427291575,
+    "lazy_keys": 126.771885872
+  },
+  "speedup": 1.0766353648503448,
+  "local_full_gui_path": true,
+  "six_table_multiset_equivalence": true,
+  "organizer_score": null,
+  "container_memory_limit_bytes": 2147483648,
+  "container_cpu_limit": 2,
+  "sampled_peak_working_set_bytes": {
+    "baseline": 1910108160,
+    "payload_once": 1892978688,
+    "lazy_keys": 1961144320
+  },
+  "peak_intermediate_disk_bytes": null,
+  "recovery_gui_integrated": true,
+  "submission_ready": false,
+  "baseline_recovery_enabled": false,
+  "candidate_recovery_enabled": true,
+  "speedup_by_mode": {
+    "payload_once": 1.0766353648503448,
+    "lazy_keys": 1.2945189822584042
+  },
+  "comparison_modes": [
+    "baseline",
+    "payload_once",
+    "lazy_keys"
+  ]
+}

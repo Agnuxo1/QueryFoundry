@@ -11,8 +11,8 @@ alternativas BLOQUEADA y DESCARTADA. Una tarea activa tiene un único propietari
 | T-003 | P0 | Claude | Diseñar pruebas de concurrencia, reinicio y dumps | coordinacion/entregas/T-003-plan.md; tests nuevos acordados | Fallos reales definidos, efectos/versiones esperados, limpieza limitada al lab | PROPUESTA — escenarios iniciales ejecutados por Codex a partir de T-001; falta diseño de réplica independiente |
 | T-004 | P0 | Codex | Ejecutar escenarios derivados de T-001; integrar correcciones revisadas | scripts/ y reports/; Codex propietario de dbperf/ | Sin duplicados; seis tablas y versiones consistentes; dump restaurable; coste contabilizado | COMPLETADA — ocho gates reales y benchmark GUI n3 de huella reforzada; réplica independiente pendiente |
 | T-005 | P1 | Codex | Piloto de escala y recursos | Laboratorio reservado; reports/scale-1000000/ | Entrada oficial; GUI completa; CPU/RAM/disco y equivalencia; límites explícitos | COMPLETADA — 1M, n1 exploratorio, seis tablas equivalentes; commit bfb2b44 |
-| T-006 | P1 | Claude | Investigar una optimización de la cola | Diseño en entregas/; dbperf/ cuando tenga propiedad acordada | Hipótesis ligada a subetapa medida; propuesta mínima con coste y riesgos | EN_REVISION — Claude entregó lazy_keys; Codex verifica Linux |
-| T-007 | P1 | Codex | Comparar candidato de T-006 y cerrar entrega técnica | reports/, docs/WRITEUP.md y STATUS.md | KEEP/REJECT/INCONCLUSO; commit reproducible; ningún resultado inventado | EN_CURSO — semántica Linux antes de GUI |
+| T-006 | P1 | Claude | Investigar una optimización de la cola | Diseño en entregas/; dbperf/ cuando tenga propiedad acordada | Hipótesis ligada a subetapa medida; propuesta mínima con coste y riesgos | COMPLETADA — entrega Claude verificada en Linux/GUI100k/1M, KEEP optativo |
+| T-007 | P1 | Codex | Comparar candidato de T-006 y cerrar entrega técnica | reports/, docs/WRITEUP.md y STATUS.md | KEEP/REJECT/INCONCLUSO; commit reproducible; ningún resultado inventado | COMPLETADA — KEEP optativo:950fuzz Linux,9GUI100k y3GUI1M equivalentes; límites documentados |
 
 ## Propiedad de archivos
 
