@@ -1,4 +1,4 @@
-"""Read-only Linux PostgreSQL sampling; observations are lower bounds, not peaks.
+"""Read-only Linux PostgreSQL sampling; non-atomic observations, not exact peaks.
 
 SQL TEMP relations are not necessarily visible from another SQL connection.
 Count their filesystem names, including TOAST, forks and relation segments.
@@ -70,8 +70,8 @@ def summarize_samples(samples, errors=0):
         'sampled_peak_sql_temp_relations_apparent_bytes': max((s['categories']['sql_temp_relations']['apparent_bytes'] for s in complete), default=None),
         'exact_peak': False,
         'global_intermediate_disk_peak_bytes': None,
-        'limitations': ['Sequential, non-atomic scans can miss short-lived files or fail during deletion.',
+        'limitations': ['Sequential, non-atomic scans may omit files, combine noncoexistent states or fail during deletion; not a guaranteed lower bound.',
                        'Category maxima occur independently; the combined maximum is computed per scan.',
                        'Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.',
-                       'Instrumentation overhead and real Linux calibration remain to be measured.'],
+                       'Calibration and overhead controls are workload-specific; consult reports/disk-sampler-linux-calibration.json and reports/research-disk-100k/monitor-overhead.json.'],
     }

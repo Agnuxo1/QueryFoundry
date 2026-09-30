@@ -1,0 +1,3058 @@
+{
+  "report_version": 1,
+  "started_at": "2026-09-30T21:12:48+02:00",
+  "completed_at": "2026-09-30T21:14:21+02:00",
+  "database_name": "kaggle_challenge",
+  "source_table_name": "public.raw_data",
+  "raw_schemas": [
+    "group001"
+  ],
+  "destination_names": [
+    "public.table3",
+    "public.table4",
+    "public.table1",
+    "public.table5",
+    "public.table6",
+    "public.table2"
+  ],
+  "source_rows": 100000,
+  "total_rows_inserted": 532416,
+  "destination_rows": [
+    {
+      "table_name": "public.table3",
+      "rows": 4
+    },
+    {
+      "table_name": "public.table4",
+      "rows": 26
+    },
+    {
+      "table_name": "public.table1",
+      "rows": 100000
+    },
+    {
+      "table_name": "public.table5",
+      "rows": 100000
+    },
+    {
+      "table_name": "public.table6",
+      "rows": 100000
+    },
+    {
+      "table_name": "public.table2",
+      "rows": 232386
+    }
+  ],
+  "items": [
+    {
+      "stage": "prepare",
+      "name": "Ensure control database metadata",
+      "seconds": 0.173140032,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "prepare",
+      "name": "Ensure control database metadata - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Bind durable job to source versions, manifest and recipes",
+      "seconds": 0.041613675,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Bind durable job to source versions, manifest and recipes - server command 2",
+      "seconds": 0.038390768,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Bind durable job to source versions, manifest and recipes - server command 3",
+      "seconds": 0.07508207,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Bind durable job to source versions, manifest and recipes - server command 4",
+      "seconds": 0.090159167,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Bind durable job to source versions, manifest and recipes - server command 5",
+      "seconds": 0.042849662,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Bind durable job to source versions, manifest and recipes - local Python CPU",
+      "seconds": 0.03125,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "prepare",
+      "name": "Normalize, parse, and validate expansion recipes - local Python CPU",
+      "seconds": 0.015625,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify source table existence",
+      "seconds": 0.072017038,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify source table existence - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read and validate source column metadata",
+      "seconds": 0.051348638,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read and validate source column metadata - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Load Raw version references for the selected scope",
+      "seconds": 0.040277767,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Load Raw version references for the selected scope - server command 2",
+      "seconds": 0.03654609,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Load Raw version references for the selected scope - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate SQL function safety",
+      "seconds": 0.045163926,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate SQL function safety - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Ensure data-database metadata and row counters",
+      "seconds": 0.03800092,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Ensure data-database metadata and row counters - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table3",
+      "seconds": 0.09544624,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table3 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table3",
+      "seconds": 0.093026397,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table3 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table3",
+      "seconds": 0.170611497,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table3 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table4",
+      "seconds": 0.035124231,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table4 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table4",
+      "seconds": 0.033279916,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table4 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table4",
+      "seconds": 0.049290126,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table4 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table1",
+      "seconds": 0.035773488,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table1 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table1",
+      "seconds": 0.03441444,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table1 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table1",
+      "seconds": 0.055823422,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table1 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table5",
+      "seconds": 0.049439008,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table5 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table5",
+      "seconds": 0.036153998,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table5 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table5",
+      "seconds": 0.062049492,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table5 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table6",
+      "seconds": 0.082948085,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table6 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table6",
+      "seconds": 0.060362046,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table6 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table6",
+      "seconds": 0.037244601,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table6 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table2",
+      "seconds": 0.034649503,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Verify destination public.table2 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table2",
+      "seconds": 0.054171772,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Read row counter for public.table2 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table2",
+      "seconds": 0.036946328,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "preflight",
+      "name": "Validate managed dependencies for public.table2 - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "prepare",
+      "name": "Build protected transactional SQL batch - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Expansion database batch envelope",
+      "seconds": 89.492784886,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": false
+    },
+    {
+      "stage": "recovery",
+      "name": "Acquire job session lock before snapshot",
+      "seconds": 0.031854,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Initialize database transaction",
+      "seconds": 0.000259,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Acquire destination table locks",
+      "seconds": 0.00049,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Scan source and build dependency manifest",
+      "seconds": 0.036984,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Insert into public.table3 (statement 1)",
+      "seconds": 0.275643,
+      "measurement": "postgresql_backend_wall",
+      "rows": 4,
+      "destination": "public.table3",
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Insert into public.table4 (statement 1)",
+      "seconds": 0.253158,
+      "measurement": "postgresql_backend_wall",
+      "rows": 26,
+      "destination": "public.table4",
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Insert into public.table1 (statement 1)",
+      "seconds": 77.803695,
+      "measurement": "postgresql_backend_wall",
+      "rows": 100000,
+      "destination": "public.table1",
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Insert into public.table5 (statement 1)",
+      "seconds": 1.77338,
+      "measurement": "postgresql_backend_wall",
+      "rows": 100000,
+      "destination": "public.table5",
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Insert into public.table6 (statement 1)",
+      "seconds": 2.539574,
+      "measurement": "postgresql_backend_wall",
+      "rows": 100000,
+      "destination": "public.table6",
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Insert into public.table2 (statement 1)",
+      "seconds": 6.176747,
+      "measurement": "postgresql_backend_wall",
+      "rows": 232386,
+      "destination": "public.table2",
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Commit durable recovery receipt",
+      "seconds": 0.426258,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Commit expansion transaction",
+      "seconds": 0.004476,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Release job session lock",
+      "seconds": 0.000515,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the server session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "execute",
+      "name": "Parse database manifest and timing telemetry - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Check atomic version-finalization receipt",
+      "seconds": 0.052149969,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Check atomic version-finalization receipt - server command 2",
+      "seconds": 0.038270226,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Check atomic version-finalization receipt - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Ensure control metadata for version registration",
+      "seconds": 0.040937133,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Ensure control metadata for version registration - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Build atomic version registration SQL - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Version database batch envelope",
+      "seconds": 0.093248093,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": false
+    },
+    {
+      "stage": "version",
+      "name": "Acquire version lock for table1",
+      "seconds": 0.000774,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": "table1",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Acquire version lock for table2",
+      "seconds": 0.000413,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": "table2",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Acquire version lock for table3",
+      "seconds": 0.000379,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": "table3",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Acquire version lock for table4",
+      "seconds": 0.000415,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": "table4",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Acquire version lock for table5",
+      "seconds": 0.000441,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": "table5",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Acquire version lock for table6",
+      "seconds": 0.000422,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": "table6",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Register version and dependency for public.table3",
+      "seconds": 0.009232,
+      "measurement": "postgresql_backend_wall",
+      "rows": 1,
+      "destination": "public.table3",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Register version and dependency for public.table4",
+      "seconds": 0.001442,
+      "measurement": "postgresql_backend_wall",
+      "rows": 1,
+      "destination": "public.table4",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Register version and dependency for public.table1",
+      "seconds": 0.003007,
+      "measurement": "postgresql_backend_wall",
+      "rows": 1,
+      "destination": "public.table1",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Register version and dependency for public.table5",
+      "seconds": 0.001276,
+      "measurement": "postgresql_backend_wall",
+      "rows": 1,
+      "destination": "public.table5",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Register version and dependency for public.table6",
+      "seconds": 0.001448,
+      "measurement": "postgresql_backend_wall",
+      "rows": 1,
+      "destination": "public.table6",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Register version and dependency for public.table2",
+      "seconds": 0.001468,
+      "measurement": "postgresql_backend_wall",
+      "rows": 1,
+      "destination": "public.table2",
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "recovery",
+      "name": "Commit durable recovery receipt",
+      "seconds": 0.001419,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Commit atomic version batch",
+      "seconds": 0.002039,
+      "measurement": "postgresql_backend_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured with PostgreSQL clock_timestamp() in the control database session; SSH transport is excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "version",
+      "name": "Parse version registration results and timing telemetry - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "refresh",
+      "name": "Invalidate destination filter caches - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "refresh",
+      "name": "Reload database table catalog",
+      "seconds": 0.035620428,
+      "measurement": "remote_server_wall",
+      "rows": null,
+      "destination": null,
+      "details": "Measured by the Linux server around the remote command; SSH connection and result-return transit are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "refresh",
+      "name": "Reload database table catalog - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "refresh",
+      "name": "Rebuild table navigation controls - local Python CPU",
+      "seconds": 0.078125,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    },
+    {
+      "stage": "refresh",
+      "name": "Build completion summary - local Python CPU",
+      "seconds": 0.0,
+      "measurement": "local_python_cpu",
+      "rows": null,
+      "destination": null,
+      "details": "Per-thread CPU time; blocking, SSH transit, and remote database wait are excluded.",
+      "include_in_total": true
+    }
+  ],
+  "benchmark_scope": "unchanged Windows GUI worker with Linux PostgreSQL over SSH",
+  "local_environment_parity": true,
+  "organizer_score": null,
+  "sampled_peak_container_working_set_bytes": 605728768,
+  "resource_sample_count": 99,
+  "resource_monitor_enabled": true,
+  "resource_method": "cgroup memory.current minus inactive_file; 0.5s wait between calls; container includes PostgreSQL and SSH",
+  "temporary_disk_peak_bytes": null,
+  "disk_sampling": {
+    "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+    "requested_wait_between_scans_seconds": 0.5,
+    "sample_count": 99,
+    "complete_scan_count": 99,
+    "failed_scan_count": 0,
+    "max_observed_start_gap_seconds": 2.101011299993843,
+    "max_observed_scan_duration_seconds": 1.592658499997924,
+    "sampled_peak_ephemeral_apparent_bytes": 164044800,
+    "sampled_peak_ephemeral_allocated_bytes": 164044800,
+    "sampled_peak_executor_work_files_apparent_bytes": 163995648,
+    "sampled_peak_sql_temp_relations_apparent_bytes": 49152,
+    "exact_peak": false,
+    "global_intermediate_disk_peak_bytes": null,
+    "limitations": [
+      "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+      "Category maxima occur independently; the combined maximum is computed per scan.",
+      "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+      "Instrumentation overhead and real Linux calibration remain to be measured."
+    ]
+  },
+  "resource_samples": [
+    {
+      "started_monotonic_seconds": 77261.8920704,
+      "finished_monotonic_seconds": 77262.107615,
+      "scan_complete": true,
+      "working_set_bytes": 81133568,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        }
+      },
+      "ephemeral_apparent_bytes": 0,
+      "ephemeral_allocated_bytes": 0
+    },
+    {
+      "started_monotonic_seconds": 77262.6116156,
+      "finished_monotonic_seconds": 77262.9503299,
+      "scan_complete": true,
+      "working_set_bytes": 291295232,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        }
+      },
+      "ephemeral_apparent_bytes": 0,
+      "ephemeral_allocated_bytes": 0
+    },
+    {
+      "started_monotonic_seconds": 77263.461219,
+      "finished_monotonic_seconds": 77263.7383823,
+      "scan_complete": true,
+      "working_set_bytes": 293142528,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        }
+      },
+      "ephemeral_apparent_bytes": 0,
+      "ephemeral_allocated_bytes": 0
+    },
+    {
+      "started_monotonic_seconds": 77264.2464286,
+      "finished_monotonic_seconds": 77264.4391111,
+      "scan_complete": true,
+      "working_set_bytes": 289894400,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        }
+      },
+      "ephemeral_apparent_bytes": 0,
+      "ephemeral_allocated_bytes": 0
+    },
+    {
+      "started_monotonic_seconds": 77264.946216,
+      "finished_monotonic_seconds": 77265.3051185,
+      "scan_complete": true,
+      "working_set_bytes": 292593664,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77265.8203463,
+      "finished_monotonic_seconds": 77266.1213014,
+      "scan_complete": true,
+      "working_set_bytes": 298143744,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77266.6237014,
+      "finished_monotonic_seconds": 77267.0018663,
+      "scan_complete": true,
+      "working_set_bytes": 299368448,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 5226496,
+          "allocated_bytes": 5226496,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 5275648,
+      "ephemeral_allocated_bytes": 5275648
+    },
+    {
+      "started_monotonic_seconds": 77267.5147839,
+      "finished_monotonic_seconds": 77267.8948486,
+      "scan_complete": true,
+      "working_set_bytes": 299352064,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 7053312,
+          "allocated_bytes": 7053312,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 7102464,
+      "ephemeral_allocated_bytes": 7102464
+    },
+    {
+      "started_monotonic_seconds": 77268.4013093,
+      "finished_monotonic_seconds": 77268.6642022,
+      "scan_complete": true,
+      "working_set_bytes": 299020288,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 9060352,
+          "allocated_bytes": 9060352,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 9109504,
+      "ephemeral_allocated_bytes": 9109504
+    },
+    {
+      "started_monotonic_seconds": 77269.1777442,
+      "finished_monotonic_seconds": 77269.4426397,
+      "scan_complete": true,
+      "working_set_bytes": 299327488,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 13885440,
+          "allocated_bytes": 13885440,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 13934592,
+      "ephemeral_allocated_bytes": 13934592
+    },
+    {
+      "started_monotonic_seconds": 77269.9451624,
+      "finished_monotonic_seconds": 77270.3228574,
+      "scan_complete": true,
+      "working_set_bytes": 299118592,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 17219584,
+          "allocated_bytes": 17219584,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 17268736,
+      "ephemeral_allocated_bytes": 17268736
+    },
+    {
+      "started_monotonic_seconds": 77270.8323324,
+      "finished_monotonic_seconds": 77272.0748449,
+      "scan_complete": true,
+      "working_set_bytes": 298311680,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 21528576,
+          "allocated_bytes": 21528576,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 21577728,
+      "ephemeral_allocated_bytes": 21577728
+    },
+    {
+      "started_monotonic_seconds": 77272.5914044,
+      "finished_monotonic_seconds": 77272.9537814,
+      "scan_complete": true,
+      "working_set_bytes": 298528768,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 25526272,
+          "allocated_bytes": 25526272,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 25575424,
+      "ephemeral_allocated_bytes": 25575424
+    },
+    {
+      "started_monotonic_seconds": 77273.4583015,
+      "finished_monotonic_seconds": 77273.837995,
+      "scan_complete": true,
+      "working_set_bytes": 299900928,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 27443200,
+          "allocated_bytes": 27443200,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 27492352,
+      "ephemeral_allocated_bytes": 27492352
+    },
+    {
+      "started_monotonic_seconds": 77274.3448991,
+      "finished_monotonic_seconds": 77274.6256067,
+      "scan_complete": true,
+      "working_set_bytes": 305307648,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 29573120,
+          "allocated_bytes": 29573120,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 29622272,
+      "ephemeral_allocated_bytes": 29622272
+    },
+    {
+      "started_monotonic_seconds": 77275.1387547,
+      "finished_monotonic_seconds": 77275.5066648,
+      "scan_complete": true,
+      "working_set_bytes": 300523520,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 32210944,
+          "allocated_bytes": 32210944,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 32260096,
+      "ephemeral_allocated_bytes": 32260096
+    },
+    {
+      "started_monotonic_seconds": 77276.017876,
+      "finished_monotonic_seconds": 77276.2967072,
+      "scan_complete": true,
+      "working_set_bytes": 300429312,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 33497088,
+          "allocated_bytes": 33497088,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 33546240,
+      "ephemeral_allocated_bytes": 33546240
+    },
+    {
+      "started_monotonic_seconds": 77276.7999018,
+      "finished_monotonic_seconds": 77277.0832461,
+      "scan_complete": true,
+      "working_set_bytes": 298799104,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 36675584,
+          "allocated_bytes": 36675584,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 36724736,
+      "ephemeral_allocated_bytes": 36724736
+    },
+    {
+      "started_monotonic_seconds": 77277.5999523,
+      "finished_monotonic_seconds": 77278.0519453,
+      "scan_complete": true,
+      "working_set_bytes": 305500160,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 39985152,
+          "allocated_bytes": 39985152,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 40034304,
+      "ephemeral_allocated_bytes": 40034304
+    },
+    {
+      "started_monotonic_seconds": 77278.5597857,
+      "finished_monotonic_seconds": 77278.8593087,
+      "scan_complete": true,
+      "working_set_bytes": 300752896,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 42090496,
+          "allocated_bytes": 42090496,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 42139648,
+      "ephemeral_allocated_bytes": 42139648
+    },
+    {
+      "started_monotonic_seconds": 77279.3725238,
+      "finished_monotonic_seconds": 77279.7198964,
+      "scan_complete": true,
+      "working_set_bytes": 300240896,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 48029696,
+          "allocated_bytes": 48029696,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 48078848,
+      "ephemeral_allocated_bytes": 48078848
+    },
+    {
+      "started_monotonic_seconds": 77280.2248208,
+      "finished_monotonic_seconds": 77280.7173083,
+      "scan_complete": true,
+      "working_set_bytes": 300146688,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 51470336,
+          "allocated_bytes": 51470336,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 51519488,
+      "ephemeral_allocated_bytes": 51519488
+    },
+    {
+      "started_monotonic_seconds": 77281.2254754,
+      "finished_monotonic_seconds": 77282.8181339,
+      "scan_complete": true,
+      "working_set_bytes": 298807296,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 56483840,
+          "allocated_bytes": 56483840,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 56532992,
+      "ephemeral_allocated_bytes": 56532992
+    },
+    {
+      "started_monotonic_seconds": 77283.3264867,
+      "finished_monotonic_seconds": 77284.2650979,
+      "scan_complete": true,
+      "working_set_bytes": 299290624,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 59875328,
+          "allocated_bytes": 59875328,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 59924480,
+      "ephemeral_allocated_bytes": 59924480
+    },
+    {
+      "started_monotonic_seconds": 77284.7688931,
+      "finished_monotonic_seconds": 77285.1004159,
+      "scan_complete": true,
+      "working_set_bytes": 301105152,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 63119360,
+          "allocated_bytes": 63123456,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 63168512,
+      "ephemeral_allocated_bytes": 63172608
+    },
+    {
+      "started_monotonic_seconds": 77285.6113404,
+      "finished_monotonic_seconds": 77286.0145422,
+      "scan_complete": true,
+      "working_set_bytes": 300802048,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 66494464,
+          "allocated_bytes": 66494464,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 66543616,
+      "ephemeral_allocated_bytes": 66543616
+    },
+    {
+      "started_monotonic_seconds": 77286.5414374,
+      "finished_monotonic_seconds": 77287.0865432,
+      "scan_complete": true,
+      "working_set_bytes": 301281280,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 71524352,
+          "allocated_bytes": 71524352,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 71573504,
+      "ephemeral_allocated_bytes": 71573504
+    },
+    {
+      "started_monotonic_seconds": 77287.5947736,
+      "finished_monotonic_seconds": 77288.4459833,
+      "scan_complete": true,
+      "working_set_bytes": 301060096,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 78143488,
+          "allocated_bytes": 78143488,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 78192640,
+      "ephemeral_allocated_bytes": 78192640
+    },
+    {
+      "started_monotonic_seconds": 77288.962774,
+      "finished_monotonic_seconds": 77289.5374755,
+      "scan_complete": true,
+      "working_set_bytes": 299409408,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 82673664,
+          "allocated_bytes": 82673664,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 82722816,
+      "ephemeral_allocated_bytes": 82722816
+    },
+    {
+      "started_monotonic_seconds": 77290.0457314,
+      "finished_monotonic_seconds": 77290.9746243,
+      "scan_complete": true,
+      "working_set_bytes": 299536384,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 88563712,
+          "allocated_bytes": 88563712,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 88612864,
+      "ephemeral_allocated_bytes": 88612864
+    },
+    {
+      "started_monotonic_seconds": 77291.4859709,
+      "finished_monotonic_seconds": 77292.4145536,
+      "scan_complete": true,
+      "working_set_bytes": 300490752,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 96116736,
+          "allocated_bytes": 96116736,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 96165888,
+      "ephemeral_allocated_bytes": 96165888
+    },
+    {
+      "started_monotonic_seconds": 77292.9209496,
+      "finished_monotonic_seconds": 77293.5517438,
+      "scan_complete": true,
+      "working_set_bytes": 300765184,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 101777408,
+          "allocated_bytes": 101777408,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 101826560,
+      "ephemeral_allocated_bytes": 101826560
+    },
+    {
+      "started_monotonic_seconds": 77294.057437,
+      "finished_monotonic_seconds": 77295.0196563,
+      "scan_complete": true,
+      "working_set_bytes": 300441600,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 109903872,
+          "allocated_bytes": 109903872,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 109953024,
+      "ephemeral_allocated_bytes": 109953024
+    },
+    {
+      "started_monotonic_seconds": 77295.5337963,
+      "finished_monotonic_seconds": 77295.9218642,
+      "scan_complete": true,
+      "working_set_bytes": 302481408,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 115236864,
+          "allocated_bytes": 115236864,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 115286016,
+      "ephemeral_allocated_bytes": 115286016
+    },
+    {
+      "started_monotonic_seconds": 77296.4248528,
+      "finished_monotonic_seconds": 77296.7430762,
+      "scan_complete": true,
+      "working_set_bytes": 302518272,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 120127488,
+          "allocated_bytes": 120127488,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 120176640,
+      "ephemeral_allocated_bytes": 120176640
+    },
+    {
+      "started_monotonic_seconds": 77297.2589053,
+      "finished_monotonic_seconds": 77297.6699825,
+      "scan_complete": true,
+      "working_set_bytes": 303124480,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 125632512,
+          "allocated_bytes": 125632512,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 125681664,
+      "ephemeral_allocated_bytes": 125681664
+    },
+    {
+      "started_monotonic_seconds": 77298.1838131,
+      "finished_monotonic_seconds": 77298.4416211,
+      "scan_complete": true,
+      "working_set_bytes": 303296512,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 133079040,
+          "allocated_bytes": 133079040,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 133128192,
+      "ephemeral_allocated_bytes": 133128192
+    },
+    {
+      "started_monotonic_seconds": 77298.9469961,
+      "finished_monotonic_seconds": 77299.4433079,
+      "scan_complete": true,
+      "working_set_bytes": 301604864,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 140550144,
+          "allocated_bytes": 140550144,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 140599296,
+      "ephemeral_allocated_bytes": 140599296
+    },
+    {
+      "started_monotonic_seconds": 77299.9595599,
+      "finished_monotonic_seconds": 77300.459756,
+      "scan_complete": true,
+      "working_set_bytes": 303239168,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 145006592,
+          "allocated_bytes": 145006592,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 145055744,
+      "ephemeral_allocated_bytes": 145055744
+    },
+    {
+      "started_monotonic_seconds": 77300.9621475,
+      "finished_monotonic_seconds": 77301.8340622,
+      "scan_complete": true,
+      "working_set_bytes": 302845952,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 149856256,
+          "allocated_bytes": 149856256,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 149905408,
+      "ephemeral_allocated_bytes": 149905408
+    },
+    {
+      "started_monotonic_seconds": 77302.343453,
+      "finished_monotonic_seconds": 77303.4817064,
+      "scan_complete": true,
+      "working_set_bytes": 303779840,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 156246016,
+          "allocated_bytes": 156246016,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 156295168,
+      "ephemeral_allocated_bytes": 156295168
+    },
+    {
+      "started_monotonic_seconds": 77303.9861296,
+      "finished_monotonic_seconds": 77304.5685414,
+      "scan_complete": true,
+      "working_set_bytes": 303841280,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 159662080,
+          "allocated_bytes": 159662080,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 159711232,
+      "ephemeral_allocated_bytes": 159711232
+    },
+    {
+      "started_monotonic_seconds": 77305.0774267,
+      "finished_monotonic_seconds": 77305.4349555,
+      "scan_complete": true,
+      "working_set_bytes": 325885952,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77305.9492532,
+      "finished_monotonic_seconds": 77306.2592565,
+      "scan_complete": true,
+      "working_set_bytes": 343633920,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77306.7716937,
+      "finished_monotonic_seconds": 77306.9697093,
+      "scan_complete": true,
+      "working_set_bytes": 371671040,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77307.4732655,
+      "finished_monotonic_seconds": 77307.6688418,
+      "scan_complete": true,
+      "working_set_bytes": 379023360,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77308.1739655,
+      "finished_monotonic_seconds": 77308.5636571,
+      "scan_complete": true,
+      "working_set_bytes": 429838336,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77309.0786084,
+      "finished_monotonic_seconds": 77309.4164326,
+      "scan_complete": true,
+      "working_set_bytes": 461029376,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77309.9303865,
+      "finished_monotonic_seconds": 77310.1663527,
+      "scan_complete": true,
+      "working_set_bytes": 486498304,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77310.6788944,
+      "finished_monotonic_seconds": 77310.9176028,
+      "scan_complete": true,
+      "working_set_bytes": 488787968,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77311.4331425,
+      "finished_monotonic_seconds": 77311.7019979,
+      "scan_complete": true,
+      "working_set_bytes": 494477312,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77312.2146376,
+      "finished_monotonic_seconds": 77312.8270563,
+      "scan_complete": true,
+      "working_set_bytes": 498089984,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77313.3367072,
+      "finished_monotonic_seconds": 77313.794066,
+      "scan_complete": true,
+      "working_set_bytes": 503328768,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77314.3010372,
+      "finished_monotonic_seconds": 77315.1874354,
+      "scan_complete": true,
+      "working_set_bytes": 517206016,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77315.6902653,
+      "finished_monotonic_seconds": 77316.1487015,
+      "scan_complete": true,
+      "working_set_bytes": 523386880,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77316.6619851,
+      "finished_monotonic_seconds": 77317.0033178,
+      "scan_complete": true,
+      "working_set_bytes": 528261120,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77317.5087644,
+      "finished_monotonic_seconds": 77318.0633573,
+      "scan_complete": true,
+      "working_set_bytes": 533876736,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77318.5742729,
+      "finished_monotonic_seconds": 77318.8071099,
+      "scan_complete": true,
+      "working_set_bytes": 538177536,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77319.3192373,
+      "finished_monotonic_seconds": 77319.6016173,
+      "scan_complete": true,
+      "working_set_bytes": 543719424,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77320.1142369,
+      "finished_monotonic_seconds": 77320.4039406,
+      "scan_complete": true,
+      "working_set_bytes": 548192256,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77320.9124801,
+      "finished_monotonic_seconds": 77321.2490044,
+      "scan_complete": true,
+      "working_set_bytes": 554741760,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77321.7593847,
+      "finished_monotonic_seconds": 77322.1082708,
+      "scan_complete": true,
+      "working_set_bytes": 558592000,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77322.6183859,
+      "finished_monotonic_seconds": 77322.9490861,
+      "scan_complete": true,
+      "working_set_bytes": 562323456,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77323.4643889,
+      "finished_monotonic_seconds": 77323.7549985,
+      "scan_complete": true,
+      "working_set_bytes": 562941952,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77324.2606267,
+      "finished_monotonic_seconds": 77324.8635292,
+      "scan_complete": true,
+      "working_set_bytes": 575291392,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77325.3784503,
+      "finished_monotonic_seconds": 77325.7235968,
+      "scan_complete": true,
+      "working_set_bytes": 578940928,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77326.2389125,
+      "finished_monotonic_seconds": 77327.507037,
+      "scan_complete": true,
+      "working_set_bytes": 583172096,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77328.0132813,
+      "finished_monotonic_seconds": 77328.3011177,
+      "scan_complete": true,
+      "working_set_bytes": 587640832,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77328.8072094,
+      "finished_monotonic_seconds": 77329.5341783,
+      "scan_complete": true,
+      "working_set_bytes": 592445440,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77330.0506325,
+      "finished_monotonic_seconds": 77331.4096395,
+      "scan_complete": true,
+      "working_set_bytes": 594644992,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77331.9208289,
+      "finished_monotonic_seconds": 77332.0933926,
+      "scan_complete": true,
+      "working_set_bytes": 596549632,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77332.5986382,
+      "finished_monotonic_seconds": 77333.3152863,
+      "scan_complete": true,
+      "working_set_bytes": 596918272,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77333.8271698,
+      "finished_monotonic_seconds": 77334.8992913,
+      "scan_complete": true,
+      "working_set_bytes": 598990848,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77335.4028344,
+      "finished_monotonic_seconds": 77335.9074874,
+      "scan_complete": true,
+      "working_set_bytes": 601337856,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77336.4112569,
+      "finished_monotonic_seconds": 77336.6273938,
+      "scan_complete": true,
+      "working_set_bytes": 600788992,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77337.1358321,
+      "finished_monotonic_seconds": 77337.4407752,
+      "scan_complete": true,
+      "working_set_bytes": 601198592,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77337.9585641,
+      "finished_monotonic_seconds": 77338.1828719,
+      "scan_complete": true,
+      "working_set_bytes": 604213248,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77338.6939721,
+      "finished_monotonic_seconds": 77338.980313,
+      "scan_complete": true,
+      "working_set_bytes": 602816512,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77339.4893948,
+      "finished_monotonic_seconds": 77339.9781497,
+      "scan_complete": true,
+      "working_set_bytes": 601075712,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77340.4918011,
+      "finished_monotonic_seconds": 77341.3958864,
+      "scan_complete": true,
+      "working_set_bytes": 601554944,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77341.9052512,
+      "finished_monotonic_seconds": 77342.2044561,
+      "scan_complete": true,
+      "working_set_bytes": 605728768,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77342.7118725,
+      "finished_monotonic_seconds": 77343.3953584,
+      "scan_complete": true,
+      "working_set_bytes": 602959872,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 163995648,
+          "allocated_bytes": 163995648,
+          "files": 1
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 164044800,
+      "ephemeral_allocated_bytes": 164044800
+    },
+    {
+      "started_monotonic_seconds": 77343.906412,
+      "finished_monotonic_seconds": 77344.1400598,
+      "scan_complete": true,
+      "working_set_bytes": 434319360,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77344.6435057,
+      "finished_monotonic_seconds": 77344.8056598,
+      "scan_complete": true,
+      "working_set_bytes": 437153792,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77345.3173299,
+      "finished_monotonic_seconds": 77345.4961613,
+      "scan_complete": true,
+      "working_set_bytes": 436064256,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77346.0115087,
+      "finished_monotonic_seconds": 77346.1954748,
+      "scan_complete": true,
+      "working_set_bytes": 437809152,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77346.7135727,
+      "finished_monotonic_seconds": 77346.875118,
+      "scan_complete": true,
+      "working_set_bytes": 439205888,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77347.3903294,
+      "finished_monotonic_seconds": 77347.7157921,
+      "scan_complete": true,
+      "working_set_bytes": 439746560,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77348.2307531,
+      "finished_monotonic_seconds": 77348.5668477,
+      "scan_complete": true,
+      "working_set_bytes": 438587392,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77349.0719447,
+      "finished_monotonic_seconds": 77349.3651361,
+      "scan_complete": true,
+      "working_set_bytes": 438665216,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77349.8695733,
+      "finished_monotonic_seconds": 77350.1611779,
+      "scan_complete": true,
+      "working_set_bytes": 438132736,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77350.6809988,
+      "finished_monotonic_seconds": 77350.8675137,
+      "scan_complete": true,
+      "working_set_bytes": 440307712,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77351.381538,
+      "finished_monotonic_seconds": 77351.6364931,
+      "scan_complete": true,
+      "working_set_bytes": 441966592,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77352.1402665,
+      "finished_monotonic_seconds": 77352.3275362,
+      "scan_complete": true,
+      "working_set_bytes": 442871808,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77352.8301031,
+      "finished_monotonic_seconds": 77353.0575495,
+      "scan_complete": true,
+      "working_set_bytes": 443502592,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77353.5632481,
+      "finished_monotonic_seconds": 77353.7758612,
+      "scan_complete": true,
+      "working_set_bytes": 442077184,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77354.2823189,
+      "finished_monotonic_seconds": 77354.4370893,
+      "scan_complete": true,
+      "working_set_bytes": 439656448,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 49152,
+          "allocated_bytes": 49152,
+          "files": 7
+        }
+      },
+      "ephemeral_apparent_bytes": 49152,
+      "ephemeral_allocated_bytes": 49152
+    },
+    {
+      "started_monotonic_seconds": 77354.9512328,
+      "finished_monotonic_seconds": 77355.1299662,
+      "scan_complete": true,
+      "working_set_bytes": 432005120,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        }
+      },
+      "ephemeral_apparent_bytes": 0,
+      "ephemeral_allocated_bytes": 0
+    },
+    {
+      "started_monotonic_seconds": 77355.6409527,
+      "finished_monotonic_seconds": 77355.8168134,
+      "scan_complete": true,
+      "working_set_bytes": 432345088,
+      "categories": {
+        "executor_work_files": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        },
+        "sql_temp_relations": {
+          "apparent_bytes": 0,
+          "allocated_bytes": 0,
+          "files": 0
+        }
+      },
+      "ephemeral_apparent_bytes": 0,
+      "ephemeral_allocated_bytes": 0
+    }
+  ],
+  "sampled_peak_postgresql_temporary_files_bytes": 163995648,
+  "postgresql_temporary_bytes_written": 163995648,
+  "lab_container": "queryfoundry-database-1",
+  "git_commit": "ffea4a5c3a33662b20719f51166ae937e86defe7",
+  "mode": "lazy_keys",
+  "repeat": 0,
+  "measured_processing_total_seconds": 91.440530099,
+  "six_table_multiset_equivalence": true,
+  "overhead_pair": 0
+}

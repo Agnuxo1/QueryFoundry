@@ -1,0 +1,259 @@
+{
+  "timestamp_utc": "2026-09-30T19:12:43.785129+00:00",
+  "mode": "lazy_keys",
+  "scope": "full unchanged Windows GUI worker, Linux SSH, 100000 official rows, recovery enabled",
+  "paired_rounds": 4,
+  "records": [
+    {
+      "pair": 0,
+      "monitor_enabled": true,
+      "seconds": 91.440530099,
+      "report": "durable-gui/gui-lazy_keys-0.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 99,
+        "complete_scan_count": 99,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": 2.101011299993843,
+        "max_observed_scan_duration_seconds": 1.592658499997924,
+        "sampled_peak_ephemeral_apparent_bytes": 164044800,
+        "sampled_peak_ephemeral_allocated_bytes": 164044800,
+        "sampled_peak_executor_work_files_apparent_bytes": 163995648,
+        "sampled_peak_sql_temp_relations_apparent_bytes": 49152,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 0,
+      "monitor_enabled": false,
+      "seconds": 19.078137832,
+      "report": "durable-gui/gui-lazy_keys-1.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 0,
+        "complete_scan_count": 0,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": null,
+        "max_observed_scan_duration_seconds": null,
+        "sampled_peak_ephemeral_apparent_bytes": null,
+        "sampled_peak_ephemeral_allocated_bytes": null,
+        "sampled_peak_executor_work_files_apparent_bytes": null,
+        "sampled_peak_sql_temp_relations_apparent_bytes": null,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 1,
+      "monitor_enabled": false,
+      "seconds": 15.147900817,
+      "report": "durable-gui/gui-lazy_keys-3.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 0,
+        "complete_scan_count": 0,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": null,
+        "max_observed_scan_duration_seconds": null,
+        "sampled_peak_ephemeral_apparent_bytes": null,
+        "sampled_peak_ephemeral_allocated_bytes": null,
+        "sampled_peak_executor_work_files_apparent_bytes": null,
+        "sampled_peak_sql_temp_relations_apparent_bytes": null,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 1,
+      "monitor_enabled": true,
+      "seconds": 13.846314184,
+      "report": "durable-gui/gui-lazy_keys-2.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 24,
+        "complete_scan_count": 24,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": 0.7162682999914978,
+        "max_observed_scan_duration_seconds": 0.20603739999933168,
+        "sampled_peak_ephemeral_apparent_bytes": 164044800,
+        "sampled_peak_ephemeral_allocated_bytes": 164048896,
+        "sampled_peak_executor_work_files_apparent_bytes": 163995648,
+        "sampled_peak_sql_temp_relations_apparent_bytes": 49152,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 2,
+      "monitor_enabled": true,
+      "seconds": 14.327761152,
+      "report": "durable-gui/gui-lazy_keys-4.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 25,
+        "complete_scan_count": 25,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": 0.7047057000017958,
+        "max_observed_scan_duration_seconds": 0.19383239999297075,
+        "sampled_peak_ephemeral_apparent_bytes": 164044800,
+        "sampled_peak_ephemeral_allocated_bytes": 164044800,
+        "sampled_peak_executor_work_files_apparent_bytes": 163995648,
+        "sampled_peak_sql_temp_relations_apparent_bytes": 49152,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 2,
+      "monitor_enabled": false,
+      "seconds": 12.307123502,
+      "report": "durable-gui/gui-lazy_keys-5.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 0,
+        "complete_scan_count": 0,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": null,
+        "max_observed_scan_duration_seconds": null,
+        "sampled_peak_ephemeral_apparent_bytes": null,
+        "sampled_peak_ephemeral_allocated_bytes": null,
+        "sampled_peak_executor_work_files_apparent_bytes": null,
+        "sampled_peak_sql_temp_relations_apparent_bytes": null,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 3,
+      "monitor_enabled": false,
+      "seconds": 14.796727801,
+      "report": "durable-gui/gui-lazy_keys-7.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 0,
+        "complete_scan_count": 0,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": null,
+        "max_observed_scan_duration_seconds": null,
+        "sampled_peak_ephemeral_apparent_bytes": null,
+        "sampled_peak_ephemeral_allocated_bytes": null,
+        "sampled_peak_executor_work_files_apparent_bytes": null,
+        "sampled_peak_sql_temp_relations_apparent_bytes": null,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    },
+    {
+      "pair": 3,
+      "monitor_enabled": true,
+      "seconds": 13.553285362,
+      "report": "durable-gui/gui-lazy_keys-6.json",
+      "six_table_multiset_equivalence": true,
+      "disk_sampling": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 24,
+        "complete_scan_count": 24,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": 0.7023247000033734,
+        "max_observed_scan_duration_seconds": 0.190917999992962,
+        "sampled_peak_ephemeral_apparent_bytes": 164044800,
+        "sampled_peak_ephemeral_allocated_bytes": 164044800,
+        "sampled_peak_executor_work_files_apparent_bytes": 163995648,
+        "sampled_peak_sql_temp_relations_apparent_bytes": 49152,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "official_source_modified": false,
+  "global_intermediate_disk_peak_bytes": null,
+  "base_git_commit": "ffea4a5c3a33662b20719f51166ae937e86defe7",
+  "tested_source_sha256": {
+    "scripts/benchmark_gui.py": "892f65885e35a4a2790f99162838c857ae810312e689ea31bed18d721213bec6",
+    "scripts/resource_sampling.py": "68f93434db107b3857162f145c9291b8c198982aebc141498cb9f76524fd307b",
+    "scripts/research_monitor_overhead.py": "8105b113720ec1d7638f31badf92585e3c53c295a2a634015b963a755224f755"
+  },
+  "median_seconds": {
+    "monitor_on": 14.087037668,
+    "monitor_off": 14.972314309
+  },
+  "paired_time_change_percent": [
+    379.2948394870366,
+    -8.59252149010159,
+    16.418439692033914,
+    -8.403496068339944
+  ],
+  "median_paired_time_change_percent": 4.007471811846985,
+  "limitations": [
+    "Four paired rounds on one machine, exploratory; not a significance test.",
+    "Measures the whole resource monitor, including memory sampling and Docker calls.",
+    "Sampled ephemeral space excludes persistent metadata, client caches/staging and WAL."
+  ],
+  "tested_sampler_git_revision": "d6eae5690800ca1731f1ec4ed0f61a54e3de81b2",
+  "metrology_clarification": "Filesystem traversal is non-atomic: sums may omit short peaks or combine noncoexistent states. Sampled maximum is not a guaranteed mathematical lower bound."
+}

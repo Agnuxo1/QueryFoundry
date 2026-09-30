@@ -1,0 +1,238 @@
+{
+  "timestamp_utc": "2026-09-30T19:08:43.149134+00:00",
+  "scope": "synthetic instrument calibration; not a competition benchmark",
+  "official_database_writes": false,
+  "postgres_version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+  "base_git_commit": "ffea4a5c3a33662b20719f51166ae937e86defe7",
+  "tested_sampler_sha256": "68f93434db107b3857162f145c9291b8c198982aebc141498cb9f76524fd307b",
+  "stages": {
+    "sql_temp": {
+      "oracle": {
+        "stage": "sql_temp",
+        "expected_apparent_bytes": 14647296,
+        "toast_bytes": 8609792,
+        "tablespace_bytes": 5914624
+      },
+      "samples": [
+        {
+          "started_monotonic_seconds": 77027.8989039,
+          "finished_monotonic_seconds": 77028.4952906,
+          "scan_complete": true,
+          "working_set_bytes": 77824000,
+          "categories": {
+            "executor_work_files": {
+              "apparent_bytes": 0,
+              "allocated_bytes": 0,
+              "files": 0
+            },
+            "sql_temp_relations": {
+              "apparent_bytes": 14647296,
+              "allocated_bytes": 14647296,
+              "files": 9
+            }
+          },
+          "ephemeral_apparent_bytes": 14647296,
+          "ephemeral_allocated_bytes": 14647296
+        },
+        {
+          "started_monotonic_seconds": 77028.4975444,
+          "finished_monotonic_seconds": 77028.6868921,
+          "scan_complete": true,
+          "working_set_bytes": 79937536,
+          "categories": {
+            "executor_work_files": {
+              "apparent_bytes": 0,
+              "allocated_bytes": 0,
+              "files": 0
+            },
+            "sql_temp_relations": {
+              "apparent_bytes": 14647296,
+              "allocated_bytes": 14647296,
+              "files": 9
+            }
+          },
+          "ephemeral_apparent_bytes": 14647296,
+          "ephemeral_allocated_bytes": 14647296
+        },
+        {
+          "started_monotonic_seconds": 77028.6891443,
+          "finished_monotonic_seconds": 77029.7647148,
+          "scan_complete": true,
+          "working_set_bytes": 81199104,
+          "categories": {
+            "executor_work_files": {
+              "apparent_bytes": 0,
+              "allocated_bytes": 0,
+              "files": 0
+            },
+            "sql_temp_relations": {
+              "apparent_bytes": 14647296,
+              "allocated_bytes": 14647296,
+              "files": 9
+            }
+          },
+          "ephemeral_apparent_bytes": 14647296,
+          "ephemeral_allocated_bytes": 14647296
+        }
+      ],
+      "summary": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 3,
+        "complete_scan_count": 3,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": 0.5986405000003288,
+        "max_observed_scan_duration_seconds": 1.0755704999901354,
+        "sampled_peak_ephemeral_apparent_bytes": 14647296,
+        "sampled_peak_ephemeral_allocated_bytes": 14647296,
+        "sampled_peak_executor_work_files_apparent_bytes": 0,
+        "sampled_peak_sql_temp_relations_apparent_bytes": 14647296,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      },
+      "other_session_catalog_visible_count": 0
+    },
+    "executor_spill": {
+      "oracle": {
+        "stage": "executor_spill",
+        "backend_pid": 158
+      },
+      "samples": [
+        {
+          "started_monotonic_seconds": 77036.3043853,
+          "finished_monotonic_seconds": 77037.3837363,
+          "scan_complete": true,
+          "working_set_bytes": 92254208,
+          "categories": {
+            "executor_work_files": {
+              "apparent_bytes": 9235232,
+              "allocated_bytes": 9236480,
+              "files": 2
+            },
+            "sql_temp_relations": {
+              "apparent_bytes": 0,
+              "allocated_bytes": 0,
+              "files": 0
+            }
+          },
+          "ephemeral_apparent_bytes": 9235232,
+          "ephemeral_allocated_bytes": 9236480
+        },
+        {
+          "started_monotonic_seconds": 77037.38649,
+          "finished_monotonic_seconds": 77037.5831,
+          "scan_complete": true,
+          "working_set_bytes": 85487616,
+          "categories": {
+            "executor_work_files": {
+              "apparent_bytes": 9235232,
+              "allocated_bytes": 9236480,
+              "files": 2
+            },
+            "sql_temp_relations": {
+              "apparent_bytes": 0,
+              "allocated_bytes": 0,
+              "files": 0
+            }
+          },
+          "ephemeral_apparent_bytes": 9235232,
+          "ephemeral_allocated_bytes": 9236480
+        },
+        {
+          "started_monotonic_seconds": 77037.5851431,
+          "finished_monotonic_seconds": 77037.7400684,
+          "scan_complete": true,
+          "working_set_bytes": 87433216,
+          "categories": {
+            "executor_work_files": {
+              "apparent_bytes": 9235232,
+              "allocated_bytes": 9236480,
+              "files": 2
+            },
+            "sql_temp_relations": {
+              "apparent_bytes": 0,
+              "allocated_bytes": 0,
+              "files": 0
+            }
+          },
+          "ephemeral_apparent_bytes": 9235232,
+          "ephemeral_allocated_bytes": 9236480
+        }
+      ],
+      "summary": {
+        "method": "Linux cgroup and GNU find; PGDATA/base and followed PGDATA/pg_tblspc",
+        "requested_wait_between_scans_seconds": 0.5,
+        "sample_count": 3,
+        "complete_scan_count": 3,
+        "failed_scan_count": 0,
+        "max_observed_start_gap_seconds": 1.0821047000063118,
+        "max_observed_scan_duration_seconds": 1.0793510000075912,
+        "sampled_peak_ephemeral_apparent_bytes": 9235232,
+        "sampled_peak_ephemeral_allocated_bytes": 9236480,
+        "sampled_peak_executor_work_files_apparent_bytes": 9235232,
+        "sampled_peak_sql_temp_relations_apparent_bytes": 0,
+        "exact_peak": false,
+        "global_intermediate_disk_peak_bytes": null,
+        "limitations": [
+          "Sequential, non-atomic scans can miss short-lived files or fail during deletion.",
+          "Category maxima occur independently; the combined maximum is computed per scan.",
+          "Persistent receipts, client caches/staging, WAL and volume provisioning are excluded.",
+          "Instrumentation overhead and real Linux calibration remain to be measured."
+        ]
+      }
+    }
+  },
+  "passed": true,
+  "global_intermediate_disk_peak_bytes": null,
+  "instrumentation_overhead_validated": false,
+  "baseline": {
+    "started_monotonic_seconds": 77025.763918,
+    "finished_monotonic_seconds": 77026.2290295,
+    "scan_complete": true,
+    "working_set_bytes": 78348288,
+    "categories": {
+      "executor_work_files": {
+        "apparent_bytes": 0,
+        "allocated_bytes": 0,
+        "files": 0
+      },
+      "sql_temp_relations": {
+        "apparent_bytes": 0,
+        "allocated_bytes": 0,
+        "files": 0
+      }
+    },
+    "ephemeral_apparent_bytes": 0,
+    "ephemeral_allocated_bytes": 0
+  },
+  "after_session": {
+    "started_monotonic_seconds": 77044.3316813,
+    "finished_monotonic_seconds": 77044.5229394,
+    "scan_complete": true,
+    "working_set_bytes": 75796480,
+    "categories": {
+      "executor_work_files": {
+        "apparent_bytes": 0,
+        "allocated_bytes": 0,
+        "files": 0
+      },
+      "sql_temp_relations": {
+        "apparent_bytes": 0,
+        "allocated_bytes": 0,
+        "files": 0
+      }
+    },
+    "ephemeral_apparent_bytes": 0,
+    "ephemeral_allocated_bytes": 0
+  },
+  "temporary_bytes_written": 9235232,
+  "disposable_resources_removed": true,
+  "tested_sampler_git_revision": "d6eae5690800ca1731f1ec4ed0f61a54e3de81b2",
+  "metrology_clarification": "Filesystem traversal is non-atomic: sums may omit short peaks or combine noncoexistent states. Sampled maximum is not a guaranteed mathematical lower bound."
+}
