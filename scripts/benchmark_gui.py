@@ -54,8 +54,10 @@ def reset_destinations():
     if label!=PROJECT: raise RuntimeError('Refusing to reset a non-laboratory container')
     names=','.join("'"+t+"'" for t in ORDER)
     sql('BEGIN; TRUNCATE '+','.join('public.'+t for t in ORDER)+' RESTART IDENTITY; '
+        "DO $qf_reset$ BEGIN IF to_regclass('public.pgdm_table_row_counts') IS NOT NULL THEN "
         'UPDATE public.pgdm_table_row_counts SET row_count=0,updated_at=clock_timestamp() '
-        'WHERE schema_name=\'public\' AND table_name IN ('+names+'); COMMIT;')
+        'WHERE schema_name=\'public\' AND table_name IN ('+names+'); '
+        'END IF; END $qf_reset$; COMMIT;')
 
 def run_once(mode,number):
     reset_destinations()
