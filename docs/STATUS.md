@@ -1,6 +1,6 @@
 # Factual release status - 5 October 2026
 
-Technical release closed; formal Kaggle submission is being prepared. After publication, reports/kaggle-submission.json records the actual submitted state, URL and immutable source commit. No organizer score or ranking is claimed.
+Formal Kaggle submission completed and verified as Submitted on 5 October 2026. reports/kaggle-submission.json records the actual state, public URL, attachment verification and immutable source commit 32c283f32fe35e9b5bd0e538bd6631f305863fb3. No organizer score or ranking is claimed.
 
 - 32 original files preserved. Primary payload_once with optional recovery; lazy_keys experimental.
 - Final nine 100k GUI/SSH/Linux runs: medians original 16.045867 s, payload_once 15.447215 s, lazy_keys 12.792425 s; six outputs equivalent in every run. n=3 exploratory; resource observer disabled, peaks unavailable.

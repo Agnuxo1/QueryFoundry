@@ -20,6 +20,9 @@ GUI, generator and fixed seed live byte-for-byte in `app/`; everything we add li
 Nothing here claims an official score or a 300-million-row capacity: every number below is a local,
 reproducible measurement with its scope stated.
 
+**Kaggle: Submitted, 5 October 2026.** [View the official writeup](https://www.kaggle.com/competitions/python-database-performance-optimization/writeups/queryfoundry-verifiable-jsonb-expansion-and-durab). Exact submitted source: `32c283f32fe35e9b5bd0e538bd6631f305863fb3`. [Verified receipt](reports/kaggle-submission.json). Source ZIP, PDF report and SHA-256 manifest are attached and their public downloads verified. No official score or rank has been assigned.
+
+
 ## Release evidence - 5 October 2026
 
 [Consolidated report](docs/WRITEUP.md) and [reproduction guide](docs/REPRODUCIBILITY.md). Final 100k, three-round GUI/SSH/Linux medians: original **16.046 s**, payload_once with recovery **15.447 s**, experimental lazy_keys **12.792 s**; all nine runs passed six-table equivalence. These are local exploratory observations. Figures and animated charts below describe earlier historical series.
