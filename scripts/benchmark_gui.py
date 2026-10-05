@@ -7,6 +7,7 @@ version registration, filter-cache invalidation and navigation refresh.
 import argparse
 from datetime import datetime, timezone
 import json
+import hashlib
 import os
 import re
 from pathlib import Path
@@ -133,6 +134,8 @@ def run_once(mode,number):
         result['postgresql_temporary_bytes_written']=max(0,int(sql("SELECT temp_bytes FROM pg_stat_database WHERE datname='kaggle_challenge';"))-temp_before)
         result['lab_container']=CONTAINER
         result['git_commit']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+        result['runtime_source_sha256']={str(path.relative_to(ROOT)).replace('\\','/'):hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in sorted(list((ROOT/'dbperf').glob('*.py'))+[ROOT/'launch.py',Path(__file__).resolve(),ROOT/'scripts/resource_sampling.py'])}
         result['mode']=mode; result['repeat']=number
         total=sum(float(x.get('seconds') or 0) for x in result.get('items',[]) if x.get('include_in_total',True))
         result['measured_processing_total_seconds']=total
@@ -166,7 +169,7 @@ def summarize(records,repeats):
         'repeats':repeats,'median_seconds':medians,'speedup':medians['baseline']/medians[CANDIDATE],
         'local_full_gui_path':True,'six_table_multiset_equivalence':True,'organizer_score':None,
         'container_memory_limit_bytes':2147483648,'container_cpu_limit':2,
-        'sampled_peak_working_set_bytes':{m:max(r['sampled_peak_container_working_set_bytes'] or 0 for r in records if r['mode']==m) for m in medians},
+        'sampled_peak_working_set_bytes':{m:max((r['sampled_peak_container_working_set_bytes'] for r in records if r['mode']==m and r['sampled_peak_container_working_set_bytes'] is not None),default=None) for m in medians},
         'peak_intermediate_disk_bytes':None,'recovery_gui_integrated':DURABLE,'submission_ready':False}
     summary['baseline_recovery_enabled']=False
     summary['candidate_recovery_enabled']=DURABLE

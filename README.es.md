@@ -4,6 +4,13 @@ Proyecto dedicado a [Python Database Performance Optimization](https://www.kaggl
 Cliente Windows, PostgreSQL Linux y SSH. Generador y aplicación oficial
 conservados byte a byte en `app/`; extensiones en `dbperf/`.
 
+## Release evidence - 5 October 2026
+
+[Consolidated report](docs/WRITEUP.md) and [reproduction guide](docs/REPRODUCIBILITY.md). Final 100k, three-round GUI/SSH/Linux medians: original **16.046 s**, payload_once with recovery **15.447 s**, experimental lazy_keys **12.792 s**; all nine runs passed six-table equivalence. These are local exploratory observations. Figures and animated charts below describe earlier historical series.
+
+Payload_once remains the primary profile. Independent planner tests exposed two unresolved multi-error SQLSTATE differences in lazy_keys; it remains opt-in. Actual SSH recovery passed at three transaction boundaries. The formal Kaggle receipt records submitted state and exact code separately; no official score or rank is claimed.
+
+
 ## Evidencia inicial
 
 100.000 filas del generador oficial, PostgreSQL 17 Linux, dos CPU y límite de
