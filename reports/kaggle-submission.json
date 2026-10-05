@@ -1,0 +1,53 @@
+{
+  "verified_at_utc": "2026-10-05T06:37:50.636240+00:00",
+  "status": "Submitted",
+  "verification": [
+    "signed-in writeup displays Submitted!",
+    "competition Your Work and public listing display Submitted",
+    "all three public attachment downloads match local SHA-256"
+  ],
+  "writeup_url": "https://www.kaggle.com/competitions/python-database-performance-optimization/writeups/queryfoundry-verifiable-jsonb-expansion-and-durab",
+  "kaggle_forum_message_id": 3532948,
+  "track": "Main Track",
+  "participant": "Francisco Angulo de Lafuente",
+  "submitted_code_commit": "32c283f32fe35e9b5bd0e538bd6631f305863fb3",
+  "source_url": "https://github.com/Agnuxo1/QueryFoundry/tree/32c283f32fe35e9b5bd0e538bd6631f305863fb3",
+  "code_license": "Apache-2.0",
+  "writeup_license": "CC BY 4.0",
+  "source_zip_sha256": "e05525b0e05424ba547f9c17d4bd1fac74bd84140ddf5609a6c275230aa21cfe",
+  "official_files_verified": 32,
+  "unit_tests_passed": 18,
+  "final_gui_runs": 9,
+  "all_six_tables_equivalent": true,
+  "ssh_disconnect_cases_passed": 3,
+  "ci_url": "https://github.com/Agnuxo1/QueryFoundry/actions/runs/37273114098",
+  "ci_conclusion": "success",
+  "organizer_score": null,
+  "rank": null,
+  "validated_300m": false,
+  "attachments": [
+    {
+      "name": "QueryFoundry-32c283f32fe3.zip",
+      "url": "https://storage.googleapis.com/kaggle-forum-message-attachments/3532948/52063/QueryFoundry-32c283f32fe3.zip",
+      "bytes": 6747557,
+      "sha256": "e05525b0e05424ba547f9c17d4bd1fac74bd84140ddf5609a6c275230aa21cfe",
+      "public_download_matches_local": true
+    },
+    {
+      "name": "QueryFoundry-Technical-Report.pdf",
+      "url": "https://storage.googleapis.com/kaggle-forum-message-attachments/3532948/52064/QueryFoundry-Technical-Report.pdf",
+      "bytes": 9417,
+      "sha256": "c38f61d67d2b61f80fb49e4664ce9989e7b4e2879498caf7b670ce3e5db0d950",
+      "public_download_matches_local": true
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "url": "https://storage.googleapis.com/kaggle-forum-message-attachments/3532948/52065/SHA256SUMS.txt",
+      "bytes": 198,
+      "sha256": "ecd635a6134b6feaa131aadbe7549082b52461c1b5c8fe58d2f6ff4e80ad98f5",
+      "public_download_matches_local": true
+    }
+  ],
+  "confirmation_image": "docs/assets/kaggle-submitted.png",
+  "receipt_commit_note": "This post-submission documentation commit does not replace the immutable submitted source commit."
+}

@@ -447,3 +447,7 @@ Claude: revisa el cierre documental si estás activo; no inicies carga hasta lib
 ### 2026-10-05 - Codex - cierre verificado; RES-CX-09 LIBERADA
 
 Tres cortes SSH reales recuperados, clones borrados y origen intacto. Nueve GUI100k: medianas 16,045867 /15,447215 /12,792425 s; seis tablas equivalentes en todas, hashes de runtime coincidentes. Monitor desactivado: picos null. 18 tests aprobados; 32 archivos intactos. Docker detenido, datos preservados. Informe y reproducción consolidados; payload_once principal, lazy optativo por dos SQLSTATE multi-error pendientes. Envío Kaggle completo autorizado en preparación con sesión activa.
+
+### 2026-10-05 - Codex - ENTREGA KAGGLE COMPLETADA
+
+Estado Submitted verificado en Writeup, Your Work y listado público. Commit entregado 32c283f32fe35e9b5bd0e538bd6631f305863fb3; ZIP, PDF y SHA256SUMS descargables y hashes públicos iguales a locales. CI aprobada; 18 tests, 32 originales, 9 GUI equivalentes y 3 cortes SSH. Recibo reports/kaggle-submission.json; captura docs/assets/kaggle-submitted.png. El commit documental posterior sólo registra el recibo, no cambia código entregado. Sin puntuación ni ranking; laboratorios detenidos y datos preservados.
