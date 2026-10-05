@@ -1,0 +1,88 @@
+{
+  "timestamp_utc": "2026-10-05T06:17:45.661815+00:00",
+  "scope": "64-row functional clones, actual Windows Paramiko transport closed; Linux PG",
+  "benchmark": false,
+  "base_git_commit": "55f26f89cc03856da9a74493b38e55f54da26791",
+  "probe_sha256": "ec0bb8e72a972c23a82aaabe810dc6d20233e2d1e7a8f6597ba0d563f8996e0b",
+  "cases": {
+    "data_before_commit": {
+      "transport_closed": true,
+      "interrupted_call_raised": true,
+      "error_type": "RuntimeError",
+      "data_receipt_after_disconnect": 0,
+      "rows_after_disconnect": {
+        "table3": 0,
+        "table4": 0,
+        "table1": 0,
+        "table5": 0,
+        "table6": 0,
+        "table2": 0
+      },
+      "same_job_new_connection_recovered": true,
+      "six_table_multiset_equivalence": true,
+      "data_receipts": 1,
+      "control_receipts": 1,
+      "version_records_added": 6,
+      "repeat_finalization_same_versions": true,
+      "residual_advisory_locks": 0
+    },
+    "data_after_commit": {
+      "transport_closed": true,
+      "interrupted_call_raised": true,
+      "error_type": "RuntimeError",
+      "data_receipt_after_disconnect": 1,
+      "rows_after_disconnect": {
+        "table3": 4,
+        "table4": 6,
+        "table1": 64,
+        "table5": 64,
+        "table6": 64,
+        "table2": 158
+      },
+      "same_job_new_connection_recovered": true,
+      "six_table_multiset_equivalence": true,
+      "data_receipts": 1,
+      "control_receipts": 1,
+      "version_records_added": 6,
+      "repeat_finalization_same_versions": true,
+      "residual_advisory_locks": 0
+    },
+    "versions_after_commit": {
+      "transport_closed": true,
+      "interrupted_call_raised": true,
+      "error_type": "RuntimeError",
+      "data_receipt_after_disconnect": 1,
+      "rows_after_disconnect": {
+        "table3": 4,
+        "table4": 6,
+        "table1": 64,
+        "table5": 64,
+        "table6": 64,
+        "table2": 158
+      },
+      "same_job_new_connection_recovered": true,
+      "six_table_multiset_equivalence": true,
+      "data_receipts": 1,
+      "control_receipts": 1,
+      "version_records_added": 6,
+      "repeat_finalization_same_versions": true,
+      "residual_advisory_locks": 0
+    }
+  },
+  "passed": true,
+  "source_generator_modified": false,
+  "clone_databases": {
+    "kaggle_challenge": "qf_ssh_data_9c5d3c712144",
+    "postgres_data_manager": "qf_ssh_control_9c5d3c712144"
+  },
+  "original_expected_rows": {
+    "table3": 4,
+    "table4": 6,
+    "table1": 64,
+    "table5": 64,
+    "table6": 64,
+    "table2": 158
+  },
+  "clones_removed": true,
+  "official_source_unchanged": true
+}

@@ -72,3 +72,9 @@ Remaining: stronger source-content checks, full GUI process termination, indepen
 and larger-scale validation of the strengthened fingerprints. The new100k benchmark
 is in reports/research-fingerprint-100k/durable-gui/; older pilot numbers do not
 measure this implementation.
+
+## Final real SSH gate - 5 October 2026
+
+reports/ssh-disconnect-final.json records actual Paramiko closures before data COMMIT, after data COMMIT and after control COMMIT. Each disposable 64-row case resumed over a new connection with the same UUID, six equivalent outputs, one receipt per database, six version records and zero residual advisory locks. Clones removed; official source unchanged. First observer failure retained separately: SIGPIPE/crash recovery required bounded waits in observer/cleanup probes only. Direct GUI window termination was not separately tested.
+
+Preserve the UUID and matching source/version/request metadata; restore both databases consistently with the same database identity. Destination edits or missing receipt constraints are rejected. Renamed databases change request identity. Changed version metadata may block resume; reconcile committed results rather than delete guards or forge receipts. Fingerprints are noncryptographic and cross-version migration is unsupported. JSON edits preserving stored raw_hash are a source detection gap. No automatic recovery is claimed for inconsistent states.

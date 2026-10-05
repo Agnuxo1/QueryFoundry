@@ -1,0 +1,435 @@
+## default / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## default / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## work_mem_64kB / baseline
+qual order: type -> weight -> declaration
+Hash Join
+  Hash Cond: (main_row.id_column_3 = source_row.raw_id)
+  ->  Seq Scan on table1 main_row
+  ->  Hash
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Values Scan on "*VALUES*"
+                    Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## work_mem_64kB / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## work_mem_1GB / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## work_mem_1GB / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## parallel_forced / baseline
+qual order: type -> weight -> declaration
+Gather
+  Workers Planned: 4
+  ->  Parallel Hash Join
+        Hash Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Parallel Seq Scan on table1 main_row
+        ->  Parallel Hash
+              ->  Nested Loop
+                    ->  Parallel Seq Scan on fzp source_row
+                    ->  Values Scan on "*VALUES*"
+                          Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## parallel_forced / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Gather
+                    Workers Planned: 4
+                    ->  Parallel Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## no_parallel / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## no_parallel / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## jit_forced / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## jit_forced / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## jit_off / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## jit_off / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## no_nestloop / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## no_nestloop / lazy_keys
+qual order: type -> weight -> declaration
+Merge Join
+  Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+  ->  Sort
+        Sort Key: source_row.raw_id
+        ->  Nested Loop
+              Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+              ->  Nested Loop
+                    ->  Seq Scan on fzp source_row
+                    ->  Result
+              ->  Materialize
+                    ->  Values Scan on "*VALUES*"
+
+
+## no_hashjoin / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## no_hashjoin / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## no_mergejoin / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Hash Join
+        Hash Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Seq Scan on table1 main_row
+        ->  Hash
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## no_mergejoin / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## merge_only / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## merge_only / lazy_keys
+qual order: type -> weight -> declaration
+Merge Join
+  Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+  ->  Sort
+        Sort Key: source_row.raw_id
+        ->  Nested Loop
+              Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+              ->  Nested Loop
+                    ->  Seq Scan on fzp source_row
+                    ->  Result
+              ->  Materialize
+                    ->  Values Scan on "*VALUES*"
+
+
+## no_material / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## no_material / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## random_page_cost_1 / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (source_row.raw_id = main_row.id_column_3)
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## random_page_cost_1 / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## cpu_cost_skew / baseline
+qual order: type -> weight -> declaration
+Gather
+  Workers Planned: 1
+  ->  Hash Join
+        Hash Cond: (source_row.raw_id = main_row.id_column_3)
+        ->  Nested Loop
+              ->  Parallel Seq Scan on fzp source_row
+              ->  Values Scan on "*VALUES*"
+                    Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+        ->  Hash
+              ->  Seq Scan on table1 main_row
+
+
+## cpu_cost_skew / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## stats_target_1 / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## stats_target_1 / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+
+
+## stats_target_10000 / baseline
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Merge Join
+        Merge Cond: (main_row.id_column_3 = source_row.raw_id)
+        ->  Index Scan using table1_id_column_3_key on table1 main_row
+        ->  Sort
+              Sort Key: source_row.raw_id
+              ->  Seq Scan on fzp source_row
+  ->  Values Scan on "*VALUES*"
+        Filter: ((upper(btrim(column3)) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim(column4), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim(column2), ''::text))::smallint = column1))
+
+
+## stats_target_10000 / lazy_keys
+qual order: type -> weight -> declaration
+Nested Loop
+  ->  Nested Loop
+        Join Filter: ((upper(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column3))) = ANY ('{X,Y,Z}'::text[])) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column4)), ''::text))::numeric >= '0'::numeric) AND ((NULLIF(btrim((((source_row.raw -> 'values'::text)) ->> "*VALUES*".column2)), ''::text))::smallint = "*VALUES*".column1))
+        ->  Nested Loop
+              ->  Seq Scan on fzp source_row
+              ->  Result
+        ->  Materialize
+              ->  Values Scan on "*VALUES*"
+  ->  Index Scan using table1_id_column_3_key on table1 main_row
+        Index Cond: (id_column_3 = source_row.raw_id)
+

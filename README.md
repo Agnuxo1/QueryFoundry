@@ -20,6 +20,13 @@ GUI, generator and fixed seed live byte-for-byte in `app/`; everything we add li
 Nothing here claims an official score or a 300-million-row capacity: every number below is a local,
 reproducible measurement with its scope stated.
 
+## Release evidence - 5 October 2026
+
+[Consolidated report](docs/WRITEUP.md) and [reproduction guide](docs/REPRODUCIBILITY.md). Final 100k, three-round GUI/SSH/Linux medians: original **16.046 s**, payload_once with recovery **15.447 s**, experimental lazy_keys **12.792 s**; all nine runs passed six-table equivalence. These are local exploratory observations. Figures and animated charts below describe earlier historical series.
+
+Payload_once remains the primary profile. Independent planner tests exposed two unresolved multi-error SQLSTATE differences in lazy_keys; it remains opt-in. Actual SSH recovery passed at three transaction boundaries. The formal Kaggle receipt records submitted state and exact code separately; no official score or rank is claimed.
+
+
 ## How it works
 
 <img src="docs/assets/pipeline.gif" alt="One expansion writes six destination tables in one transaction, then registers six versions" width="100%">

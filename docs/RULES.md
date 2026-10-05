@@ -44,3 +44,5 @@ equivalent validation/versioning and fair complete-workflow timing. Functional
 mutation fixtures must be labelled separately from official benchmark workloads.
 Development dependencies must be disclosed and reproducible; the submitted
 runtime does not require Claude or JEV services.
+
+Signed-in UI revalidated 5 October 2026: deadline 12 October 2026 at 04:59 Madrid; rules already accepted. Submission requires a Submitted Writeup and exact public code commit.

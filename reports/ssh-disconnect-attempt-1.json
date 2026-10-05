@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "phase": "observation after actual SSH cut",
+  "finding": "PostgreSQL backend signal13 caused automatic crash recovery; immediate observation and cleanup met transient recovery-mode connections",
+  "disposable_clones_removed_after_recovery": true,
+  "probe_adjustment": "wait for recovery only on observation and cleanup, never blindly retry service DML"
+}

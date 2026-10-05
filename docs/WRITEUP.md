@@ -1,133 +1,57 @@
-# QueryFoundry — borrador de entrega
+# QueryFoundry: Verifiable JSONB Expansion and Durable SSH Recovery
 
-Estado: repositorio público; resultados locales reproducibles; sin envío Kaggle aceptado.
-El commit exacto se obtiene con `git rev-parse HEAD` cuando se cierre la entrega.
+QueryFoundry extends the organizer's Windows GUI, preserving all 32 official files byte-for-byte. It reduces repeated JSONB extraction and adds optional transactional recovery across the data and version-control databases. The primary entry is `payload_once` with `--recovery`; `lazy_keys` remains an explicitly experimental opt-in profile.
 
-## Problema y solución
+Public source: https://github.com/Agnuxo1/QueryFoundry (Apache-2.0). The Kaggle submission pins the exact 40-character Git commit and includes a source archive from that commit. This report and all raw observations are included in the archive.
 
-La expansión oficial consulta varias veces el mismo subobjeto JSON por fila.
-Reutilizamos `raw->'values'` con un LATERAL por receta y una barrera OFFSET 0.
-No eliminamos preflight, manifiestos, validación, contadores, versiones ni
-refrescos GUI. Se mantiene el orden table3, table4, table1, table5, table6, table2.
-La aplicación y generador originales se preservan en app/ con hashes SHA-256.
+## Design and preserved behavior
 
-Una variante de extracción anticipada de todos los campos fue descartada:
-su mediana SQL diagnóstica, 15,384 s, fue peor que payload_once, 13,376 s.
-Estas mediciones SQL sólo guiaron la selección; no son la métrica de entrega.
+The unchanged GUI worker runs on Windows and reaches PostgreSQL on Linux through real SSH. The six organizer recipes execute in order `table3, table4, table1, table5, table6, table2`. `payload_once` reuses `raw->'values'` through a LATERAL expression with an OFFSET 0 barrier; it retains original casts, filters, joins and validation. Rewrites apply only to the six recognized organizer recipes; custom SQL is preserved.
 
-## Evaluación
+Expansion remains one REPEATABLE READ transaction. Preflight checks, source/version manifests, destination checks, row counts, control-version registration and GUI refreshes remain in the measured workflow. Neither the official generator nor its fixed seed is changed. SHA-256 integrity checks verify all 32 organizer files, including inside the release ZIP.
 
-Usamos el generador oficial sin modificaciones, 100.000 filas, PostgreSQL Linux
-en Docker, cliente Windows y conexión SSH real. La GUI original ejecutó el
-trabajador completo con sus widgets e informe; la ventana estaba oculta durante
-la automatización. Se alternaron tres ejecuciones de cada variante.
+Recovery stores a receipt atomically with data effects and a separate receipt atomically with the six control-version records. A session advisory lock is acquired before the snapshot, preventing concurrent duplicate UUIDs. Resuming the same request and UUID verifies committed outputs before replaying the receipt, then completes version registration. There is no distributed transaction and no block checkpointing: a failure before the data commit repeats the full expansion.
 
-Original: mediana 14,245 s. Payload reutilizado: 13,239 s. La reducción local
-fue 7,1% en MEASURED PROCESSING TOTAL. Los seis informes y sus subetapas están en
-reports/. Comprobamos que el agregado coincide con el total del informe original.
-La equivalencia de las seis tablas se comprobó con EXCEPT ALL en ambos sentidos,
-normalizando claves sustitutas y preservando sus relaciones. Las claves de
-raw_data permanecen iguales.
+## Final measured series: 5 October 2026
 
-La memoria observada fue aproximadamente 636–647 MiB de working set del
-contenedor, incluyendo PostgreSQL y SSH, muestreado con memory.current menos
-inactive_file. Límite de 2 GiB y dos CPU. No se midió el pico de disco temporal;
-no se presenta esa ausencia como cero. No hay validación a 300 millones de filas
-ni puntuación del organizador. Los resultados no permiten prometer posición.
+100,000 official generated rows; three rotating rounds per variant; all nine runs retained; Windows GUI worker with real widgets (window hidden for automation), actual SSH, Linux PostgreSQL 17.11, two CPUs and a 2 GiB container limit. Every run inserted 532,416 destination rows and passed bidirectional EXCEPT ALL multiset comparison on all six tables, normalizing surrogate keys while preserving relationships.
 
-## Recuperación
+| Variant | Median MEASURED PROCESSING TOTAL | Runs | Local reduction versus original |
+|---|---:|---:|---:|
+| Original, without recovery | 16.045867 s | 3 | reference |
+| payload_once, with strengthened recovery | 15.447215 s | 3 | 3.73% |
+| lazy_keys, with strengthened recovery (experimental) | 12.792425 s | 3 | 20.28% |
 
-La opción --recovery confirma un recibo con los efectos en la base de trabajo
-y otro con las seis versiones en la base de control. Puede reanudar después del
-primer commit sin duplicar datos. No usa una transacción distribuida ni
-checkpoints por bloques. La firma liga petición y manifiesto de origen.
-Un archivo local conserva sólo el identificador para reanudar, no reemplaza el
-recibo PostgreSQL. Se verificaron fallos antes del commit, pérdida de respuesta
-tras ambos commits, nueva conexión entre commits y rechazo de UUID reutilizado.
-Véanse reports/durable-recovery.json, docs/RECOVERY.md y el benchmark separado
-reports/durable-gui/. Todos sus costes se incluyen en ejecuciones nuevas.
+Evidence: `reports/release-20261005/durable-gui/` includes individual JSON/TXT reports, run order, source hashes and aggregates. All nine runtime-source fingerprints match the release code. Records identify base commit 55f26f8 plus explicit hashes for benchmark metadata changes; those hashes pin the actual measured sources. The packaging commit adds documentation and evidence without changing the measured runtime.
 
-La comparación GUI independiente, tres repeticiones por variante, produjo
-medianas de 13,868 s original SIN recibos y 12,911 s candidato CON recibos
-(diferencia local del 6,9%; rangos solapados, sin prueba de significancia).
-Picos de working set: 633 y 643 MiB respectivamente. No interpretar la diferencia
-entre esta serie y la anterior como coste negativo de recuperación: existe
-variación de tiempos y ambas tienen sus propios baselines.
+The metric is the organizer's MEASURED PROCESSING TOTAL, including its remote-server and local-CPU components. It is not end-to-end stopwatch latency: SSH transit and blocking time excluded by the organizer's instrumentation remain excluded. Recovery and verification costs participate in the candidate workflow. The resource observer was disabled in this final series, so memory and disk peaks are unavailable, not zero. Small sample sizes, overlapping timing ranges and a single host do not establish statistical significance or general speedup.
 
-## Reproducción y límites
+## Larger pilot and experimental profile
 
-Seguir README.md y usar el commit indicado. Imagen base PostgreSQL fijada por
-digest, versiones Python registradas, origen oficial fijado y clientes con
-registro de descarga y hash. El laboratorio tiene claves propias y puertos
-loopback; no se incluyen credenciales en la entrega.
+The earlier 1,000,000-row three-way pilot ran once per variant: original 164.109 s, payload_once 152.427 s, lazy_keys 126.772 s. All six tables matched (5,321,553 destination rows). Sampled container working sets were 1.779 / 1.763 / 1.826 GiB respectively. These are historical n=1 observations, not repeated final-release measurements. Evidence: `reports/research-lazy-1m/`.
 
-Falta ampliar escala y medir el pico completo de disco intermedio. La transacción única puede requerir
-repetir mucho trabajo si falla antes del commit. Las mejoras pequeñas requieren
-más repeticiones y hardware independiente para confirmar estabilidad.
+Lazy extraction targets the dominant table2 stage. Linux differential testing matched 800 lazy_keys and 150 payload_once cases against the original; a deliberately rejected rewrite provided a positive detector control. Independent Windows planner testing added 1,600 lazy_keys cases across 16 settings and 300 payload_once controls. The 940 lazy cases with a single error source matched exactly. Multiple simultaneous invalid cells exposed six message differences, including two SQLSTATE differences still unresolved. Consequently lazy_keys is not the default, and we do not claim universal error equivalence. Windows JIT settings did not test actual JIT; real Linux parallel/JIT coverage remains future work. See `coordinacion/entregas/I-005b-lazy-keys-plans-claude.md` and raw artifacts.
 
-## Investigación posterior — 2026-09-30
+The earlier sparse_positions optimization was rejected because two of eight malformed-input cases changed an error into acceptance. It is not used by the entry.
 
-La auditoría independiente de Claude detectó una instantánea obsoleta al esperar
-un lock dentro de REPEATABLE READ, reintentos con UUID distinto y recuperación
-que no detectaba alteración de destinos. Codex reprodujo los escenarios y
-corrigió la adquisición de lock antes de la instantánea, conservación de UUID
-y verificación de destinos. Concurrencia de dos clientes, reinicio real,
-dump/restore de ambas bases y reanudación en clones pasaron; también se rechazaron
-borrado, actualización con igual conteo y renombrado de columna.
+## Recovery validation
 
-El recibo opcional guarda conteos, dos sumas de hashes de registros, descripción
-de columnas y metadatos de versión, codificación y locale. Estas huellas no son
-criptográficas ni permiten migración automática entre versiones PostgreSQL.
-Los recibos antiguos requieren validación independiente.
+Real Linux gates covered simultaneous requests, database restart, dump/restore with changed OIDs, deletion, same-count content edits, column rename and version races. An independent Windows replica used a separate local PostgreSQL installation; it is complementary evidence rather than a substitute for Linux/SSH.
 
-En revisión c0c7e272ce56f126e3d42f3eda36b3aa90c90551, tres repeticiones alternadas
-de la GUI completa a100k dieron mediana15,875292175s para original SIN recuperación
-y15,094171879s para payload_once CON recuperación reforzada. Reducción local4,920%,
-rangos15,375–16,698s y14,925–15,837s: solapados, n3, exploratorio. No se aísla el
-coste de recuperación comparando con series históricas. Las seis tablas son
-equivalentes en cada ejecución. Working set máximo muestreado797,223/790,141MiB.
-Evidencia completa: reports/research-fingerprint-100k/durable-gui/.
+The final functional gate closed the actual Paramiko SSH transport before the data commit, after the data commit, and after the control commit. Each case recovered over a new connection with the same UUID, equivalent six-table outputs, exactly one data receipt, one control receipt, six version records and no residual advisory locks. Tests used disposable 64-row clones, removed afterward, and verified the official source was unchanged. Evidence: `reports/ssh-disconnect-final.json` and `scripts/research_ssh_disconnect.py`.
 
-Piloto1M con generador oficial y revisión anterior bfb2b44: original155,490661388s,
-candidato145,661872109s; n1, seis tablas equivalentes, guard anterior de conteos.
-Working set1,863/1,926GiB bajo límite2GiB. No extrapolar este piloto a la nueva
-huella ni a300M. Temporales PostgreSQL observados43,056MiB original/0 candidato,
-escrituras74,687MiB/0; no incluye todos los intermedios, WAL ni tablas TEMP.
+The first SSH experiment failed when PostgreSQL underwent SIGPIPE-triggered crash recovery and the observer queried too soon. The failed attempt is retained in `reports/ssh-disconnect-attempt-1.json`. Only observer and cleanup probes received bounded recovery waits; the service does not blindly retry data writes. Direct GUI window termination was not separately tested.
 
-Se rechazó sparse_positions antes de medir velocidad:2/8 casos sintéticos
-alteraban errores de cast del original. Se conserva sólo como experimento negativo.
-JEV, status connected/provenance jev, recomendó conservar el candidato de
-investigación y recuperación opcional, sin declarar significancia o victoria.
+## Resource measurement and boundaries
 
-## I-005: resultados GUI100k verificados
+The disk sampler was calibrated against 14,647,296 bytes of disposable TEMP/TOAST/index/tablespace storage and a 9,235,232-byte held sort spill. The eight-run observer-on/off control retained a 91.441 s outlier and did not establish a fixed or zero observer cost. Its observed ephemeral-file maximum was 156.445 MiB in that separate 100k experiment. Non-atomic sampling may miss peaks or combine noncoexistent states; it is not a guaranteed global peak or lower bound. WAL, persistent receipts and client staging are outside that sampler. See `docs/DISK-MEASUREMENT.md` and calibration/overhead reports.
 
-Commit3c62b85, tres rondas rotatorias original/payload_once/lazy_keys.
-Medianas15,588055791 /15,56720543 /12,34199933s. Candidatos con recuperación
-reforzada; original sin recibos. Lazy reduce20,824% frente al original y20,718%
-frente a payload. Las seis tablas coinciden en las9ejecuciones. Todos los
-resultados conservados: primera original25,973s, dominada por table1, causa
-no establecida. Rangos original15,085–25,973, payload15,154–15,792, lazy12,142–12,422s.
-N3exploratorio; no significancia ni puntuación oficial. La pequeña mejora de
-payload de series anteriores no se reproduce aquí. Table2 mediana6,741/5,734/3,423s.
-Linux:800fuzz lazy con219errores y150payload con19errores, idénticos al original.
-El control sparse produce la discrepancia esperada. Defaultpayload conservado;
-lazyoptativo; falta concluir piloto1M con esta implementación.
+Receipt fingerprints use two seeded record-hash sums, counts, schema and PostgreSQL/encoding/locale metadata. They are not cryptographic and do not support automatic cross-version migration. Source manifests validate stored raw_hash values: editing JSON while preserving raw_hash is a documented detection gap. Restores must preserve matching database/request identity and both databases; missing receipt constraints or changed version metadata require independent reconciliation. No automatic bypass is offered.
 
-## I-005: piloto1M aceptado y decisión
+No run validates 300 million source rows. There is no organizer score, established significance or claimed rank. Future work includes larger paired tests, source-content verification cost, Linux parallel/JIT malformed-input tests and durable block checkpoints; none is represented as implemented.
 
-Datos oficiales preservados, runtime3c62b85 equivalente a9e83eb5 (diferencia sólo
-documentación/informes en los paths medidos); los tres registros usan9e83eb5.
-Una ejecución por variante: original164,108612678 /payload152,427291575 /
-lazy126,771885872s. Seis tablas equivalentes;5.321.553filas insertadas por variante.
-Reducción lazy22,751% original y16,831% payload. Table2:73,052 /60,071 /35,405s.
-Working set muestreado1,779 /1,763 /1,826GiB bajo límite2GiB. Archivos de trabajo
-PostgreSQL observados57,275MiB original y0 candidatos; escritos136,518MiB /0 /0.
-No incluye tablasTEMP, WAL y todos los intermediarios; pico global desconocido.
-RAM libre del host cayó transitoriamente a1,04GiB; no es medición exhaustiva.
-A esta escala se repitieron los8contraejemplos conocidos: salidas/SQLSTATE
-coincidentes. N1exploratorio, sin significancia ni puntuación oficial.
-JEV connected/provenancejev/modeljev-1.13.0 recomienda lazy optativo (confianza1),
-réplica independiente de recuperación como prioridad siguiente (confianza0,31).
-Decisión: KEEP como candidato de investigación optativo; defaultpayload conservado.
-No afirmamos equivalencia de errores en todos los planes/versiones.
-RES006liberada; ambos laboratorios detenidos y datasets preservados.
+## Reproduction and deliverables
+
+Follow `docs/REPRODUCIBILITY.md` from the pinned submission commit. Dependencies are locked, the Linux base image is digest-pinned, the official generator and manifest are preserved, and local credentials/runtime/datasets are excluded from Git and the source ZIP. Normal operation needs Windows, Python, SSH and PostgreSQL; no Claude, JEV or remote AI service is a runtime dependency.
+
+Deliverables: source ZIP, exact public commit, technical report, reproduction guide, unit tests, original-file manifest, nine final GUI records, larger historical pilot, independent audits, negative experiments and actual SSH recovery evidence. Kaggle publication state is recorded separately after formal submission; repository publication alone is not a contest submission.

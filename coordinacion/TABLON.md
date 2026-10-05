@@ -410,3 +410,40 @@ Claude: revisa calibración y controls en reports/research-disk-100k y propone
 prueba aislada para el tiempo anómalo de table1 y sus archivos de trabajo.
 Yo continúo siendo responsable del monitor y de las interrupciones SSH.
 Puedes solicitar la siguiente reserva para planes/fuzz en este tablón.
+
+### 2026-09-30 23:10 Madrid — Claude — R-005/punto 4 (lazy_keys frente a planes) — EN_CURSO, RES-CL-04
+
+Fuzz de `lazy_keys` con entradas inválidas (campos ausentes, null, tipos incorrectos, fuera de rango, pesos inválidos) y planes
+forzados (work_mem, paralelismo, JIT, enable_*, estadísticas); semillas nuevas; `sparse_positions` como control positivo; EXPLAIN guardado.
+Sólo mi PostgreSQL propio (Windows, fidelidad limitada: luego repetir en Linux si Codex reserva el lab). No toco `dbperf/` ni los labs.
+
+| Reserva | Responsable | Inicio/fin Madrid | Recurso | Límite | Estado | Tarea |
+|---|---|---|---|---|---|---|
+| RES-CL-04 | Claude | 23:10–00:15 | Clúster PG propio `D:\PROJECTS\.cognition\claude-qf-scratch` (puerto 55433), generador oficial 20.000 filas | ≤1,5 CPU, ≤1,2 GiB RAM, ≤2 GiB en D:; sin GPU; commit `55f26f8` | LIBERADA | punto 4 |
+
+### 2026-09-30 00:15 Madrid — Claude — punto 4 (lazy_keys frente a planes) — EN_REVISION; RES-CL-04 LIBERADA
+
+Entrega `coordinacion/entregas/I-005b-lazy-keys-plans-claude.md` + `i005/fuzz_plans.py`, `fuzz_plans_results.jsonl`, `explain-plans.txt`.
+1600 pruebas `lazy_keys` (semillas nuevas 103-106), 16 configuraciones (work_mem, paralelismo, JIT, enable_*, costes, estadísticas),
+entradas ausentes/null/tipos erróneos/fuera de rango/pesos inválidos: **0 discrepancias de estado, salida o mensaje exacto** con una
+sola fuente de error (940 pruebas); 32 EXPLAIN con el mismo orden de quals (tipo, peso, declaración). `payload_once` 300 sin
+discrepancias; control positivo `sparse_positions` detectado en la prueba 0. Hallazgo de método: con varias celdas inválidas el propio
+**original** cambia de mensaje según el plan (probado), así que sólo se exige mensaje exacto con una fuente de error.
+Límites: Windows, **sin JIT** en este binario, 20k filas. Pendiente: repetir en Linux (JIT, paralelismo real) y barrido del original para
+SQLSTATE; puntos 3, 5-8 siguen en manos de Codex/reservas. Clúster propio borrado; no toqué `dbperf/`, `app/` ni labs.
+
+### 2026-10-05 — Codex — cierre de entrega autorizado; RES-CX-09 ACTIVA
+
+El usuario autoriza cerrar faltantes y envío completo en Kaggle. Sesión Kaggle
+confirmada; cierre oficial revalidado 12 octubre 2026 04:59 Madrid. Integro
+I-005b sin promover lazy_keys: dos diferencias multi-error de SQLSTATE siguen
+abiertas. payload_once permanece por defecto; investigación claramente optativa.
+RES-CX-09: Docker principal 2 CPU/2 GiB, sin escala simultánea; máximo 45 min
+para prueba SSH real en clones y gate GUI. RAM libre previa 9,99 GiB, clúster
+Claude detenido; no escribo origen oficial. JEV remoto recomienda cierre
+conservador verificable. Prepararé Writeup consolidado y commit exacto público.
+Claude: revisa el cierre documental si estás activo; no inicies carga hasta liberar.
+
+### 2026-10-05 - Codex - cierre verificado; RES-CX-09 LIBERADA
+
+Tres cortes SSH reales recuperados, clones borrados y origen intacto. Nueve GUI100k: medianas 16,045867 /15,447215 /12,792425 s; seis tablas equivalentes en todas, hashes de runtime coincidentes. Monitor desactivado: picos null. 18 tests aprobados; 32 archivos intactos. Docker detenido, datos preservados. Informe y reproducción consolidados; payload_once principal, lazy optativo por dos SQLSTATE multi-error pendientes. Envío Kaggle completo autorizado en preparación con sesión activa.
