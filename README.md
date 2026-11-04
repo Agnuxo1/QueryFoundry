@@ -163,3 +163,23 @@ rules in [`docs/RULES.md`](docs/RULES.md); reuse in [`docs/REUSE.md`](docs/REUSE
 Apache-2.0. Includes byte-preserving organizer sources from
 `igorsiecz/kaggle_postgre_challenge` (commit `5dfde9d`); original notices are kept in `app/` and
 [`NOTICE`](NOTICE).
+
+## Scientific figures
+
+![October 100,000-row validation series. Original: 16.046; payload_once: 15.447; lazy_keys (experimental): 12.792](docs/figures/october-local-runtime.gif)
+
+*October 100,000-row validation series.* [Static figure](docs/figures/october-local-runtime.png).
+
+
+![Identify the submitted snapshot. October writeup; Frozen commit; Source archive; Verified receipt](docs/figures/submission-lineage.gif)
+
+*Identify the submitted snapshot.* [Static figure](docs/figures/submission-lineage.png).
+
+
+## Bibliography and proposed checks
+
+- [PostgreSQL, Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html). Check recovery boundaries separately from query timing.
+
+**Attribution.** Cite [Francisco Angulo de Lafuente](https://orcid.org/0009-0001-1634-7063) using [CITATION.cff](CITATION.cff). Existing Apache-2.0 terms and upstream notices are preserved; the new figure renderer is MIT. Preserve applicable copyright and permission notices and do not present this work as your own. [License](LICENSE) · [Figure methods and provenance](docs/figures/README.md).
+
+<!-- research-provenance: project=QueryFoundry; edition=2026-11-04; creator=Francisco Angulo de Lafuente; orcid=https://orcid.org/0009-0001-1634-7063; figure-renderer-license=MIT -->

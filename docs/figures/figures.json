@@ -1,0 +1,86 @@
+{
+  "title": "QueryFoundry",
+  "subtitle": "Verification and recovery in the October challenge",
+  "figures": [
+    {
+      "kind": "bars",
+      "id": "october-local-runtime",
+      "title": "October 100,000-row validation series",
+      "subtitle": "Median of three rounds; all nine runs passed six-table equivalence",
+      "labels": [
+        "Original",
+        "payload_once",
+        "lazy_keys (experimental)"
+      ],
+      "values": [
+        16.046,
+        15.447,
+        12.792
+      ],
+      "lim": [
+        0,
+        20
+      ],
+      "xlabel": "Median processing time (s)",
+      "source": "Source: README release evidence, 5 October",
+      "basis": "Reported evidence",
+      "alt": "October 100,000-row validation series. Original: 16.046; payload_once: 15.447; lazy_keys (experimental): 12.792",
+      "ticks": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20
+      ]
+    },
+    {
+      "kind": "flow",
+      "id": "submission-lineage",
+      "title": "Identify the submitted snapshot",
+      "subtitle": "Earlier October challenge; separate from PGDM Expand v2",
+      "nodes": [
+        [
+          0.1,
+          0.51,
+          "October writeup"
+        ],
+        [
+          0.3666666666666667,
+          0.51,
+          "Frozen commit"
+        ],
+        [
+          0.6333333333333333,
+          0.51,
+          "Source archive"
+        ],
+        [
+          0.9000000000000001,
+          0.51,
+          "Verified receipt"
+        ]
+      ],
+      "edges": [
+        [
+          0,
+          1,
+          ""
+        ],
+        [
+          1,
+          2,
+          ""
+        ],
+        [
+          2,
+          3,
+          ""
+        ]
+      ],
+      "basis": "Technical schematic",
+      "source": "Source: reports/kaggle-submission.json and the README",
+      "alt": "Identify the submitted snapshot. October writeup; Frozen commit; Source archive; Verified receipt"
+    }
+  ]
+}
