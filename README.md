@@ -23,6 +23,10 @@ reproducible measurement with its scope stated.
 **Kaggle: Submitted, 5 October 2026.** [View the official writeup](https://www.kaggle.com/competitions/python-database-performance-optimization/writeups/queryfoundry-verifiable-jsonb-expansion-and-durab). Exact submitted source: `32c283f32fe35e9b5bd0e538bd6631f305863fb3`. [Verified receipt](reports/kaggle-submission.json). Source ZIP, PDF report and SHA-256 manifest are attached and their public downloads verified. No official score or rank has been assigned.
 
 
+<!-- impact-note:start -->
+<sub><strong>Efficiency and practical value.</strong> QueryFoundry extends the organizer’s database application by reusing each row’s extracted JSON payload and recording durable transaction receipts. These mechanisms target redundant parsing and avoid repeating committed work during supported retries. The <a href="#durable-recovery">recovery design</a> preserves output-equivalence checks and upstream behavior, providing a concrete performance and resilience contribution while keeping experimental SQL rewrites and their limitations separate.</sub>
+<!-- impact-note:end -->
+
 ## Release evidence - 5 October 2026
 
 [Consolidated report](docs/WRITEUP.md) and [reproduction guide](docs/REPRODUCIBILITY.md). Final 100k, three-round GUI/SSH/Linux medians: original **16.046 s**, payload_once with recovery **15.447 s**, experimental lazy_keys **12.792 s**; all nine runs passed six-table equivalence. These are local exploratory observations. Figures and animated charts below describe earlier historical series.
